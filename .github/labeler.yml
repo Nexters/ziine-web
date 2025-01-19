@@ -1,0 +1,12 @@
+feat:
+  - head-branch: ['^feat']
+
+fix:
+  - head-branch: ['^fix']
+
+refactor:
+  - head-branch: ['^refactor']
+
+env:
+  - changed-files:
+      - any-glob-to-any-file: ['package.json', '**/*/package.json']
