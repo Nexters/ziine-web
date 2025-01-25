@@ -1,0 +1,7 @@
+{
+  "name": "@ziine/prettier-config",
+  "version": "1.0.0",
+  "devDependencies": {
+    "prettier": "^3.4.2"
+  }
+}
