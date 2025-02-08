@@ -1,6 +1,6 @@
 /** @type { import('@storybook/nextjs').StorybookConfig } */
 const config = {
-  stories: ['../stories/*.mdx', '../stories/*.stories.@(js|jsx|mjs|ts|tsx)'],
+  stories: ['../src/stories/*.mdx', '../src/stories/*.stories.@(js|jsx|mjs|ts|tsx)'],
   addons: [
     '@storybook/addon-onboarding',
     '@storybook/addon-essentials',
@@ -13,7 +13,7 @@ const config = {
   },
   staticDirs: [
     {
-      from: '../fonts',
+      from: '../src/fonts',
       to: '/fonts',
     },
   ],
