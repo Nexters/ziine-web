@@ -1,10 +1,9 @@
 import { ReactNode } from 'react';
 import { css } from '../styled-system/css';
-import React from 'react';
-
 export interface IButtonProps {
   children: ReactNode;
   variant?: 'primary' | 'secondary';
+  textOnly?: boolean
 }
 
 export const Tag = ({ children, variant = 'primary' }: IButtonProps) => {
@@ -24,6 +23,7 @@ export const Tag = ({ children, variant = 'primary' }: IButtonProps) => {
         border: 'solid',
         borderWidth: '1.5px',
         borderRadius: '99px',
+        
         ...(variant === 'primary'
           ? {
               bg: 'rgba(255, 87, 30, 0.15)',
