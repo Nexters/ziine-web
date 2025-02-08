@@ -1,6 +1,7 @@
 {
   "name": "@ziine/prettier-config",
   "version": "1.0.0",
+  "main": ".prettierrc.cjs",
   "devDependencies": {
     "prettier": "^3.4.2"
   }

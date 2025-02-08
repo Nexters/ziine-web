@@ -3,15 +3,12 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "ziine": "pnpm -F ziine",
+    "eslint-config": "pnpm -F eslint-config",
+    "prettier-config": "pnpm -F prettier-config",
+    "design": "pnpm -F design"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "jotai": "^2.11.1",
-    "ky": "^1.7.4",
-    "react-query@4": "link:tanstack/react-query@4",
-    "typescript": "^5.7.3"
-  }
+  "license": "ISC"
 }
