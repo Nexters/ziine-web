@@ -123,12 +123,6 @@ importers:
       '@vitejs/plugin-react':
         specifier: ^4.3.1
         version: 4.3.4(vite@6.1.0(@types/node@20.17.16)(jiti@1.21.7)(lightningcss@1.25.1)(terser@5.37.0))
-      '@ziine/eslint-config':
-        specifier: workspace:*
-        version: link:../eslint-config
-      '@ziine/prettier-config':
-        specifier: workspace:*
-        version: link:../prettier-config
       storybook:
         specifier: ^8.5.1
         version: 8.5.1(prettier@3.4.2)

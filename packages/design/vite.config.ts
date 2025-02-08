@@ -16,7 +16,7 @@ export default defineConfig({
     viteStaticCopy({
       targets: [{ src: 'src/styled-system/**/*.d.ts', dest: './' }],
       structured: true,
-    }),   
+    }),
   ],
   optimizeDeps: {
     include: ['storybook-addon-essential'],
@@ -28,6 +28,7 @@ export default defineConfig({
     target: 'esnext',
     minify: 'esbuild',
     lib: {
+      // eslint-disable-next-line no-undef
       entry: resolve(__dirname, 'src/index.ts'),
       formats: ['es'],
       fileName: 'index',

@@ -1,8 +1,7 @@
 {
   "name": "@ziine/eslint-config",
   "version": "1.0.0",
-  "type": "module",
-  "main": "index.js",
+  "main": "eslint.config.cjs",
   "devDependencies": {
     "eslint": "^9.20.0",
     "eslint-config-prettier": "^10.0.1",
