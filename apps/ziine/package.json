@@ -6,23 +6,26 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "prepare": "panda codegen",
+    "postbuild": "panda ship --outfile dist/panda.buildinfo.json"
   },
   "dependencies": {
+    "next": "15.1.5",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "next": "15.1.5"
+    "react-dom": "^19.0.0"
   },
   "devDependencies": {
-    "typescript": "^5",
+    "@eslint/eslintrc": "^3",
+    "@pandacss/dev": "^0.51.1",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "eslint": "^9",
-    "eslint-config-next": "15.1.5",
-    "@eslint/eslintrc": "^3",
+    "@ziine/design": "workspace:*",
     "@ziine/eslint-config": "workspace:*",
     "@ziine/prettier-config": "workspace:*",
-    "@ziine/design": "workspace:*"
+    "eslint": "^9",
+    "eslint-config-next": "15.1.5",
+    "typescript": "^5"
   }
 }

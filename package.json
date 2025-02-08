@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "ziine": "pnpm -F ziine",
+    "eslint-config": "pnpm -F eslint-config",
+    "prettier-config": "pnpm -F prettier-config",
+    "design": "pnpm -F design"
   },
   "keywords": [],
   "author": "",
