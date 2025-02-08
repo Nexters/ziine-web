@@ -40,3 +40,21 @@ a {
     color-scheme: dark;
   }
 }
+
+@media (max-width: 899px) {
+  body {
+    background-color: bisque;
+  }
+}
+
+@media (min-width: 900px) {
+  body {
+    background-color: mediumslateblue;
+  }
+}
+
+@media (min-width: 1200px) {
+  body {
+    background-color: yellow;
+  }
+}
