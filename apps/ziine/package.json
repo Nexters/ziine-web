@@ -13,7 +13,10 @@
   "dependencies": {
     "next": "15.1.5",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "jotai": "^2.11.3",
+    "ky": "^1.7.4",
+    "@tanstack/react-query": "5.66.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
