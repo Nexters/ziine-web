@@ -2,7 +2,7 @@
   "name": "@ziine/design",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "storybook": "storybook dev -p 6006",
@@ -21,9 +21,18 @@
     "@storybook/nextjs": "^8.5.1",
     "@storybook/react": "^8.5.1",
     "@storybook/test": "^8.5.1",
-    "storybook": "^8.5.1"
+    "@types/react": "^19.0.8",
+    "@types/react-dom": "^19.0.3",
+    "storybook": "^8.5.1",
+    "typescript": "^5.7.3"
   },
   "dependencies": {
-    "prop-types": "^15.8.1"
+    "autoprefixer": "^10.4.20",
+    "css-loader": "^7.1.2",
+    "postcss": "^8.5.1",
+    "postcss-loader": "^8.1.1",
+    "prop-types": "^15.8.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
   }
 }
