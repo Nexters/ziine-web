@@ -6,17 +6,16 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
     "prepare": "panda codegen",
     "postbuild": "panda ship --outfile dist/panda.buildinfo.json"
   },
   "dependencies": {
-    "next": "15.1.5",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
+    "@tanstack/react-query": "5.66.0",
     "jotai": "^2.11.3",
     "ky": "^1.7.4",
-    "@tanstack/react-query": "5.66.0"
+    "next": "15.1.5",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
@@ -26,8 +25,6 @@
     "@types/react-dom": "^19",
     "@ziine/design": "workspace:*",
     "@ziine/eslint-config": "workspace:*",
-    "@ziine/prettier-config": "workspace:*",
-    "eslint": "^9",
     "eslint-config-next": "15.1.5",
     "typescript": "^5"
   }
