@@ -2,6 +2,7 @@ import '@/styles/global.css';
 
 import { css } from '@/styled-system/css';
 import type { Metadata } from 'next';
+import { TanstackQueryProvider } from '@/shared/providers';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -15,7 +16,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <body className={css({ bg: 'grayscale.900' })}>{children}</body>
+      <body className={css({ bg: 'grayscale.900' })}>
+        <TanstackQueryProvider>{children}</TanstackQueryProvider>
+      </body>
     </html>
   );
 }
