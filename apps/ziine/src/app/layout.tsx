@@ -1,5 +1,6 @@
-import { css } from '@/styled-system/css';
 import '@/styles/global.css';
+
+import { css } from '@/styled-system/css';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
