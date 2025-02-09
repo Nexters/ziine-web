@@ -10,5 +10,9 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "@ziine/prettier-config": "workspace:*",
+    "@ziine/eslint-config": "workspace:*"
+  }
 }
