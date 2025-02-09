@@ -19,16 +19,16 @@ export default definePreset({
             100: { value: 'rgba(255, 87, 30, 0.1)' },
           },
           grayscale: {
-            900: { value: '#101A31' }, // Black
+            900: { value: '#1E1E1E' }, // Black
             800: { value: '#2F2F2F' },
-            700: { value: '#40485A' },
-            600: { value: '#596171' },
-            500: { value: '#7E8491' }, // Medium Gray
-            400: { value: '#A3A8B4' },
-            300: { value: '#BBC0C9' },
-            200: { value: '#D3D6DC' },
-            100: { value: '#E8EAEE' },
-            50: { value: '#F4F5F7' },
+            700: { value: '#4B4B4B' },
+            600: { value: '#6D6D6D' },
+            500: { value: '#8E8E8E' }, // Medium Gray
+            400: { value: '#A5A5A5' },
+            300: { value: '#BBBBBB' },
+            200: { value: '#D2D2D2' },
+            100: { value: '#E8E8E8' },
+            50: { value: '#F4F4F4' },
             0: { value: '#FFFFFF' }, // White
           },
           black_op: { value: 'rgba(255, 255, 255, 0.5)' },
@@ -46,14 +46,16 @@ export default definePreset({
           },
         },
         fonts: {
-          heading: {value: 'Pretendard'},
-          body: {value: 'Pretendard'},
+          heading: { value: 'Pretendard' },
+          body: { value: 'Pretendard' },
         },
         fontWeights: {
-          regular: {value: '400'},
-          bold: {value: '700'},
-          extrabold: {value: '800'},
-          black: {value: '900'},
+          regular: { value: '400' },
+          medium: { value: '500' },
+          semibold: { value: '600' },
+          bold: { value: '700' },
+          extrabold: { value: '800' },
+          black: { value: '900' },
         },
       },
     },

@@ -11,7 +11,7 @@ export default defineConfig({
     tsconfigPaths(),
     dts({
       insertTypesEntry: true,
-      tsconfigPath: './tsconfig.app.json',
+      tsconfigPath: './tsconfig.json',
     }),
     viteStaticCopy({
       targets: [{ src: 'src/styled-system/**/*.d.ts', dest: './' }],
@@ -28,17 +28,9 @@ export default defineConfig({
     target: 'esnext',
     minify: 'esbuild',
     lib: {
-      // eslint-disable-next-line no-undef
       entry: resolve(__dirname, 'src/index.ts'),
       formats: ['es'],
       fileName: 'index',
-    },
-    rollupOptions: {
-      external: ['react'],
-      output: {
-        chunkFileNames: 'assets/[name]-[hash].js',
-        assetFileNames: 'assets/[name][extname]',
-      },
     },
   },
 });
