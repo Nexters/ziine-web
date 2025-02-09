@@ -1,3 +1,4 @@
+import { css } from '@/styled-system/css';
 import '@/styles/global.css';
 import type { Metadata } from 'next';
 
@@ -13,7 +14,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <body>{children}</body>
+      <body className={css({ bg: 'grayscale.900' })}>{children}</body>
     </html>
   );
 }
