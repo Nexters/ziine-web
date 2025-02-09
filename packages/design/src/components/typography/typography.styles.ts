@@ -4,6 +4,9 @@ export const typographyStyle = cva({
   defaultVariants: {
     level: 'paragraph1',
   },
+  base: {
+    fontFamily: 'body',
+  },
   variants: {
     level: {
       heading1: {
