@@ -14,6 +14,6 @@ export interface ArtworkItem {
 }
 
 export const getArtworks = async () => {
-  const response = apiClient.get<{ artworks: Array<ArtworkItem> }>('api/v1/artworks');
-  return response.json();
+  const response = await apiClient.get<{ artworks: Array<ArtworkItem> }>('api/v1/artworks');
+  return await response.json();
 };
