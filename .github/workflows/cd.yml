@@ -3,7 +3,7 @@ name: Continuous Deployment
 on:
   push:
     branches: [dev, prod]
-    paths: ["apps/web/**"]
+    paths: ["apps/ziine/**", "packages/design/**"]
 
 jobs:
   Continous-Deployment:
