@@ -25,6 +25,7 @@
     "@types/react-dom": "^19",
     "@ziine/design": "workspace:*",
     "@ziine/eslint-config": "workspace:*",
+    "@ziine/prettier-config": "workspace:*",
     "eslint-config-next": "15.1.5",
     "typescript": "^5"
   }
