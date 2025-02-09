@@ -6,7 +6,14 @@ settings:
 
 importers:
 
-  .: {}
+  .:
+    devDependencies:
+      '@ziine/eslint-config':
+        specifier: workspace:*
+        version: link:packages/eslint-config
+      '@ziine/prettier-config':
+        specifier: workspace:*
+        version: link:packages/prettier-config
 
   apps/ziine:
     dependencies:
