@@ -1,4 +1,4 @@
-import { ImgButton, Typography, ListType } from '@ziine/design';
+import { ImgButton, Typography, ListType, ExhibitionInput } from '@ziine/design';
 import { css } from 'styled-system/css';
 
 const ArtworkRegisterPage = () => {
@@ -20,8 +20,6 @@ const ArtworkRegisterPage = () => {
         textCntVisible={false}
       />
       <ListType text={'재료'} required={true} placeholder={['ex. 캔버스에 유화']} type={''} />
-      {/* list type (two register area) */}
-      {/* list type (two register area + big input) */}
       <ListType
         inputType={'fat'}
         text={'작가 상세 정보'}
@@ -30,7 +28,6 @@ const ArtworkRegisterPage = () => {
         textCntVisible={false}
       />
       {/* divider */}
-      {/* oneRegister: textCnt option 추가 */}
       <ListType
         text={'작가 정보'}
         required={false}
@@ -46,8 +43,7 @@ const ArtworkRegisterPage = () => {
         description='공개하고자 하는 학교 이름과 학과 정보를 해쉬태그 형태로 기입해 주세요.'
         type={''}
       />
-      {/* list type (exhibition input) */}
-      {/* list type (sns form) */}
+      <ExhibitionInput text={'전시 이력'} required={false} placeholder={['YYYY.MM', '전시 명']} />
       {/* drop down */}
     </div>
   );

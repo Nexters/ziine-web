@@ -16,6 +16,7 @@ interface Props {
   placeholder: string[];
   description?: string;
   textCntVisible?: boolean;
+  icons?: string[];
 }
 
 export const ListType = ({
@@ -76,6 +77,65 @@ export const ListType = ({
           <Input placeholder={placeholder[0]} textCntVisible={textCntVisible} />
         )}
         {type === 'twoRegister' && <Input placeholder={placeholder[1]} textCntVisible={textCntVisible} />}
+      </div>
+    </div>
+  );
+};
+
+export const ExhibitionInput = ({
+  type = 'oneRegister',
+  text,
+  required = true,
+  style,
+  placeholder,
+  description,
+}: Props) => {
+  return (
+    <div className={cx(listTypeStyle(type))}>
+      <div
+        className={css({
+          display: 'flex',
+          alignItems: 'center',
+          gap: '4px',
+        })}
+        style={style}
+      >
+        <Typography level='subtitle3' className={css({ color: 'grayscale.0' })}>
+          {text}
+        </Typography>
+        <Typography
+          level='paragraph2'
+          className={css({
+            color: required ? 'error.500' : 'grayscale.600',
+          })}
+        >
+          {required ? '*' : '(선택)'}
+        </Typography>
+      </div>
+      {description && (
+        <Typography
+          level='paragraph3'
+          className={css({
+            color: 'grayscale.600',
+            mb: '-2px',
+          })}
+        >
+          {description}
+        </Typography>
+      )}
+      <div
+        className={css({
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '12px',
+        })}
+      >
+        <Typography level='paragraph2' className={css({ color: 'grayscale.300' })}>
+          {text}
+        </Typography>
+        <Input placeholder={placeholder[0]} textCntVisible={false} />
+        <Input placeholder={placeholder[1]} textCntVisible={false} />
+        {/* 버튼 */}
       </div>
     </div>
   );
