@@ -3,9 +3,13 @@ import { listTypeStyle } from './list-type.styles';
 import { css, cx } from '@/styled-system/css';
 import { Typography } from '../typography';
 import { Input } from '../input';
+import { InputFat } from '../input/input';
+
+type InputType = 'thin' | 'fat';
 
 interface Props {
-  type: string;
+  inputType?: InputType;
+  type?: string;
   text: string;
   style?: CSSProperties;
   required: boolean;
@@ -15,6 +19,7 @@ interface Props {
 }
 
 export const ListType = ({
+  inputType = 'thin',
   type = 'oneRegister',
   text,
   required = true,
@@ -65,8 +70,12 @@ export const ListType = ({
           width: '100%',
         })}
       >
-        <Input placeholder={placeholder[0]} textCntVisible={textCntVisible}></Input>
-        {type === 'twoRegister' && <Input placeholder={placeholder[1]} textCntVisible={textCntVisible}></Input>}
+        {inputType === 'fat' ? (
+          <InputFat placeholder={placeholder[0]} textCntVisible={textCntVisible} />
+        ) : (
+          <Input placeholder={placeholder[0]} textCntVisible={textCntVisible} />
+        )}
+        {type === 'twoRegister' && <Input placeholder={placeholder[1]} textCntVisible={textCntVisible} />}
       </div>
     </div>
   );

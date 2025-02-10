@@ -29,3 +29,28 @@ export const inputStyle = cva({
     },
   },
 });
+
+export const inputFatStyle = cva({
+  base: {
+    display: 'flex',
+    alignItems: 'flex-start',
+    resize: 'none',
+    height: '220px',
+    padding: '16px',
+    gap: '8px',
+    borderRadius: '6px',
+    bg: 'grayscale.800',
+    color: 'grayscale.0',
+    ...input_paragraph_style,
+    _placeholder: {
+      color: 'grayscale.600',
+    },
+    _focus: {
+      outline: 'none',
+      border: 'solid',
+      borderWidth: '1.5px',
+      borderColor: 'grayscale.600',
+      caretColor: 'grayscale.0',
+    },
+  },
+});
