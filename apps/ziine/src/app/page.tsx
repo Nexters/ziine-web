@@ -1,5 +1,6 @@
 'use client';
 
+import { css } from '@/styled-system/css';
 import { ArtWorkPage } from '@/views';
 import { GlobalNavBar } from '@/widgets';
 import { useDetectNavType } from '@/widgets/global-nav-bar/hooks';
@@ -7,9 +8,9 @@ import { useDetectNavType } from '@/widgets/global-nav-bar/hooks';
 export default function Home() {
   const { isArtwork } = useDetectNavType();
   return (
-    <>
-      <GlobalNavBar />
+    <div className={css({ position: 'relative' })}>
+      <GlobalNavBar className={css({ zIndex: 1, position: 'sticky', top: 0 })} />
       {isArtwork ? <ArtWorkPage /> : <></>}
-    </>
+    </div>
   );
 }
