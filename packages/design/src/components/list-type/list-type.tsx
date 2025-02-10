@@ -10,14 +10,25 @@ interface Props {
   style?: CSSProperties;
   required: boolean;
   placeholder: string;
+  description?: string;
+  textCntVisible?: boolean;
 }
 
-export const ListType = ({ type = 'oneRegister', text, required = true, style, placeholder }: Props) => {
+export const ListType = ({
+  type = 'oneRegister',
+  text,
+  required = true,
+  style,
+  placeholder,
+  description,
+  textCntVisible = true,
+}: Props) => {
   return (
     <div className={cx(listTypeStyle(type))}>
       <div
         className={css({
           display: 'flex',
+          alignItems: 'center',
           gap: '4px',
         })}
         style={style}
@@ -34,7 +45,19 @@ export const ListType = ({ type = 'oneRegister', text, required = true, style, p
           {required ? '*' : '(선택)'}
         </Typography>
       </div>
-      <Input placeholder={placeholder}></Input>
+      {description && (
+        <Typography
+          level='paragraph3'
+          className={css({
+            color: 'grayscale.600',
+            mb: '-2px',
+          })}
+        >
+          {description}
+        </Typography>
+      )}
+
+      <Input placeholder={placeholder} textCntVisible={textCntVisible}></Input>
     </div>
   );
 };
