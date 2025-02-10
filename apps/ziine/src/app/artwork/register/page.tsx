@@ -1,4 +1,4 @@
-import { ImgButton, Typography, ListType, ExhibitionInput } from '@ziine/design';
+import { ImgButton, Typography, ListType, ExhibitionInput, ExhibitionIconInput } from '@ziine/design';
 import { css } from 'styled-system/css';
 
 const ArtworkRegisterPage = () => {
@@ -44,6 +44,13 @@ const ArtworkRegisterPage = () => {
         type={''}
       />
       <ExhibitionInput text={'전시 이력'} required={false} placeholder={['YYYY.MM', '전시 명']} />
+      <ExhibitionIconInput
+        text={'홍보 채널'}
+        required={false}
+        placeholder={['@인스타그램 아이디', '비핸스 등 웹사이트 링크']}
+        icons={['', '']}
+        description={'나와 내 작품을 홍보할 수 있는 채널이 있다면, 알려주세요.'}
+      />
       {/* drop down */}
     </div>
   );

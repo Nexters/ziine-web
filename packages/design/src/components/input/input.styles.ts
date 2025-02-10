@@ -54,3 +54,11 @@ export const inputFatStyle = cva({
     },
   },
 });
+
+export const container = cva({
+  base: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '12px',
+  },
+});

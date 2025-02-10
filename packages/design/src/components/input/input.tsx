@@ -1,5 +1,5 @@
 import { CSSProperties } from 'react';
-import { inputFatStyle, inputStyle } from './input.styles';
+import { inputFatStyle, inputStyle, container } from './input.styles';
 import { css, cx } from '@/styled-system/css';
 import { Typography } from '../typography';
 
@@ -32,6 +32,27 @@ export const InputFat = ({ placeholder, style, textCntVisible }: Props) => {
           00/00
         </Typography>
       )}
+    </div>
+  );
+};
+
+interface ImgInputProps {
+  placeholder: string[];
+  img: string[];
+}
+
+export const ImgInput = ({ placeholder, img }: ImgInputProps) => {
+  return (
+    <div className={cx(container())}>
+      <div className={cx(inputStyle())}>
+        <img src={img[0]}></img>
+        <input placeholder={placeholder[0]}></input>
+      </div>
+
+      <div className={cx(inputStyle())}>
+        <img src={img[1]}></img>
+        <input placeholder={placeholder[1]}></input>
+      </div>
     </div>
   );
 };

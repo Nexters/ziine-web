@@ -3,7 +3,7 @@ import { listTypeStyle } from './list-type.styles';
 import { css, cx } from '@/styled-system/css';
 import { Typography } from '../typography';
 import { Input } from '../input';
-import { InputFat } from '../input/input';
+import { ImgInput, InputFat } from '../input/input';
 
 type InputType = 'thin' | 'fat';
 
@@ -137,6 +137,52 @@ export const ExhibitionInput = ({
         <Input placeholder={placeholder[1]} textCntVisible={false} />
         {/* 버튼 */}
       </div>
+    </div>
+  );
+};
+
+interface IconInputProps {
+  text: string;
+  required: boolean;
+  placeholder: string[];
+  description: string;
+  icons: string[];
+}
+
+export const ExhibitionIconInput = ({ text, required = true, placeholder, description, icons }: IconInputProps) => {
+  return (
+    <div className={cx(listTypeStyle())}>
+      <div
+        className={css({
+          display: 'flex',
+          alignItems: 'center',
+          gap: '4px',
+        })}
+      >
+        <Typography level='subtitle3' className={css({ color: 'grayscale.0' })}>
+          {text}
+        </Typography>
+        <Typography
+          level='paragraph2'
+          className={css({
+            color: required ? 'error.500' : 'grayscale.600',
+          })}
+        >
+          {required ? '*' : '(선택)'}
+        </Typography>
+      </div>
+      {description && (
+        <Typography
+          level='paragraph3'
+          className={css({
+            color: 'grayscale.600',
+            mb: '-2px',
+          })}
+        >
+          {description}
+        </Typography>
+      )}
+      <ImgInput img={icons} placeholder={placeholder} />
     </div>
   );
 };
