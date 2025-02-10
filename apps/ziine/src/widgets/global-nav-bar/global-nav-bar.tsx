@@ -1,15 +1,32 @@
 'use client';
 
-import { css } from '@/styled-system/css';
+import { css, cx } from '@/styled-system/css';
 import { TapButton } from '@ziine/design';
 import { useDetectNavType } from './hooks';
 import { ARTWORK, MAGAZINE } from './hooks/use-detect-nav-type';
+import { CSSProperties } from 'react';
 
-export const GlobalNavBar = () => {
+interface Props {
+  className?: string;
+  style?: CSSProperties;
+}
+
+export const GlobalNavBar = ({ className, style }: Props) => {
   const { isArtwork, setSearchParams } = useDetectNavType();
 
   return (
-    <div className={css({ display: 'flex', alignItems: 'center', justifyContent: 'center', paddingTop: '20px' })}>
+    <div
+      style={style}
+      className={cx(
+        css({
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '20px',
+        }),
+        className,
+      )}
+    >
       <TapButton
         selected={isArtwork}
         text='Artworks'
