@@ -68,7 +68,7 @@ export const ArtImageCard = ({ profileImageUrl, profileName, title, imageUrl, cl
           textOverflow: 'ellipsis',
           color: 'grayscale.0',
           WebkitLineClamp: 2,
-          bg: 'background: linear-gradient(180deg, rgba(0, 0, 0, 0.00) 0%, rgba(0, 0, 0, 0.50) 100%)',
+          bg: 'linear-gradient(180deg, rgba(0, 0, 0, 0.00) 0%, rgba(0, 0, 0, 0.50) 100%)',
         })}
       >
         <Typography

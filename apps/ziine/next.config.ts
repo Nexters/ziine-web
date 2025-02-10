@@ -4,6 +4,10 @@ const nextConfig: NextConfig = {
   env: {
     API_URL: process.env.API_URL,
   },
+  images: {
+    formats: ['image/avif', 'image/webp'],
+    domains: [],
+  },
 };
 
 export default nextConfig;

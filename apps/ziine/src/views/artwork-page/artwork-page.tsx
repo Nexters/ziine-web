@@ -17,13 +17,24 @@ export const ArtWorkPage = () => {
   );
 };
 
+const gridLayout = css({
+  display: 'grid',
+  gridTemplateColumns: '1fr',
+  gap: '16px',
+  padding: '16px 40px',
+
+  '@media (min-width: 900px)': {
+    gridTemplateColumns: '1fr 1fr',
+  },
+});
+
 const ArtworkList = () => {
   const {
     data: { artworks },
   } = useSuspenseArtworksQuery();
 
   return (
-    <div className={css({ gap: '16px' })}>
+    <div className={gridLayout}>
       {artworks.map(({ artist: { name, profileImageUrl }, title, imageUrl }) => (
         <ArtImageCard
           key={title + imageUrl}

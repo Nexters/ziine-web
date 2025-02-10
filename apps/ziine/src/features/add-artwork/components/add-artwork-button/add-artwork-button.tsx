@@ -1,7 +1,5 @@
-'use client';
-
 import { css, cx } from '@/styled-system/css';
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import React, { CSSProperties } from 'react';
 
 interface Props {
@@ -10,12 +8,9 @@ interface Props {
 }
 
 export const AddArtworkButton = ({ className, style }: Props) => {
-  const router = useRouter();
-  const onClick = () => router.push('/artwork/register');
-
   return (
-    <button
-      onClick={onClick}
+    <Link
+      href='/artwork/register'
       style={style}
       className={cx(
         css({
@@ -31,6 +26,6 @@ export const AddArtworkButton = ({ className, style }: Props) => {
         }),
         className,
       )}
-    ></button>
+    ></Link>
   );
 };
