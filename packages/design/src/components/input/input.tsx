@@ -1,5 +1,5 @@
 import { CSSProperties } from 'react';
-import { inputFatStyle, inputStyle, container } from './input.styles';
+import { inputFatStyle, inputStyle, container, dropdownStyle, dropdownContainer } from './input.styles';
 import { css, cx } from '@/styled-system/css';
 import { Typography } from '../typography';
 
@@ -53,6 +53,24 @@ export const ImgInput = ({ placeholder, img }: ImgInputProps) => {
         <img src={img[1]}></img>
         <input placeholder={placeholder[1]}></input>
       </div>
+    </div>
+  );
+};
+
+interface DropdownProps {
+  placeholder: string;
+  options: string[];
+}
+
+export const DropDownInput = ({ placeholder, options }: DropdownProps) => {
+  return (
+    <div className={cx(dropdownContainer())}>
+      <input placeholder={placeholder} className={cx(inputStyle())}></input>
+      <select className={cx(dropdownStyle())}>
+        <option value='option1'>{options[0]}</option>
+        <option value='option2'>{options[1]}</option>
+        <option value='option3'>{options[2]}</option>
+      </select>
     </div>
   );
 };

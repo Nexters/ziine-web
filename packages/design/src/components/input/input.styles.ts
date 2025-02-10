@@ -62,3 +62,34 @@ export const container = cva({
     gap: '12px',
   },
 });
+
+const dropdown_paragraph_style = {
+  fontSize: '14px',
+  fontWeight: '500',
+  lineHeight: '160%',
+  letterSpacing: '0%',
+};
+
+export const dropdownContainer = cva({
+  base: {
+    display: 'flex',
+    gap: '11px',
+  },
+});
+
+export const dropdownStyle = cva({
+  base: {
+    display: 'flex',
+    width: '136px',
+    height: '50px',
+    padding: '16px 12px 16px 16px',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    border: 'solid',
+    borderWidth: '1.5px',
+    borderColor: 'grayscale.700',
+    borderRadius: '6px',
+    bg: 'grayscale.800',
+    ...dropdown_paragraph_style,
+  },
+});

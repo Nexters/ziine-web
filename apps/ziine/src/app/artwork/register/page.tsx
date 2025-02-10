@@ -1,4 +1,4 @@
-import { ImgButton, Typography, ListType, ExhibitionInput, ExhibitionIconInput } from '@ziine/design';
+import { ImgButton, Typography, ListType, ExhibitionInput, ExhibitionIconInput, DropDownInput } from '@ziine/design';
 import { css } from 'styled-system/css';
 
 const ArtworkRegisterPage = () => {
@@ -51,7 +51,7 @@ const ArtworkRegisterPage = () => {
         icons={['', '']}
         description={'나와 내 작품을 홍보할 수 있는 채널이 있다면, 알려주세요.'}
       />
-      {/* drop down */}
+      <DropDownInput placeholder={'이메일'} options={['옵션1', '옵션2', '옵션3']} />
     </div>
   );
 };
