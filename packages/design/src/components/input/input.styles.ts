@@ -13,7 +13,6 @@ export const inputStyle = cva({
     height: '50px',
     padding: '16px',
     gap: '8px',
-    alignSelf: 'stretch',
     borderRadius: '6px',
     bg: 'grayscale.800',
     color: 'grayscale.0',

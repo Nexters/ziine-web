@@ -9,7 +9,7 @@ interface Props {
   text: string;
   style?: CSSProperties;
   required: boolean;
-  placeholder: string;
+  placeholder: string[];
   description?: string;
   textCntVisible?: boolean;
 }
@@ -57,7 +57,17 @@ export const ListType = ({
         </Typography>
       )}
 
-      <Input placeholder={placeholder} textCntVisible={textCntVisible}></Input>
+      <div
+        className={css({
+          display: 'grid',
+          gap: '8px',
+          gridTemplateColumns: type === 'twoRegister' ? '1fr 1fr' : '1fr',
+          width: '100%',
+        })}
+      >
+        <Input placeholder={placeholder[0]} textCntVisible={textCntVisible}></Input>
+        {type === 'twoRegister' && <Input placeholder={placeholder[1]} textCntVisible={textCntVisible}></Input>}
+      </div>
     </div>
   );
 };
