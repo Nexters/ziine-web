@@ -74,6 +74,7 @@ export const dropdownContainer = cva({
   base: {
     display: 'flex',
     gap: '11px',
+    alignItems: 'center',
   },
 });
 
@@ -91,5 +92,7 @@ export const dropdownStyle = cva({
     borderRadius: '6px',
     bg: 'grayscale.800',
     ...dropdown_paragraph_style,
+    color: 'grayscale.600',
+    outline: 'none',
   },
 });

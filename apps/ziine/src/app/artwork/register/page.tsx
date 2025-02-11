@@ -51,7 +51,15 @@ const ArtworkRegisterPage = () => {
         icons={['', '']}
         description={'나와 내 작품을 홍보할 수 있는 채널이 있다면, 알려주세요.'}
       />
-      <DropDownInput placeholder={'이메일'} options={['옵션1', '옵션2', '옵션3']} />
+      <DropDownInput
+        placeholder={['이메일']}
+        options={['직접 입력', '옵션1', '옵션2', '옵션3']}
+        text={'이메일'}
+        description={
+          '이메일 주소를 기입하시면, 심사 통과 여부를 메일로 알려드려요.\n 이메일 주소는 공개되지 않으니, 안심하고 작성하세요.'
+        }
+        required={false}
+      />
     </div>
   );
 };

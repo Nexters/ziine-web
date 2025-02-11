@@ -3,7 +3,7 @@ import { listTypeStyle } from './list-type.styles';
 import { css, cx } from '@/styled-system/css';
 import { Typography } from '../typography';
 import { Input } from '../input';
-import { ImgInput, InputFat } from '../input/input';
+import { DropDownList, ImgInput, InputFat } from '../input/input';
 
 type InputType = 'thin' | 'fat';
 
@@ -183,6 +183,52 @@ export const ExhibitionIconInput = ({ text, required = true, placeholder, descri
         </Typography>
       )}
       <ImgInput img={icons} placeholder={placeholder} />
+    </div>
+  );
+};
+
+interface DropdownProps {
+  placeholder: string[];
+  options: string[];
+  text: string;
+  required: boolean;
+  description?: string;
+}
+
+export const DropDownInput = ({ text, required = true, placeholder, description, options }: DropdownProps) => {
+  return (
+    <div className={cx(listTypeStyle())}>
+      <div
+        className={css({
+          display: 'flex',
+          alignItems: 'center',
+          gap: '4px',
+        })}
+      >
+        <Typography level='subtitle3' className={css({ color: 'grayscale.0' })}>
+          {text}
+        </Typography>
+        <Typography
+          level='paragraph2'
+          className={css({
+            color: required ? 'error.500' : 'grayscale.600',
+          })}
+        >
+          {required ? '*' : '(선택)'}
+        </Typography>
+      </div>
+      {description && (
+        <Typography
+          level='paragraph3'
+          className={css({
+            color: 'grayscale.600',
+            mb: '-2px',
+          })}
+        >
+          {description}
+        </Typography>
+      )}
+      <DropDownList options={options} placeholder={placeholder[0]} />
     </div>
   );
 };

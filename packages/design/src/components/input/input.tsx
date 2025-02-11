@@ -62,14 +62,17 @@ interface DropdownProps {
   options: string[];
 }
 
-export const DropDownInput = ({ placeholder, options }: DropdownProps) => {
+export const DropDownList = ({ placeholder, options }: DropdownProps) => {
   return (
     <div className={cx(dropdownContainer())}>
-      <input placeholder={placeholder} className={cx(inputStyle())}></input>
+      <input placeholder={placeholder} className={cx(inputStyle())} style={{ flex: 1 }}></input>
       <select className={cx(dropdownStyle())}>
-        <option value='option1'>{options[0]}</option>
-        <option value='option2'>{options[1]}</option>
-        <option value='option3'>{options[2]}</option>
+        <option value='' disabled selected hidden>
+          {options[0]}
+        </option>
+        <option value='option1'>{options[1]}</option>
+        <option value='option2'>{options[2]}</option>
+        <option value='option3'>{options[3]}</option>
       </select>
     </div>
   );
