@@ -1,5 +1,5 @@
 import { cx } from '@/styled-system/css';
-import { buttonStyle } from './button.styles';
+import { buttonStyle, smallBtnStyle } from './button.styles';
 
 interface ButtonProps {
   text: string;
@@ -14,4 +14,13 @@ export const Button = ({ text, type = 'main', status = 'default', disabled = fal
       {text}
     </button>
   );
+};
+
+interface SmallBtnProps {
+  text: string;
+  type?: 'filled' | 'outlined';
+}
+
+export const SmallButton = ({ text, type = 'filled' }: SmallBtnProps) => {
+  return <button className={cx(smallBtnStyle({ type }))}>{text}</button>;
 };

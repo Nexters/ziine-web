@@ -7,12 +7,22 @@ import {
   DropDownInput,
   Divider,
   Button,
+  SmallButton,
 } from '@ziine/design';
 import { css } from 'styled-system/css';
 
 const ArtworkRegisterPage = () => {
   return (
-    <div className={css({ display: 'flex', flexDirection: 'column', gap: '40px', maxWidth: '900px', width: 'screen' })}>
+    <div
+      className={css({
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '40px',
+        maxWidth: '900px',
+        width: 'screen',
+        mb: '40px',
+      })}
+    >
       <div className={css({ display: 'flex', flexDirection: 'column', gap: '12px' })}>
         <ImgButton text='이미지 업로드' />
         <Typography level='paragraph4' className={css({ color: 'grayscale.600' })}>
@@ -58,6 +68,7 @@ const ArtworkRegisterPage = () => {
         placeholder={['YYYY.MM', '전시 명']}
         description={'과거 전시했던 개인전 및 단체전의 일자, 전시 명을 작성해 주세요.'}
       />
+      <SmallButton text='추가하기' type='outlined' />
       <ExhibitionIconInput
         text={'홍보 채널'}
         required={false}

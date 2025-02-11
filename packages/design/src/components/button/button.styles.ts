@@ -61,3 +61,37 @@ export const buttonStyle = cva({
     },
   },
 });
+
+export const smallBtnStyle = cva({
+  defaultVariants: {
+    type: 'filled',
+  },
+  base: {
+    display: 'flex',
+    padding: '12px 16px',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: '8px',
+    borderRadius: '6px',
+    color: 'grayscale.0',
+  },
+  variants: {
+    type: {
+      filled: {
+        bg: 'grayscale.700',
+        _hover: {
+          bg: 'grayscale.600',
+        },
+      },
+      outlined: {
+        bg: 'transparent',
+        border: 'solid',
+        borderWidth: '1.5px',
+        borderColor: 'grayscale.700',
+        _hover: {
+          bg: 'grayscale.800',
+        },
+      },
+    },
+  },
+});
