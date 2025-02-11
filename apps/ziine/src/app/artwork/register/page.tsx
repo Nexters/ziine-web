@@ -6,6 +6,7 @@ import {
   ExhibitionIconInput,
   DropDownInput,
   Divider,
+  Button,
 } from '@ziine/design';
 import { css } from 'styled-system/css';
 
@@ -74,6 +75,7 @@ const ArtworkRegisterPage = () => {
         }
         required={false}
       />
+      <Button text='등록 신청하기' />
     </div>
   );
 };
