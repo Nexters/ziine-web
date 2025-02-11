@@ -6,3 +6,4 @@ export { DropDownInput } from './list-type';
 export { ListType } from './list-type';
 export { ExhibitionInput } from './list-type';
 export { ExhibitionIconInput } from './list-type';
+export { Divider } from './divider';

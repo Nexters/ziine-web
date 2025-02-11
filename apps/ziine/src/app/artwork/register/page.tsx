@@ -1,4 +1,12 @@
-import { ImgButton, Typography, ListType, ExhibitionInput, ExhibitionIconInput, DropDownInput } from '@ziine/design';
+import {
+  ImgButton,
+  Typography,
+  ListType,
+  ExhibitionInput,
+  ExhibitionIconInput,
+  DropDownInput,
+  Divider,
+} from '@ziine/design';
 import { css } from 'styled-system/css';
 
 const ArtworkRegisterPage = () => {
@@ -27,7 +35,7 @@ const ArtworkRegisterPage = () => {
         placeholder={['ex. 작품에 담긴 의미 혹은 사용된 기법 설명']}
         textCntVisible={false}
       />
-      {/* divider */}
+      <Divider />
       <ListType
         text={'작가 정보'}
         required={false}
@@ -43,7 +51,12 @@ const ArtworkRegisterPage = () => {
         description='공개하고자 하는 학교 이름과 학과 정보를 해쉬태그 형태로 기입해 주세요.'
         type={''}
       />
-      <ExhibitionInput text={'전시 이력'} required={false} placeholder={['YYYY.MM', '전시 명']} />
+      <ExhibitionInput
+        text={'전시 이력'}
+        required={false}
+        placeholder={['YYYY.MM', '전시 명']}
+        description={'과거 전시했던 개인전 및 단체전의 일자, 전시 명을 작성해 주세요.'}
+      />
       <ExhibitionIconInput
         text={'홍보 채널'}
         required={false}
@@ -51,6 +64,7 @@ const ArtworkRegisterPage = () => {
         icons={['', '']}
         description={'나와 내 작품을 홍보할 수 있는 채널이 있다면, 알려주세요.'}
       />
+      <Divider />
       <DropDownInput
         placeholder={['이메일']}
         options={['직접 입력', '옵션1', '옵션2', '옵션3']}
