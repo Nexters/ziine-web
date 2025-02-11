@@ -1,128 +1,124 @@
-import { CSSProperties } from 'react';
 import { listTypeStyle } from './list-type.styles';
 import { css, cx } from '@/styled-system/css';
 import { Typography } from '../typography';
 import { Input } from '../input';
 import { DropDownList, ImgInput, InputFat } from '../input/input';
+import { TitleDescriptionGroup } from './title-description-group';
 
 type InputType = 'thin' | 'fat';
+type EventType = React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>;
 
 interface Props {
   inputType?: InputType;
-  type?: string;
   text: string;
-  style?: CSSProperties;
   required: boolean;
   placeholder: string[];
   description?: string;
   textCntVisible?: boolean;
-  icons?: string[];
+  value: string;
+  onChange: (e: EventType) => void;
 }
 
-export const ListType = ({
+export const OneRegisterArea = ({
   inputType = 'thin',
-  type = 'oneRegister',
   text,
   required = true,
-  style,
   placeholder,
   description,
   textCntVisible = true,
+  value,
+  onChange,
 }: Props) => {
   return (
-    <div className={cx(listTypeStyle(type))}>
-      <div
-        className={css({
-          display: 'flex',
-          alignItems: 'center',
-          gap: '4px',
-        })}
-        style={style}
-      >
-        <Typography level='subtitle3' className={css({ color: 'grayscale.0' })}>
-          {text}
-        </Typography>
-        <Typography
-          level='paragraph2'
-          className={css({
-            color: required ? 'error.500' : 'grayscale.600',
-          })}
-        >
-          {required ? '*' : '(선택)'}
-        </Typography>
-      </div>
-      {description && (
-        <Typography
-          level='paragraph3'
-          className={css({
-            color: 'grayscale.600',
-            mb: '-2px',
-          })}
-        >
-          {description}
-        </Typography>
-      )}
+    <div className={cx(listTypeStyle())}>
+      <TitleDescriptionGroup text={text} required={required} description={description!} />
 
       <div
         className={css({
           display: 'grid',
           gap: '8px',
-          gridTemplateColumns: type === 'twoRegister' ? '1fr 1fr' : '1fr',
+          gridTemplateColumns: '1fr',
           width: '100%',
         })}
       >
         {inputType === 'fat' ? (
-          <InputFat placeholder={placeholder[0]} textCntVisible={textCntVisible} />
+          <InputFat placeholder={placeholder[0]} textCntVisible={textCntVisible} value={value} onChange={onChange} />
         ) : (
-          <Input placeholder={placeholder[0]} textCntVisible={textCntVisible} />
+          <Input placeholder={placeholder[0]} textCntVisible={textCntVisible} value={value} onChange={onChange} />
         )}
-        {type === 'twoRegister' && <Input placeholder={placeholder[1]} textCntVisible={textCntVisible} />}
       </div>
     </div>
   );
 };
 
-export const ExhibitionInput = ({
-  type = 'oneRegister',
+interface TwoRegisterAreaProps {
+  text: string;
+  required: boolean;
+  placeholder: string[];
+  description?: string;
+  textCntVisible?: boolean;
+  value: string[];
+  onWidthChange: (e: EventType) => void;
+  onHeightChange: (e: EventType) => void;
+}
+
+export const TwoRegisterArea = ({
   text,
   required = true,
-  style,
   placeholder,
   description,
-}: Props) => {
+  textCntVisible = true,
+  value,
+  onWidthChange,
+  onHeightChange,
+}: TwoRegisterAreaProps) => {
   return (
-    <div className={cx(listTypeStyle(type))}>
+    <div className={cx(listTypeStyle())}>
+      <TitleDescriptionGroup text={text} required={required} description={description!} />
+
       <div
         className={css({
-          display: 'flex',
-          alignItems: 'center',
-          gap: '4px',
+          display: 'grid',
+          gap: '8px',
+          gridTemplateColumns: '1fr 1fr',
+          width: '100%',
         })}
-        style={style}
       >
-        <Typography level='subtitle3' className={css({ color: 'grayscale.0' })}>
-          {text}
-        </Typography>
-        <Typography
-          level='paragraph2'
-          className={css({
-            color: required ? 'error.500' : 'grayscale.600',
-          })}
-        >
-          {required ? '*' : '(선택)'}
-        </Typography>
+        <Input placeholder={placeholder[0]} textCntVisible={textCntVisible} value={value[0]} onChange={onWidthChange} />
+        <Input
+          placeholder={placeholder[1]}
+          textCntVisible={textCntVisible}
+          value={value[1]}
+          onChange={onHeightChange}
+        />
       </div>
-      {description && (
-        <Typography
-          level='paragraph3'
-          className={css({
-            color: 'grayscale.600',
-            mb: '-2px',
-          })}
-        >
-          {description}
-        </Typography>
-      )}
+    </div>
+  );
+};
+
+interface ExhibitionInputProps {
+  text: string;
+  required: boolean;
+  placeholder: string[];
+  description?: string;
+  textCntVisible?: boolean;
+  value: [string, string];
+  onChangeDate: (e: EventType) => void;
+  onChangeName: (e: EventType) => void;
+}
+
+export const ExhibitionInput = ({
+  text,
+  required = true,
+  placeholder,
+  description,
+  value,
+  onChangeDate,
+  onChangeName,
+}: ExhibitionInputProps) => {
+  return (
+    <div className={cx(listTypeStyle())}>
+      <TitleDescriptionGroup text={text} required={required} description={description!} />
       <div
         className={css({
           display: 'flex',
@@ -133,8 +129,8 @@ export const ExhibitionInput = ({
         <Typography level='paragraph2' className={css({ color: 'grayscale.300' })}>
           {text}
         </Typography>
-        <Input placeholder={placeholder[0]} textCntVisible={false} />
-        <Input placeholder={placeholder[1]} textCntVisible={false} />
+        <Input placeholder={placeholder[0]} textCntVisible={false} value={value[0]} onChange={onChangeDate} />
+        <Input placeholder={placeholder[1]} textCntVisible={false} value={value[1]} onChange={onChangeName} />
         {/* 버튼 */}
       </div>
     </div>
@@ -152,36 +148,7 @@ interface IconInputProps {
 export const ExhibitionIconInput = ({ text, required = true, placeholder, description, icons }: IconInputProps) => {
   return (
     <div className={cx(listTypeStyle())}>
-      <div
-        className={css({
-          display: 'flex',
-          alignItems: 'center',
-          gap: '4px',
-        })}
-      >
-        <Typography level='subtitle3' className={css({ color: 'grayscale.0' })}>
-          {text}
-        </Typography>
-        <Typography
-          level='paragraph2'
-          className={css({
-            color: required ? 'error.500' : 'grayscale.600',
-          })}
-        >
-          {required ? '*' : '(선택)'}
-        </Typography>
-      </div>
-      {description && (
-        <Typography
-          level='paragraph3'
-          className={css({
-            color: 'grayscale.600',
-            mb: '-2px',
-          })}
-        >
-          {description}
-        </Typography>
-      )}
+      <TitleDescriptionGroup text={text} required={required} description={description!} />
       <ImgInput img={icons} placeholder={placeholder} />
     </div>
   );
@@ -198,36 +165,7 @@ interface DropdownProps {
 export const DropDownInput = ({ text, required = true, placeholder, description, options }: DropdownProps) => {
   return (
     <div className={cx(listTypeStyle())}>
-      <div
-        className={css({
-          display: 'flex',
-          alignItems: 'center',
-          gap: '4px',
-        })}
-      >
-        <Typography level='subtitle3' className={css({ color: 'grayscale.0' })}>
-          {text}
-        </Typography>
-        <Typography
-          level='paragraph2'
-          className={css({
-            color: required ? 'error.500' : 'grayscale.600',
-          })}
-        >
-          {required ? '*' : '(선택)'}
-        </Typography>
-      </div>
-      {description && (
-        <Typography
-          level='paragraph3'
-          className={css({
-            color: 'grayscale.600',
-            mb: '-2px',
-          })}
-        >
-          {description}
-        </Typography>
-      )}
+      <TitleDescriptionGroup text={text} required={required} description={description!} />
       <DropDownList options={options} placeholder={placeholder[0]} />
     </div>
   );

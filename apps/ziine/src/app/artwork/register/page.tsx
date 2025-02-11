@@ -1,7 +1,10 @@
+'use client';
+
 import {
   ImgButton,
   Typography,
-  ListType,
+  OneRegisterArea,
+  TwoRegisterArea,
   ExhibitionInput,
   ExhibitionIconInput,
   DropDownInput,
@@ -10,8 +13,47 @@ import {
   SmallButton,
 } from '@ziine/design';
 import { css } from 'styled-system/css';
+import { useState } from 'react';
+
+type EventType = React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>;
 
 const ArtworkRegisterPage = () => {
+  const [title, setTitle] = useState<string>('');
+  const [width, setWidth] = useState<string>('');
+  const [height, setHeight] = useState<string>('');
+  const [material, setMaterial] = useState<string>('');
+  const [artistInfo, setArtistInfo] = useState<string>('');
+  const [artistName, setArtistName] = useState<string>('');
+  const [education, setEducation] = useState<string>('');
+  const [exhibitionDate, setExhibitionDate] = useState<string>('');
+  const [exhibitionName, setExhibitionName] = useState<string>('');
+  const [promotionChannel, setPromotionChannel] = useState<string[]>(['', '']);
+  const [email, setEmail] = useState<string>('');
+
+  const handleTitleChange = (e: EventType) => setTitle(e.target.value);
+  const handleWidthChange = (e: EventType) => setWidth(e.target.value);
+  const handleHeightChange = (e: EventType) => setHeight(e.target.value);
+  const handleMaterialChange = (e: EventType) => setMaterial(e.target.value);
+  const handleArtistInfoChange = (e: EventType) => setArtistInfo(e.target.value);
+  const handleArtistNameChange = (e: EventType) => setArtistName(e.target.value);
+  const handleEducationChange = (e: EventType) => setEducation(e.target.value);
+
+  const handleExhibitionDateChange = () => {
+    setExhibitionDate(exhibitionDate);
+  };
+
+  const handleExhibitionNameChange = () => {
+    setExhibitionName(exhibitionName);
+  };
+
+  const handlePromotionChannelChange = (index: number, value: string) => {
+    const newPromotionChannel = [...promotionChannel];
+    newPromotionChannel[index] = value;
+    setPromotionChannel(newPromotionChannel);
+  };
+
+  const handleEmailChange = (e: EventType) => setEmail(e.target.value);
+
   return (
     <div
       className={css({
@@ -29,44 +71,65 @@ const ArtworkRegisterPage = () => {
           *작품 이미지는 한 장만 업로드 가능합니다.
         </Typography>
       </div>
-      <ListType text={'제목'} required={true} placeholder={['작품 제목']} type={''} />
-      <ListType
-        type={'twoRegister'}
+      <OneRegisterArea
+        text={'제목'}
+        required={true}
+        placeholder={['작품 제목']}
+        value={title}
+        onChange={handleTitleChange}
+      />
+      <TwoRegisterArea
         text='텍스트'
         required={true}
         placeholder={['가로 사이즈', '세로 사이즈']}
         description='디지털 아트의 경우에는 픽셀을 cm 단위로 변환하여 작성해 주세요.'
         textCntVisible={false}
+        value={[width, height]}
+        onWidthChange={handleWidthChange}
+        onHeightChange={handleHeightChange}
       />
-      <ListType text={'재료'} required={true} placeholder={['ex. 캔버스에 유화']} type={''} />
-      <ListType
+      <OneRegisterArea
+        text={'재료'}
+        required={true}
+        placeholder={['ex. 캔버스에 유화']}
+        value={material}
+        onChange={handleMaterialChange}
+      />
+      <OneRegisterArea
         inputType={'fat'}
         text={'작가 상세 정보'}
         required={false}
         placeholder={['ex. 작품에 담긴 의미 혹은 사용된 기법 설명']}
         textCntVisible={false}
+        value={artistInfo}
+        onChange={handleArtistInfoChange}
       />
       <Divider />
-      <ListType
+      <OneRegisterArea
         text={'작가 정보'}
         required={false}
         placeholder={['작가 이름']}
         description='본인을 들어낼 수 있는 설명이나 닉네임을 작성해 주세요.'
         textCntVisible={false}
-        type={''}
+        value={artistName}
+        onChange={handleArtistNameChange}
       />
-      <ListType
+      <OneRegisterArea
         text={'학력'}
         required={false}
         placeholder={['학력']}
         description='공개하고자 하는 학교 이름과 학과 정보를 해쉬태그 형태로 기입해 주세요.'
-        type={''}
+        value={education}
+        onChange={handleEducationChange}
       />
       <ExhibitionInput
         text={'전시 이력'}
         required={false}
         placeholder={['YYYY.MM', '전시 명']}
         description={'과거 전시했던 개인전 및 단체전의 일자, 전시 명을 작성해 주세요.'}
+        value={[exhibitionDate, exhibitionName]}
+        onChangeDate={handleExhibitionDateChange}
+        onChangeName={handleExhibitionNameChange}
       />
       <SmallButton text='추가하기' type='outlined' />
       <ExhibitionIconInput

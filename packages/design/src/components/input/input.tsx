@@ -1,32 +1,44 @@
-import { CSSProperties } from 'react';
 import { inputFatStyle, inputStyle, container, dropdownStyle, dropdownContainer } from './input.styles';
 import { css, cx } from '@/styled-system/css';
 import { Typography } from '../typography';
 
-interface Props {
+interface InputProps {
   placeholder: string;
   textCntVisible: boolean;
-  style?: CSSProperties;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export const Input = ({ placeholder, style, textCntVisible }: Props) => {
+export const Input = ({ placeholder, textCntVisible, value, onChange }: InputProps) => {
   return (
     <div className={css({ display: 'flex', flexDirection: 'column', gap: '4px' })}>
-      <input type='text' className={cx(inputStyle())} placeholder={placeholder} style={style}></input>
+      <input
+        type='text'
+        className={cx(inputStyle())}
+        placeholder={placeholder}
+        value={value}
+        onChange={onChange}
+      ></input>
       {textCntVisible && (
         <Typography level='paragraph4' className={css({ color: 'grayscale.500', textAlign: 'end' })}>
-          00/00
+          {value?.length || 0}/00
         </Typography>
       )}
     </div>
   );
 };
 
-// input박스 크기 키워지면 input, 안되면 textarea로 변경하기
-export const InputFat = ({ placeholder, style, textCntVisible }: Props) => {
+interface TextAreaProps {
+  placeholder: string;
+  textCntVisible: boolean;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+}
+
+export const InputFat = ({ placeholder, textCntVisible, value, onChange }: TextAreaProps) => {
   return (
     <div className={css({ display: 'flex', flexDirection: 'column', gap: '4px' })}>
-      <textarea className={cx(inputFatStyle())} placeholder={placeholder} style={style} />
+      <textarea className={cx(inputFatStyle())} placeholder={placeholder} value={value} onChange={onChange} />
       {textCntVisible && (
         <Typography level='paragraph4' className={css({ color: 'grayscale.500', textAlign: 'end' })}>
           00/00
