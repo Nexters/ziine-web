@@ -51,19 +51,22 @@ export const InputFat = ({ placeholder, textCntVisible, value, onChange }: TextA
 interface ImgInputProps {
   placeholder: string[];
   img: string[];
+  value: string[];
+  onChangeInstagramId: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChangeLink: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export const ImgInput = ({ placeholder, img }: ImgInputProps) => {
+export const ImgInput = ({ placeholder, img, value, onChangeInstagramId, onChangeLink }: ImgInputProps) => {
   return (
     <div className={cx(container())}>
       <div className={cx(inputStyle())}>
         <img src={img[0]}></img>
-        <input placeholder={placeholder[0]}></input>
+        <input placeholder={placeholder[0]} value={value[0]} onChange={onChangeInstagramId}></input>
       </div>
 
       <div className={cx(inputStyle())}>
         <img src={img[1]}></img>
-        <input placeholder={placeholder[1]}></input>
+        <input placeholder={placeholder[1]} value={value[1]} onChange={onChangeLink}></input>
       </div>
     </div>
   );
@@ -72,13 +75,31 @@ export const ImgInput = ({ placeholder, img }: ImgInputProps) => {
 interface DropdownProps {
   placeholder: string;
   options: string[];
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  dropdownValue: string;
+  onChangeOption: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
-export const DropDownList = ({ placeholder, options }: DropdownProps) => {
+export const DropDownList = ({
+  placeholder,
+  options,
+  value,
+  onChange,
+  dropdownValue,
+  onChangeOption,
+}: DropdownProps) => {
   return (
     <div className={cx(dropdownContainer())}>
-      <input placeholder={placeholder} className={cx(inputStyle())} style={{ flex: 1 }}></input>
-      <select className={cx(dropdownStyle())} defaultValue={options[0]}>
+      <input
+        placeholder={placeholder}
+        className={cx(inputStyle())}
+        style={{ flex: 1 }}
+        value={value}
+        onChange={onChange}
+      ></input>
+      <select className={cx(dropdownStyle())} value={dropdownValue} onChange={onChangeOption}>
+        <option value=''>{options[0]}</option>
         <option value='option1'>{options[1]}</option>
         <option value='option2'>{options[2]}</option>
         <option value='option3'>{options[3]}</option>

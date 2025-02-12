@@ -19,8 +19,13 @@ export const Button = ({ text, type = 'main', status = 'default', disabled = fal
 interface SmallBtnProps {
   text: string;
   type?: 'filled' | 'outlined';
+  onClick: () => void;
 }
 
-export const SmallButton = ({ text, type = 'filled' }: SmallBtnProps) => {
-  return <button className={cx(smallBtnStyle({ type }))}>{text}</button>;
+export const SmallButton = ({ text, type = 'filled', onClick }: SmallBtnProps) => {
+  return (
+    <button className={cx(smallBtnStyle({ type }))} onClick={onClick}>
+      {text}
+    </button>
+  );
 };

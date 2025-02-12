@@ -5,6 +5,7 @@ export { Input } from './input';
 export { DropDownInput } from './list-type';
 export { OneRegisterArea } from './list-type';
 export { TwoRegisterArea } from './list-type';
+export { TitleDescriptionGroup } from './list-type';
 export { ExhibitionInput } from './list-type';
 export { ExhibitionIconInput } from './list-type';
 export { Divider } from './divider';

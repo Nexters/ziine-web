@@ -97,42 +97,42 @@ export const TwoRegisterArea = ({
 };
 
 interface ExhibitionInputProps {
-  text: string;
-  required: boolean;
   placeholder: string[];
-  description?: string;
-  textCntVisible?: boolean;
+  index: number;
   value: [string, string];
-  onChangeDate: (e: EventType) => void;
-  onChangeName: (e: EventType) => void;
+  onChangeDate: (value: string) => void;
+  onChangeName: (value: string) => void;
 }
 
-export const ExhibitionInput = ({
-  text,
-  required = true,
-  placeholder,
-  description,
-  value,
-  onChangeDate,
-  onChangeName,
-}: ExhibitionInputProps) => {
+export const ExhibitionInput = ({ index, placeholder, value, onChangeDate, onChangeName }: ExhibitionInputProps) => {
   return (
-    <div className={cx(listTypeStyle())}>
-      <TitleDescriptionGroup text={text} required={required} description={description!} />
-      <div
-        className={css({
+    <div
+      className={cx(
+        listTypeStyle(),
+        css({
           display: 'flex',
           flexDirection: 'column',
           gap: '12px',
-        })}
-      >
-        <Typography level='paragraph2' className={css({ color: 'grayscale.300' })}>
-          {text}
-        </Typography>
-        <Input placeholder={placeholder[0]} textCntVisible={false} value={value[0]} onChange={onChangeDate} />
-        <Input placeholder={placeholder[1]} textCntVisible={false} value={value[1]} onChange={onChangeName} />
-        {/* 버튼 */}
-      </div>
+          mt: '16px',
+        }),
+      )}
+    >
+      <Typography level='paragraph2' className={css({ color: 'grayscale.300' })}>
+        {`전시 ${index + 1}`}
+      </Typography>
+      <Input
+        placeholder={placeholder[0]}
+        textCntVisible={false}
+        value={value[0]}
+        onChange={(e) => onChangeDate(e.target.value)}
+      />
+      <Input
+        placeholder={placeholder[1]}
+        textCntVisible={false}
+        value={value[1]}
+        onChange={(e) => onChangeName(e.target.value)}
+      />
+      {/* 버튼 */}
     </div>
   );
 };
@@ -142,14 +142,32 @@ interface IconInputProps {
   required: boolean;
   placeholder: string[];
   description: string;
+  value: string[];
   icons: string[];
+  onChangeInstagramId: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChangeLink: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-export const ExhibitionIconInput = ({ text, required = true, placeholder, description, icons }: IconInputProps) => {
+export const ExhibitionIconInput = ({
+  text,
+  required = true,
+  placeholder,
+  description,
+  icons,
+  value,
+  onChangeInstagramId,
+  onChangeLink,
+}: IconInputProps) => {
   return (
     <div className={cx(listTypeStyle())}>
       <TitleDescriptionGroup text={text} required={required} description={description!} />
-      <ImgInput img={icons} placeholder={placeholder} />
+      <ImgInput
+        img={icons}
+        placeholder={placeholder}
+        value={value}
+        onChangeInstagramId={onChangeInstagramId}
+        onChangeLink={onChangeLink}
+      />
     </div>
   );
 };
@@ -160,13 +178,34 @@ interface DropdownProps {
   text: string;
   required: boolean;
   description?: string;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  dropdownValue: string;
+  onChangeOption: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
-export const DropDownInput = ({ text, required = true, placeholder, description, options }: DropdownProps) => {
+export const DropDownInput = ({
+  text,
+  required = true,
+  placeholder,
+  description,
+  options,
+  value,
+  onChange,
+  dropdownValue,
+  onChangeOption,
+}: DropdownProps) => {
   return (
     <div className={cx(listTypeStyle())}>
       <TitleDescriptionGroup text={text} required={required} description={description!} />
-      <DropDownList options={options} placeholder={placeholder[0]} />
+      <DropDownList
+        options={options}
+        placeholder={placeholder[0]}
+        value={value}
+        onChange={onChange}
+        dropdownValue={dropdownValue}
+        onChangeOption={onChangeOption}
+      />
     </div>
   );
 };

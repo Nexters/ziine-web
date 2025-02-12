@@ -34,7 +34,6 @@ export const TitleDescriptionGroup = ({ text, required = true, description }: Pr
           level='paragraph3'
           className={css({
             color: 'grayscale.600',
-            mb: '-2px',
           })}
         >
           {description}
