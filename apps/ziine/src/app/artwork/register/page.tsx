@@ -14,7 +14,7 @@ import {
   TitleDescriptionGroup,
 } from '@ziine/design';
 import { css } from 'styled-system/css';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { ArtworkFormItem, postArtworksForm } from '@/entities/artworks/apis/mutations';
 
 type EventType = React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>;
@@ -33,6 +33,15 @@ const ArtworkRegisterPage = () => {
   const [link, setLink] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [emailOption, setEmailOption] = useState<string>('');
+
+  const [isRegisterBtnDisabled, setIsRegisterBtnDisabled] = useState(false);
+
+  useEffect(() => {
+    // 모든 required 필드가 채워졌는지 확인
+    const allRequiredFilled = title.trim() !== '' && width > 0 && height > 0 && material.trim() !== '';
+
+    setIsRegisterBtnDisabled(!allRequiredFilled);
+  }, [title, width, height, material, artistName, instagramId, email]);
 
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -85,6 +94,10 @@ const ArtworkRegisterPage = () => {
 
   const handleEmailChange = (e: EventType) => setEmail(e.target.value);
   const handleEmailOptionChange = (e: ChangeEvent<HTMLSelectElement>) => setEmailOption(e.target.value);
+
+  const handleRegisterButtonClick = () => {
+    setIsRegisterBtnDisabled((prev) => !prev);
+  };
 
   const artworkFormData: ArtworkFormItem = {
     title: title,
@@ -228,7 +241,7 @@ const ArtworkRegisterPage = () => {
         dropdownValue={emailOption}
         onChangeOption={handleEmailOptionChange}
       />
-      <Button text='등록 신청하기' onClick={handleRegisterFormData} />
+      <Button text='등록 신청하기' onClick={handleRegisterFormData} disabled={isRegisterBtnDisabled} />
     </div>
   );
 };

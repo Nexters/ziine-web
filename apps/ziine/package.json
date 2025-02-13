@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "preinstall": "pnpm -F design build",
     "dev": "rm -rf .next && next dev --turbopack",
     "build": "next build",
     "start": "next start",
