@@ -15,6 +15,7 @@ const eslintConfig = [
   ...eslingConfig,
   ...compat.config({
     extends: ["next/core-web-vitals", "next/typescript"],
+    ignorePatterns: ["node_modules", "dist", "build", "styled-system"],
   }),
 ];
 
