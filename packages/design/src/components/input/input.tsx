@@ -5,7 +5,7 @@ import { Typography } from '../typography';
 interface InputProps {
   placeholder: string;
   textCntVisible: boolean;
-  value: string;
+  value: string | number;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -21,7 +21,7 @@ export const Input = ({ placeholder, textCntVisible, value, onChange }: InputPro
       ></input>
       {textCntVisible && (
         <Typography level='paragraph4' className={css({ color: 'grayscale.500', textAlign: 'end' })}>
-          {value?.length || 0}/00
+          {typeof value === 'string' ? value?.length : 0}/00
         </Typography>
       )}
     </div>

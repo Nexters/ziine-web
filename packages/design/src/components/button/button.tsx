@@ -6,11 +6,12 @@ interface ButtonProps {
   type?: 'main' | 'sub';
   status?: 'default' | 'loading';
   disabled?: boolean;
+  onClick: () => void;
 }
 
-export const Button = ({ text, type = 'main', status = 'default', disabled = false }: ButtonProps) => {
+export const Button = ({ text, type = 'main', status = 'default', disabled = false, onClick }: ButtonProps) => {
   return (
-    <button className={cx(buttonStyle({ type, status }))} disabled={disabled}>
+    <button className={cx(buttonStyle({ type, status }))} disabled={disabled} onClick={onClick}>
       {text}
     </button>
   );

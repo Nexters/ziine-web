@@ -8,7 +8,7 @@ const apiClient = ky.create({
     Accept: 'application/json',
     'Content-Type': 'application/json',
   },
-  credentials: 'include',
+  credentials: 'omit',
 });
 
 export default apiClient;

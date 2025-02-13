@@ -57,7 +57,7 @@ interface TwoRegisterAreaProps {
   placeholder: string[];
   description?: string;
   textCntVisible?: boolean;
-  value: string[];
+  value: number[];
   onWidthChange: (e: EventType) => void;
   onHeightChange: (e: EventType) => void;
 }

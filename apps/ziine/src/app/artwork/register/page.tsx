@@ -14,18 +14,17 @@ import {
   TitleDescriptionGroup,
 } from '@ziine/design';
 import { css } from 'styled-system/css';
-import { ChangeEvent, useEffect, useState } from 'react';
-import ky from 'ky';
-import { apiClient } from '@/shared/apis';
+import { ChangeEvent, useState } from 'react';
+import { ArtworkFormItem, postArtworksForm } from '@/entities/artworks/apis/mutations';
 
 type EventType = React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>;
 
 const ArtworkRegisterPage = () => {
   const [image, setImage] = useState<File | null>(null);
-  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [imagePreview, setImagePreview] = useState<string>('');
   const [title, setTitle] = useState<string>('');
-  const [width, setWidth] = useState<string>('');
-  const [height, setHeight] = useState<string>('');
+  const [width, setWidth] = useState<number>(0);
+  const [height, setHeight] = useState<number>(0);
   const [material, setMaterial] = useState<string>('');
   const [artistInfo, setArtistInfo] = useState<string>('');
   const [artistName, setArtistName] = useState<string>('');
@@ -49,8 +48,16 @@ const ArtworkRegisterPage = () => {
   };
 
   const handleTitleChange = (e: EventType) => setTitle(e.target.value);
-  const handleWidthChange = (e: EventType) => setWidth(e.target.value);
-  const handleHeightChange = (e: EventType) => setHeight(e.target.value);
+  const handleWidthChange = (e: EventType) => {
+    const value = e.target.value;
+    setWidth(parseInt(value));
+  };
+
+  const handleHeightChange = (e: EventType) => {
+    const value = e.target.value;
+    setHeight(parseInt(value));
+  };
+
   const handleMaterialChange = (e: EventType) => setMaterial(e.target.value);
   const handleArtistInfoChange = (e: EventType) => setArtistInfo(e.target.value);
   const handleArtistNameChange = (e: EventType) => setArtistName(e.target.value);
@@ -78,6 +85,37 @@ const ArtworkRegisterPage = () => {
 
   const handleEmailChange = (e: EventType) => setEmail(e.target.value);
   const handleEmailOptionChange = (e: ChangeEvent<HTMLSelectElement>) => setEmailOption(e.target.value);
+
+  const artworkFormData: ArtworkFormItem = {
+    title: title,
+    width: width,
+    height: height,
+    material: material,
+    artworkImageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSz7lfFTzOS1-oWBBCCzdjUAIkckPDMrfzhrw&s',
+    artistName: artistName,
+    description: artistInfo,
+    educations: [education],
+    // exhibitions: exhibitionHistory.map(([title, exhibitionDate]) => ({
+    //   title,
+    //   exhibitionDate: new Date(exhibitionDate),
+    // })),
+    contacts: [
+      {
+        type: 'INSTAGRAM',
+        value: instagramId,
+      },
+    ],
+    email: email,
+  };
+
+  const handleRegisterFormData = async () => {
+    try {
+      const response = await postArtworksForm(artworkFormData);
+      console.log('Artwork registered successfully:', response);
+    } catch (error) {
+      console.error('Failed to register artwork:', error);
+    }
+  };
 
   return (
     <div
@@ -190,7 +228,7 @@ const ArtworkRegisterPage = () => {
         dropdownValue={emailOption}
         onChangeOption={handleEmailOptionChange}
       />
-      <Button text='등록 신청하기' />
+      <Button text='등록 신청하기' onClick={handleRegisterFormData} />
     </div>
   );
 };
