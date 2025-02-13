@@ -23,7 +23,7 @@ export const imgButtonStyle = cva({
   variants: {
     feature: {
       upload: {
-        padding: '34px 18.5px',
+        //padding: '34px 18.5px',
         _hover: {
           bg: 'grayscale.700',
           border: 'solid',

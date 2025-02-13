@@ -14,7 +14,9 @@ import {
   TitleDescriptionGroup,
 } from '@ziine/design';
 import { css } from 'styled-system/css';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
+import ky from 'ky';
+import { apiClient } from '@/shared/apis';
 
 type EventType = React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>;
 
@@ -84,7 +86,7 @@ const ArtworkRegisterPage = () => {
         flexDirection: 'column',
         gap: '40px',
         maxWidth: '900px',
-        width: 'screen',
+        width: '100%',
         mb: '40px',
       })}
     >
