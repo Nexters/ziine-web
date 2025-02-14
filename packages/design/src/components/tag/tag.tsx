@@ -1,9 +1,8 @@
 import { ReactNode } from 'react';
-import { css } from '../styled-system/css';
+import { css } from '../../styled-system/css';
 export interface IButtonProps {
   children: ReactNode;
   variant?: 'primary' | 'secondary';
-  textOnly?: boolean
 }
 
 export const Tag = ({ children, variant = 'primary' }: IButtonProps) => {

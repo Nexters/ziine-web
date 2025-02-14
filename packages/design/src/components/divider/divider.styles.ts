@@ -1,4 +1,4 @@
-import { cva } from 'styled-system/css';
+import { cva, RecipeVariantProps } from 'styled-system/css';
 
 export const dividerStyle = cva({
   defaultVariants: {
@@ -18,3 +18,5 @@ export const dividerStyle = cva({
     },
   },
 });
+
+export type DividerStyleProps = NonNullable<RecipeVariantProps<typeof dividerStyle>>;
