@@ -17,3 +17,8 @@ export const getArtworks = async () => {
   const response = await apiClient.get<{ artworks: Array<ArtworkItem> }>('api/v1/artworks');
   return await response.json();
 };
+
+export const getClientSideArtworks = async () => {
+  const response = await apiClient.get<{ artworks: Array<ArtworkItem> }>('api/v1/artworks', { prefixUrl: '' });
+  return await response.json();
+};
