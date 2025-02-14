@@ -1,11 +1,8 @@
-'use client';
-
 import MagazineDetail from '@/widgets/magazine-detail/magazine-detail';
-import { useParams } from 'next/navigation';
 import { Suspense } from 'react';
 
-const MagazineWebViewDetailPage = () => {
-  const { id } = useParams();
+const MagazineWebViewDetailPage = ({ params }: { params: { id: string } }) => {
+  const { id } = params;
 
   return (
     <Suspense fallback={<div>Loading...</div>}>

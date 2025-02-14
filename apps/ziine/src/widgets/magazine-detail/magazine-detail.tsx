@@ -1,7 +1,30 @@
 import { getMagazineDetail } from '@/entities/magazine/apis/apis';
 import { BaseImage } from '@/shared/components';
-import { css } from '@/styled-system/css';
+import { css, cx } from '@/styled-system/css';
 import { Typography } from '@ziine/design';
+import ReactMarkdown from 'react-markdown';
+import rehypeHighlight from 'rehype-highlight';
+import rehypeRaw from 'rehype-raw';
+
+import React, { ComponentProps } from 'react';
+import { typographyStyle } from '@ziine/design';
+
+type MarkdownProps = ComponentProps<typeof ReactMarkdown>;
+
+export const markdownComponents: MarkdownProps['components'] = {
+  h1: (props) => <h1 className={typographyStyle({ level: 'heading1' })} {...props} />,
+  h2: (props) => <h2 className={typographyStyle({ level: 'heading2' })} {...props} />,
+  h3: (props) => <h3 className={typographyStyle({ level: 'heading3' })} {...props} />,
+  h4: (props) => <h4 className={typographyStyle({ level: 'heading4' })} {...props} />,
+  h5: (props) => <h5 className={typographyStyle({ level: 'heading5' })} {...props} />,
+  h6: (props) => <h6 className={typographyStyle({ level: 'subtitle1' })} {...props} />,
+  p: (props) => <p className={typographyStyle({ level: 'paragraph1' })} {...props} />,
+  a: (props) => <a className='custom-link' {...props} />,
+  ul: (props) => <ul className='custom-ul' {...props} />,
+  ol: (props) => <ol className='custom-ol' {...props} />,
+  li: (props) => <li className='custom-li' {...props} />,
+  blockquote: (props) => <blockquote className='custom-blockquote' {...props} />,
+};
 
 const MagazineDetail = async ({ id }: { id: number }) => {
   const { title, createdAt, thumbnailImageUrl, content } = await getMagazineDetail(id);
@@ -24,7 +47,8 @@ const MagazineDetail = async ({ id }: { id: number }) => {
       </Typography>
       <div className={css({ margin: '24px 0' })}>
         <BaseImage
-          fill
+          width={343}
+          height={197}
           src={thumbnailImageUrl}
           alt='매거진 썸네일'
           className={css({
@@ -36,8 +60,18 @@ const MagazineDetail = async ({ id }: { id: number }) => {
         />
       </div>
 
-      {/** 백엔드에서 데이터를 string으로 마크다운을 보낼거야. 이걸 렌더링해줘 */}
-      {content}
+      <ReactMarkdown
+        className={cx(
+          css({
+            fontFamily: 'body',
+            color: 'grayscale.0',
+          }),
+        )}
+        components={markdownComponents}
+        rehypePlugins={[rehypeHighlight, rehypeRaw]}
+      >
+        {content}
+      </ReactMarkdown>
     </div>
   );
 };
