@@ -1,8 +1,8 @@
 import MagazineDetail from '@/widgets/magazine-detail/magazine-detail';
 import { Suspense } from 'react';
 
-const MagazineWebViewDetailPage = ({ params }: { params: { id: string } }) => {
-  const { id } = params;
+const MagazineWebViewDetailPage = async ({ params }: { params: Promise<{ id: string }> }) => {
+  const { id } = await params;
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
