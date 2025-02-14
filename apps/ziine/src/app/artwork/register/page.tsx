@@ -23,8 +23,8 @@ const ArtworkRegisterPage = () => {
   const [image, setImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string>('');
   const [title, setTitle] = useState<string>('');
-  const [width, setWidth] = useState<number>(0);
-  const [height, setHeight] = useState<number>(0);
+  const [width, setWidth] = useState<string>('');
+  const [height, setHeight] = useState<string>('');
   const [material, setMaterial] = useState<string>('');
   const [artistInfo, setArtistInfo] = useState<string>('');
   const [artistName, setArtistName] = useState<string>('');
@@ -38,7 +38,7 @@ const ArtworkRegisterPage = () => {
 
   useEffect(() => {
     // 모든 required 필드가 채워졌는지 확인
-    const allRequiredFilled = title.trim() !== '' && width > 0 && height > 0 && material.trim() !== '';
+    const allRequiredFilled = title.trim() !== '' && Number(width) > 0 && Number(height) > 0 && material.trim() !== '';
 
     setIsRegisterBtnDisabled(!allRequiredFilled);
   }, [title, width, height, material, artistName, instagramId, email]);
@@ -59,12 +59,16 @@ const ArtworkRegisterPage = () => {
   const handleTitleChange = (e: EventType) => setTitle(e.target.value);
   const handleWidthChange = (e: EventType) => {
     const value = e.target.value;
-    setWidth(parseInt(value));
+    if (value === '' || !isNaN(Number(value))) {
+      setWidth(value);
+    }
   };
 
   const handleHeightChange = (e: EventType) => {
     const value = e.target.value;
-    setHeight(parseInt(value));
+    if (!isNaN(Number(value)) || value === '') {
+      setHeight(value);
+    }
   };
 
   const handleMaterialChange = (e: EventType) => setMaterial(e.target.value);
@@ -95,14 +99,10 @@ const ArtworkRegisterPage = () => {
   const handleEmailChange = (e: EventType) => setEmail(e.target.value);
   const handleEmailOptionChange = (e: ChangeEvent<HTMLSelectElement>) => setEmailOption(e.target.value);
 
-  const handleRegisterButtonClick = () => {
-    setIsRegisterBtnDisabled((prev) => !prev);
-  };
-
   const artworkFormData: ArtworkFormItem = {
     title: title,
-    width: width,
-    height: height,
+    width: Number(width),
+    height: Number(height),
     material: material,
     artworkImageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSz7lfFTzOS1-oWBBCCzdjUAIkckPDMrfzhrw&s',
     artistName: artistName,
@@ -160,7 +160,6 @@ const ArtworkRegisterPage = () => {
         required={true}
         placeholder={['가로 사이즈', '세로 사이즈']}
         description='디지털 아트의 경우에는 픽셀을 cm 단위로 변환하여 작성해 주세요.'
-        textCntVisible={false}
         value={[width, height]}
         onWidthChange={handleWidthChange}
         onHeightChange={handleHeightChange}

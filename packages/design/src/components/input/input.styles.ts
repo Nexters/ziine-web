@@ -10,8 +10,8 @@ const input_paragraph_style = {
 export const inputStyle = cva({
   base: {
     display: 'flex',
+    alignItems: 'center',
     height: '50px',
-    width: '100%',
     padding: '16px',
     gap: '8px',
     borderRadius: '6px',

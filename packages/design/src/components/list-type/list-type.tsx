@@ -2,7 +2,7 @@ import { listTypeStyle } from './list-type.styles';
 import { css, cx } from '@/styled-system/css';
 import { Typography } from '../typography';
 import { Input } from '../input';
-import { DropDownList, ImgInput, InputFat } from '../input/input';
+import { DimensionsInput, DropDownList, ImgInput, InputFat } from '../input/input';
 import { TitleDescriptionGroup } from './title-description-group';
 
 type InputType = 'thin' | 'fat';
@@ -57,7 +57,7 @@ interface TwoRegisterAreaProps {
   placeholder: string[];
   description?: string;
   textCntVisible?: boolean;
-  value: number[];
+  value: string[];
   onWidthChange: (e: EventType) => void;
   onHeightChange: (e: EventType) => void;
 }
@@ -67,7 +67,6 @@ export const TwoRegisterArea = ({
   required = true,
   placeholder,
   description,
-  textCntVisible = true,
   value,
   onWidthChange,
   onHeightChange,
@@ -78,19 +77,14 @@ export const TwoRegisterArea = ({
 
       <div
         className={css({
-          display: 'grid',
+          display: 'flex',
           gap: '8px',
-          gridTemplateColumns: '1fr 1fr',
           width: '100%',
+          //gridTemplateColumns: '1fr auto',
         })}
       >
-        <Input placeholder={placeholder[0]} textCntVisible={textCntVisible} value={value[0]} onChange={onWidthChange} />
-        <Input
-          placeholder={placeholder[1]}
-          textCntVisible={textCntVisible}
-          value={value[1]}
-          onChange={onHeightChange}
-        />
+        <DimensionsInput placeholder={placeholder[0]} value={value[0]} onChange={onWidthChange} />
+        <DimensionsInput placeholder={placeholder[1]} value={value[1]} onChange={onHeightChange} />
       </div>
     </div>
   );

@@ -1,11 +1,12 @@
 import { inputFatStyle, inputStyle, container, dropdownStyle, dropdownContainer } from './input.styles';
 import { css, cx } from '@/styled-system/css';
 import { Typography } from '../typography';
+import { ChangeEvent } from 'react';
 
 interface InputProps {
   placeholder: string;
   textCntVisible: boolean;
-  value: string | number;
+  value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -21,9 +22,35 @@ export const Input = ({ placeholder, textCntVisible, value, onChange }: InputPro
       ></input>
       {textCntVisible && (
         <Typography level='paragraph4' className={css({ color: 'grayscale.500', textAlign: 'end' })}>
-          {typeof value === 'string' ? value?.length : 0}/00
+          {value?.length}/00
         </Typography>
       )}
+    </div>
+  );
+};
+
+interface DimensionsInputProps {
+  placeholder: string;
+  value: string;
+  dimension?: string;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+}
+
+export const DimensionsInput = ({ placeholder, value, dimension = 'cm', onChange }: DimensionsInputProps) => {
+  return (
+    <div
+      className={cx(
+        inputStyle(),
+        css({
+          justifyContent: 'space-between',
+          flex: 1,
+        }),
+      )}
+    >
+      <input type='text' placeholder={placeholder} value={value} onChange={onChange} />
+      <Typography level='paragraph2' className={css({ color: 'grayscale.600' })}>
+        {dimension}
+      </Typography>
     </div>
   );
 };
