@@ -39,7 +39,7 @@ export interface ArtworkDetailInfo {
   artist: {
     id: number;
     name: string;
-    profilemImageUrl: string;
+    profileImageUrl: string;
     educations: Array<string>;
     exhibitions: Array<{
       title: string;

@@ -7,6 +7,7 @@ import rehypeHighlight from 'rehype-highlight';
 import rehypeRaw from 'rehype-raw';
 
 import React, { ComponentProps } from 'react';
+import { formatYYYYMMDDDate } from '@/shared/utils';
 import { typographyStyle } from '@ziine/design';
 
 type MarkdownProps = ComponentProps<typeof ReactMarkdown>;
@@ -29,11 +30,7 @@ export const markdownComponents: MarkdownProps['components'] = {
 const MagazineDetail = async ({ id }: { id: number }) => {
   const { title, createdAt, thumbnailImageUrl, content } = await getMagazineDetail(id);
 
-  const formattedCreatedAt = new Date(createdAt).toLocaleDateString('ko-KR', {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-  });
+  const formattedCreatedAt = formatYYYYMMDDDate(createdAt);
 
   return (
     <div className={css({ padding: '24px 16px' })}>
