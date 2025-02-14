@@ -29,3 +29,25 @@ export const postArtworksForm = async (data: ArtworkFormItem) => {
     throw error;
   }
 };
+
+interface ArtWorkImage {
+  presignedUrl: string;
+  file: File;
+}
+
+export const putArtworkImageToS3 = async (data: ArtWorkImage) => {
+  const response = await fetch(data.presignedUrl, {
+    method: 'PUT',
+    headers: {
+      'x-amz-meta-original-name': data.file.name,
+      'Content-Type': data.file.type,
+    },
+    body: data.file,
+  });
+
+  if (!response.ok) {
+    throw new Error('Failed to upload image to S3');
+  }
+
+  return response;
+};

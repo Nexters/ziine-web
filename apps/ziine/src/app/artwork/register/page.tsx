@@ -15,12 +15,12 @@ import {
 } from '@ziine/design';
 import { css } from 'styled-system/css';
 import { ChangeEvent, useEffect, useState } from 'react';
-import { ArtworkFormItem, postArtworksForm } from '@/entities/artworks/apis/mutations';
+import { ArtworkFormItem, postArtworksForm, putArtworkImageToS3 } from '@/entities/artworks/apis/mutations';
+import { getArtworksImageUrl } from '@/entities/artworks/apis/apis';
 
 type EventType = React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>;
 
 const ArtworkRegisterPage = () => {
-  const [image, setImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string>('');
   const [title, setTitle] = useState<string>('');
   const [width, setWidth] = useState<string>('');
@@ -37,22 +37,38 @@ const ArtworkRegisterPage = () => {
   const [isRegisterBtnDisabled, setIsRegisterBtnDisabled] = useState(false);
 
   useEffect(() => {
-    // 모든 required 필드가 채워졌는지 확인
     const allRequiredFilled = title.trim() !== '' && Number(width) > 0 && Number(height) > 0 && material.trim() !== '';
 
     setIsRegisterBtnDisabled(!allRequiredFilled);
   }, [title, width, height, material, artistName, instagramId, email]);
 
-  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const uploadImageToServer = async (file: File) => {
+    try {
+      const response = await getArtworksImageUrl([file.name]);
+      console.log('getArtworksImage successfully:', response);
+      return response.fileUrl;
+    } catch (err) {
+      console.error('Error uploadImageToServer: ', err);
+    }
+  };
+
+  const handleImageChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
 
     if (file) {
-      setImage(file);
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreview(reader.result as string);
-      };
-      reader.readAsDataURL(file);
+      try {
+        const imageUrl = await uploadImageToServer(file);
+
+        if (imageUrl) {
+          await putArtworkImageToS3({ presignedUrl: imageUrl.presignedUrlList[0].presignedUrl, file: file }).then(
+            () => {
+              setImagePreview(imageUrl.presignedUrlList[0].fileUrl);
+            },
+          );
+        }
+      } catch (error) {
+        console.error('Error uploading image: ', error);
+      }
     }
   };
 
@@ -142,7 +158,11 @@ const ArtworkRegisterPage = () => {
       })}
     >
       <div className={css({ display: 'flex', flexDirection: 'column', gap: '12px' })}>
-        <ImgButton text='이미지 업로드' onChange={handleImageChange} imagePreview={imagePreview} />
+        <ImgButton
+          text={imagePreview !== '' ? '이미지 바꾸기' : '이미지 업로드'}
+          onChange={handleImageChange}
+          imagePreview={imagePreview}
+        />
 
         <Typography level='paragraph4' className={css({ color: 'grayscale.600' })}>
           *작품 이미지는 한 장만 업로드 가능합니다.
