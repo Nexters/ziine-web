@@ -145,7 +145,7 @@ const ArtworkDetailPage = async ({ params }: { params: Promise<{ id: string }> }
                     {/** @todo 아이콘 */}
                   </div>
                   <Typography level='paragraph2' className={css({ color: 'grayscale.600' })}>
-                    {contact.type}
+                    {contact.value}
                   </Typography>
                 </div>
 
