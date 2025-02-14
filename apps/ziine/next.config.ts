@@ -6,7 +6,7 @@ const nextConfig: NextConfig = {
   },
   images: {
     formats: ['image/avif', 'image/webp'],
-    domains: ['user-images.githubusercontent.com', 'ziine.me', 'i.namu.wiki'],
+    domains: ['user-images.githubusercontent.com', 'ziine.me', 'i.namu.wiki', 'encrypted-tbn0.gstatic.com'],
   },
 };
 

@@ -12,5 +12,5 @@ export async function GET(request: NextRequest, { params }: { params: Promise<Pa
   const { id } = await params;
   const data = await getArtworkDetail(Number(id));
 
-  return NextResponse.json({ data });
+  return NextResponse.json(data);
 }
