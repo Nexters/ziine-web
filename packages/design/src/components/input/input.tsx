@@ -61,12 +61,22 @@ export const ImgInput = ({ placeholder, img, value, onChangeInstagramId, onChang
     <div className={cx(container())}>
       <div className={cx(inputStyle())}>
         <img src={img[0]}></img>
-        <input placeholder={placeholder[0]} value={value[0]} onChange={onChangeInstagramId}></input>
+        <input
+          placeholder={placeholder[0]}
+          value={value[0]}
+          onChange={onChangeInstagramId}
+          style={{ flex: 1, outline: 'none' }}
+        ></input>
       </div>
 
       <div className={cx(inputStyle())}>
         <img src={img[1]}></img>
-        <input placeholder={placeholder[1]} value={value[1]} onChange={onChangeLink}></input>
+        <input
+          placeholder={placeholder[1]}
+          value={value[1]}
+          onChange={onChangeLink}
+          style={{ flex: 1, outline: 'none' }}
+        ></input>
       </div>
     </div>
   );
