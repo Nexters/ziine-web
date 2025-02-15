@@ -279,7 +279,9 @@ const ArtworkRegisterPage = () => {
         dropdownIsOpen={isOpen}
       />
 
-      <Button text='등록 신청하기' onClick={handleRegisterFormData} disabled={isRegisterBtnDisabled} />
+      <Button onClick={handleRegisterFormData} disabled={isRegisterBtnDisabled}>
+        등록 신청하기
+      </Button>
     </div>
   );
 };

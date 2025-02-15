@@ -1,18 +1,21 @@
 import { cx } from '@/styled-system/css';
 import { buttonStyle, smallBtnStyle } from './button.styles';
+import { CSSProperties, ReactNode } from 'react';
 
 interface ButtonProps {
-  text: string;
+  children: ReactNode;
   type?: 'main' | 'sub';
   status?: 'default' | 'loading';
   disabled?: boolean;
   onClick: () => void;
+  className?: string;
+  style?: CSSProperties;
 }
 
-export const Button = ({ text, type = 'main', status = 'default', disabled = false, onClick }: ButtonProps) => {
+export const Button = ({ children, type = 'main', status = 'default', disabled = false, onClick, className, style }: ButtonProps) => {
   return (
-    <button className={cx(buttonStyle({ type, status }))} disabled={disabled} onClick={onClick}>
-      {text}
+    <button className={cx(buttonStyle({ type, status }), className)} disabled={disabled} onClick={onClick} style={style}>
+      {children}
     </button>
   );
 };

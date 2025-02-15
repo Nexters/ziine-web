@@ -11,7 +11,7 @@ interface Props {
 export const AddArtworkButton = ({ className, style }: Props) => {
   return (
     <Link
-      href='/artwork/register'
+      href='/artwork/guide'
       style={style}
       className={cx(
         css({
