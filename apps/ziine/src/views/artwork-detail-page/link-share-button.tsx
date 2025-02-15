@@ -13,12 +13,14 @@ interface Props {
   style?: CSSProperties;
 }
 
+const toastId = 'linkShareToast';
+
 export const LinkShareButton = ({ title, url, text, className, style }: Props) => {
   const onSuccess = () => {
-    toast.success(<ToastBox text='링크가 복사되었습니다.' />);
+    toast.success(<ToastBox text='링크가 복사되었습니다.' />, { id: toastId });
   };
   const onError = () => {
-    toast.error(<ToastBox text='링크 복사에 실패했습니다.' />);
+    toast.error(<ToastBox text='링크 복사에 실패했습니다.' />, { id: toastId });
   };
 
   return (

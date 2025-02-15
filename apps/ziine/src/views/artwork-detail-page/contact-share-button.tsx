@@ -6,6 +6,8 @@ import { Tag } from '@ziine/design';
 import { CSSProperties } from 'react';
 import toast from 'react-hot-toast';
 
+const toastId = 'copyToast';
+
 interface Props {
   text: string;
   className?: string;
@@ -15,10 +17,10 @@ interface Props {
 
 export const ContactShareButton = ({ text, className, style, targetText }: Props) => {
   const onSuccess = () => {
-    toast.success(<ToastBox text={`${targetText}가 복사되었습니다.`} />);
+    toast.success(<ToastBox text={`${targetText}가 복사되었습니다.`} />, { id: toastId });
   };
   const onError = () => {
-    toast.error(<ToastBox text={`${targetText} 복사에 실패했습니다.`} />);
+    toast.error(<ToastBox text={`${targetText} 복사에 실패했습니다.`} />, { id: toastId });
   };
 
   const handleClick = () => {
