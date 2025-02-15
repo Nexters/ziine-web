@@ -32,7 +32,7 @@ const ArtworkRegisterPage = () => {
   const [instagramId, setInstagramId] = useState<string>('');
   const [link, setLink] = useState<string>('');
   const [email, setEmail] = useState<string>('');
-  const [emailOption, setEmailOption] = useState<string>('');
+  //const [emailOption, setEmailOption] = useState<string>('');
 
   const [isRegisterBtnDisabled, setIsRegisterBtnDisabled] = useState(false);
   const options = ['naver.com', 'gmail.com', 'kakao.com', 'daum.net', '직접 입력'];
@@ -129,7 +129,7 @@ const ArtworkRegisterPage = () => {
   const handleLinkChange = (e: EventType) => setLink(e.target.value);
 
   const handleEmailChange = (e: EventType) => setEmail(e.target.value);
-  const handleEmailOptionChange = (option: string) => setEmailOption(option);
+  //const handleEmailOptionChange = (option: string) => setSelectedOption(option);
 
   const artworkFormData: ArtworkFormItem = {
     title: title,
@@ -272,10 +272,10 @@ const ArtworkRegisterPage = () => {
         }
         required={false}
         value={email}
-        dropdownValue={emailOption}
+        dropdownValue={selectedOption}
         onChangeInputValue={handleEmailChange}
         onChangeIsOpen={toggleDropdown}
-        onChangeOption={handleEmailOptionChange}
+        onChangeOption={selectOption}
         dropdownIsOpen={isOpen}
       />
 
