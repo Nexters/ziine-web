@@ -9,18 +9,25 @@ const ArtworkRegisterLayout = ({ children }: PropsWithChildren) => {
         mt: '80px',
         justifyContent: 'center',
         alignItems: 'flex-start',
-        // '@media (max-width: 899px)': {
-        //     flexDirection: 'column', // 작은 화면에서 세로로 배치
-        //     alignItems: 'center', // 중앙 정렬
-        //   },
-        //   '@media (min-width: 900px) and (max-width: 1199px)': {
-        //     flexDirection: 'row', // 중간 화면에서 가로로 배치
-        //     justifyContent: 'space-between', // 공간 분배
-        //   },
-        //   '@media (min-width: 1200px)': {
-        //     flexDirection: 'row', // 큰 화면에서 가로로 배치
-        //     justifyContent: 'space-between', // 공간을 고르게 분배
-        //   },
+
+        '@media (max-width: 899px)': {
+          maxWidth: '375px',
+          width: '100%',
+          padding: '24px 16px',
+          margin: '0 auto',
+        },
+        '@media (min-width: 900px) and (max-width: 1199px)': {
+          maxWidth: '900px',
+          width: '100%',
+          padding: '24px 16px',
+          margin: '0 auto',
+        },
+        '@media (min-width: 1200px)': {
+          maxWidth: '900px',
+          width: '100%',
+          padding: '24px 16px',
+          margin: '0 auto',
+        },
       })}
     >
       {children}
