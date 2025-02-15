@@ -1,4 +1,5 @@
 import { css, cx } from '@/styled-system/css';
+import { Icon } from '@ziine/design';
 import Link from 'next/link';
 import React, { CSSProperties } from 'react';
 
@@ -17,7 +18,6 @@ export const AddArtworkButton = ({ className, style }: Props) => {
           display: 'flex',
           width: '48px',
           height: '47px',
-          padding: '11px 12px 16px 12px',
           justifyContent: 'center',
           alignItems: 'center',
           bg: 'primary.500',
@@ -26,6 +26,8 @@ export const AddArtworkButton = ({ className, style }: Props) => {
         }),
         className,
       )}
-    ></Link>
+    >
+      <Icon name='plus' size='medium' color='grayscale.0' />
+    </Link>
   );
 };
