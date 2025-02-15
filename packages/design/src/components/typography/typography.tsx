@@ -1,6 +1,6 @@
 import { CSSProperties, PropsWithChildren } from 'react';
 import { typographyStyle, TypographyStyleProps } from './typography.styles';
-import { cx } from '@/styled-system/css';
+import { cx } from 'styled-system/css';
 
 interface Props {
   level: Required<TypographyStyleProps>['level'];

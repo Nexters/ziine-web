@@ -1,4 +1,4 @@
-import { cva, RecipeVariantProps } from '@/styled-system/css';
+import { cva, RecipeVariantProps } from 'styled-system/css';
 
 export const tagStyles = cva({
   base: {
