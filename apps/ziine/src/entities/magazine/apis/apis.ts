@@ -16,3 +16,19 @@ export const getMagazineDetail = async (id: number) => {
   const response = await apiClient.get<MagazineDetail>(`api/v1/magazines/${id}`);
   return await response.json();
 };
+
+export interface MagazineItem {
+  id: number;
+  title: string;
+  summary: string;
+  thumbnailImageUrl: string;
+  keywords: Array<string>;
+  backgroundColor: string;
+  createdAt: string;
+  modifiedAt: string;
+}
+
+export const getMagazineList = async () => {
+  const response = await apiClient.get<{ magazines: Array<MagazineItem>; totalCount: number }>(`api/v1/magazines`);
+  return await response.json();
+};

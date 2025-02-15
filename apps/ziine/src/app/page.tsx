@@ -2,6 +2,7 @@
 
 import { css } from '@/styled-system/css';
 import { ArtWorkPage } from '@/views';
+import { MagazineListPage } from '@/views/magazine-list-page';
 import { GlobalNavBar } from '@/widgets';
 import { useDetectNavType } from '@/widgets/global-nav-bar/hooks';
 import { Suspense } from 'react';
@@ -21,5 +22,5 @@ export default function Home() {
 
 const MainPage = () => {
   const { isArtwork } = useDetectNavType();
-  return isArtwork ? <ArtWorkPage /> : <></>;
+  return isArtwork ? <ArtWorkPage /> : <MagazineListPage />;
 };
