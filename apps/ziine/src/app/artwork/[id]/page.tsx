@@ -1,16 +1,42 @@
-import { getArtworkDetail } from '@/entities/artworks/apis/apis';
-import { BaseImage } from '@/shared';
+import { ContactsType, getArtworkDetail } from '@/entities/artworks/apis/apis';
+import { BaseImage, NavigateBar } from '@/shared';
 import { formatYYYYMMDDDate } from '@/shared/utils';
 import { css } from '@/styled-system/css';
-import { Divider, Tag, Typography } from '@ziine/design';
+import { Divider, Icon, IconProps, Tag, Typography } from '@ziine/design';
+import { ColorToken } from '@/styled-system/tokens';
+import { LinkShareButton } from './link-share-button';
+import { ContactShareButton } from './contact-share-button';
+
+const getContactIcon = (type: ContactsType): { name: IconProps['name']; color?: ColorToken } => {
+  switch (type) {
+    case 'INSTAGRAM':
+      return { name: 'instagram_color' };
+    case 'WEBSITE':
+      return { name: 'link', color: 'primary.500' };
+    default:
+      return { name: 'link', color: 'primary.500' };
+  }
+};
+
+const getContactText = (type: ContactsType) => {
+  switch (type) {
+    case 'INSTAGRAM':
+      return '인스타그램';
+    case 'WEBSITE':
+      return '링크';
+    default:
+      return '링크';
+  }
+};
 
 const ArtworkDetailPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;
   const data = await getArtworkDetail(Number(id));
+  const contactIcon = getContactIcon(data.artist.contacts[0].type);
 
   return (
     <div className={css({ marginBottom: '40px' })}>
-      {/** @todo 뒤로가기 버튼 */}
+      <NavigateBar className={css({ position: 'fixed', top: 0 })} />
       <BaseImage
         width={375}
         height={375}
@@ -34,7 +60,12 @@ const ArtworkDetailPage = async ({ params }: { params: Promise<{ id: string }> }
           <Typography level='heading4' className={css({ color: 'grayscale.0' })}>
             {data.title}
           </Typography>
-          <div className={css({ marginLeft: '16px' })}>{/** @todo 공유하기 버튼, button tag로 바꾸기 */}</div>
+          <LinkShareButton
+            className={css({ marginLeft: '16px' })}
+            title={data.title}
+            url={data.shareUrl}
+            text={data.shareUrl}
+          />
         </div>
 
         <div
@@ -142,17 +173,14 @@ const ArtworkDetailPage = async ({ params }: { params: Promise<{ id: string }> }
               >
                 <div className={css({ display: 'flex', alignItems: 'center' })}>
                   <div className={css({ width: '20px', height: '20px', marginRight: '8px' })}>
-                    {/** @todo 아이콘 */}
+                    <Icon name={contactIcon.name} size='medium' color={contactIcon.color} />
                   </div>
                   <Typography level='paragraph2' className={css({ color: 'grayscale.600' })}>
                     {contact.value}
                   </Typography>
                 </div>
 
-                {/** @todo 복사하기 기능, button tag로 바꾸기 */}
-                <div>
-                  <Tag variant='grayFilled'>복사하기</Tag>
-                </div>
+                <ContactShareButton text={contact.value} targetText={getContactText(contact.type)} />
               </div>
             ))}
           </div>
