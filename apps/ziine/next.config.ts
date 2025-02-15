@@ -12,6 +12,8 @@ const nextConfig: NextConfig = {
       'i.namu.wiki',
       'encrypted-tbn0.gstatic.com',
       'monthlyart.com',
+      'slownews.kr',
+      'www.sakyejul.net',
     ],
   },
 };
