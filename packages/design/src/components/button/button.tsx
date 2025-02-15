@@ -6,7 +6,7 @@ interface ButtonProps {
   type?: 'main' | 'sub';
   status?: 'default' | 'loading';
   disabled?: boolean;
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 export const Button = ({ text, type = 'main', status = 'default', disabled = false, onClick }: ButtonProps) => {
