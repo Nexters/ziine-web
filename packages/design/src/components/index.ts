@@ -1,4 +1,4 @@
-export { Typography } from './typography';
+export { Typography, typographyStyle } from './typography';
 export { TapButton } from './tap-button';
 export { ImgButton } from './img-button';
 export { Input } from './input';
@@ -11,4 +11,6 @@ export { ExhibitionIconInput } from './list-type';
 export { Divider } from './divider';
 export { Button } from './button';
 export { SmallButton } from './button';
+export { Tag } from './tag';
+export { Icon, type IconProps } from './icon';
 export { DropdownList } from './dropdown';

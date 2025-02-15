@@ -1,7 +1,7 @@
 'use client';
 
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { getArtworks } from './apis';
+import { getClientSideArtworks } from './apis';
 
 const artworksQueryKeys = {
   artworks: ['artworks'],
@@ -9,5 +9,5 @@ const artworksQueryKeys = {
 };
 
 export const useSuspenseArtworksQuery = () => {
-  return useSuspenseQuery({ queryKey: artworksQueryKeys.artworks, queryFn: getArtworks });
+  return useSuspenseQuery({ queryKey: artworksQueryKeys.artworks, queryFn: getClientSideArtworks });
 };

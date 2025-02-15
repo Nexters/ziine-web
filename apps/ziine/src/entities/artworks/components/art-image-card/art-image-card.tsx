@@ -84,6 +84,7 @@ export const ArtImageCard = ({ id, profileImageUrl, profileName, title, imageUrl
           bottom: 0,
           left: 0,
           padding: '20px',
+          minWidth: '100%',
           maxWidth: '100%',
           overflow: 'hidden',
           textOverflow: 'ellipsis',
