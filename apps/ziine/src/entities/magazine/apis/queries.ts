@@ -1,7 +1,7 @@
 'use client';
 
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { getMagazineDetail, getMagazineList } from './apis';
+import { getClientSideMagazineList, getMagazineDetail } from './apis';
 
 const magazineQueryKeys = {
   magazine: ['magazine'],
@@ -18,6 +18,6 @@ export const useSuspenseMagazineDetail = (id: number) => {
 export const useSuspenseMagazineList = () => {
   return useSuspenseQuery({
     queryKey: magazineQueryKeys.magazine,
-    queryFn: () => getMagazineList(),
+    queryFn: () => getClientSideMagazineList(),
   });
 };

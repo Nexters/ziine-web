@@ -32,3 +32,10 @@ export const getMagazineList = async () => {
   const response = await apiClient.get<{ magazines: Array<MagazineItem>; totalCount: number }>(`api/v1/magazines`);
   return await response.json();
 };
+
+export const getClientSideMagazineList = async () => {
+  const response = await apiClient.get<{ magazines: Array<MagazineItem>; totalCount: number }>(`api/v1/magazines`, {
+    prefixUrl: '',
+  });
+  return await response.json();
+};
