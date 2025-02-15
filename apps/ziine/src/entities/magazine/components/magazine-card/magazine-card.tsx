@@ -70,7 +70,7 @@ export const MagazineCard = ({
         </div>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          className={css({ width: '100%', aspectRatio: '1 / 1', borderRadius: '16px' })}
+          className={css({ width: '100%', aspectRatio: '1 / 1', borderRadius: '16px', objectFit: 'cover' })}
           src={thumbnailImageUrl}
           alt={title}
           width={256}
