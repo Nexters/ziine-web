@@ -10,3 +10,4 @@ export { Divider } from './divider';
 export { Button } from './button';
 export { SmallButton } from './button';
 export { Tag } from './tag';
+export { Icon, type IconProps } from './icon';

@@ -1,7 +1,7 @@
 {
   "name": "@ziine/design",
   "version": "1.0.0",
-  "description": "",  
+  "description": "",
   "type": "module",
   "types": "./dist/index.d.ts",
   "module": "./dist/index.js",
@@ -50,7 +50,8 @@
     "build-storybook": "storybook build",
     "build": "vite build",
     "prepare": "panda codegen",
-    "postbuild": "panda ship --outfile dist/panda.buildinfo.json"
+    "postbuild": "panda ship --outfile dist/panda.buildinfo.json",
+    "optimize-icons": "svgo -f ./src/components/icon/assets -o ./src/components/icon/assets --config=svgo.config.js"
   },
   "keywords": [],
   "author": "",
@@ -69,10 +70,12 @@
     "@types/react-dom": "^19.0.3",
     "@vitejs/plugin-react": "^4.3.1",
     "storybook": "^8.5.1",
+    "svgo": "^3.3.2",
     "typescript": "^5.7.3",
     "vite": "^6.1.0",
     "vite-plugin-dts": "^4.5.0",
     "vite-plugin-static-copy": "^2.2.0",
+    "vite-plugin-svgr": "^4.3.0",
     "vite-tsconfig-paths": "^5.1.4"
   },
   "dependencies": {
