@@ -1,12 +1,14 @@
 'use client';
 
 import { Button, Typography } from '@ziine/design';
-import Lottie from 'react-lottie-player';
 import lottieJson from '../../../../public/assets/images/after uploaded.json';
 import Link from 'next/link';
 import { css } from '@/styled-system/css';
+import dynamic from 'next/dynamic';
 
 const ArtworkRegisterSuccessPage = () => {
+  const Lottie = dynamic(() => import('react-lottie-player'), { ssr: false });
+
   return (
     <div
       className={css({
