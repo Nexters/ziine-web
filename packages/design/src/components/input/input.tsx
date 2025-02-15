@@ -1,4 +1,4 @@
-import { inputFatStyle, inputStyle, container, dropdownStyle, dropdownContainer } from './input.styles';
+import { inputFatStyle, inputStyle, container } from './input.styles';
 import { css, cx } from '@/styled-system/css';
 import { Typography } from '../typography';
 import { ChangeEvent } from 'react';
@@ -122,12 +122,3 @@ export const ImgInput = ({ placeholder, img, value, onChangeInstagramId, onChang
     </div>
   );
 };
-
-interface DropdownProps {
-  placeholder: string;
-  options: string[];
-  value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  dropdownValue: string;
-  onChangeOption: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-}
