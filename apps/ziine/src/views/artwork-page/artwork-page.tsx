@@ -3,7 +3,8 @@
 import { useSuspenseArtworksQuery } from '@/entities/artworks/apis/queries';
 import { ArtImageCard } from '@/entities/artworks/components';
 import { AddArtworkButton } from '@/features/add-artwork/components';
-import { css } from '@/styled-system/css';
+import { useShowFloatingButton } from '@/features/add-artwork/hooks';
+import { css, cx } from '@/styled-system/css';
 import React, { Suspense } from 'react';
 
 const addButtonStyle = css({
@@ -22,7 +23,7 @@ export const ArtWorkPage = () => {
       <Suspense>
         <ArtworkList />
       </Suspense>
-      <AddArtworkButton className={addButtonStyle} />
+      <FloatingButton />
     </div>
   );
 };
@@ -62,5 +63,22 @@ const ArtworkList = () => {
         />
       ))}
     </div>
+  );
+};
+
+const FloatingButton = () => {
+  const showButton = useShowFloatingButton();
+
+  return (
+    <AddArtworkButton
+      className={cx(
+        addButtonStyle,
+        css({
+          transition: 'opacity 0.3s ease',
+          opacity: showButton ? 1 : 0,
+          pointerEvents: showButton ? 'auto' : 'none',
+        }),
+      )}
+    />
   );
 };
