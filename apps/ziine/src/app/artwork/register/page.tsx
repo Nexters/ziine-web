@@ -131,6 +131,22 @@ const ArtworkRegisterPage = () => {
   const handleEmailChange = (e: EventType) => setEmail(e.target.value);
   //const handleEmailOptionChange = (option: string) => setSelectedOption(option);
 
+  const handleWebViewRegisterFormData = async () => {
+    try {
+      const response = await postArtworksForm(artworkFormData);
+      console.log('Artwork registered successfully:', response);
+
+      // 📌 네이티브 웹뷰 브릿지 함수 호출
+      if (window.ziineApp && typeof window.ziineApp.artworkRegisterSuccess === 'function') {
+        window.ziineApp.artworkRegisterSuccess();
+      } else {
+        console.warn('ziineApp.artworkRegisterSuccess is not defined');
+      }
+    } catch (error) {
+      console.error('Failed to register artwork:', error);
+    }
+  };
+
   const artworkFormData: ArtworkFormItem = {
     title: title,
     width: Number(width),
@@ -155,7 +171,9 @@ const ArtworkRegisterPage = () => {
 
   const handleRegisterFormData = async () => {
     try {
-      const response = await postArtworksForm(artworkFormData);
+      const response = await postArtworksForm(artworkFormData).then(() => {
+        handleWebViewRegisterFormData();
+      });
       console.log('Artwork registered successfully:', response);
     } catch (error) {
       console.error('Failed to register artwork:', error);
@@ -279,9 +297,7 @@ const ArtworkRegisterPage = () => {
         dropdownIsOpen={isOpen}
       />
 
-      <Button onClick={handleRegisterFormData} disabled={isRegisterBtnDisabled}>
-        등록 신청하기
-      </Button>
+      <Button onClick={handleRegisterFormData} disabled={isRegisterBtnDisabled} text='등록 신청하기'></Button>
     </div>
   );
 };

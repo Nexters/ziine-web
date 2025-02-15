@@ -12,9 +12,22 @@ interface ButtonProps {
   style?: CSSProperties;
 }
 
-export const Button = ({ children, type = 'main', status = 'default', disabled = false, onClick, className, style }: ButtonProps) => {
+export const Button = ({
+  children,
+  type = 'main',
+  status = 'default',
+  disabled = false,
+  onClick,
+  className,
+  style,
+}: ButtonProps) => {
   return (
-    <button className={cx(buttonStyle({ type, status }), className)} disabled={disabled} onClick={onClick} style={style}>
+    <button
+      className={cx(buttonStyle({ type, status }), className)}
+      disabled={disabled}
+      onClick={onClick}
+      style={style}
+    >
       {children}
     </button>
   );
