@@ -25,10 +25,15 @@ export interface PresignedUrl {
   }[];
 }
 
-export const getArtworksImageUrl = async (fileNames: string[]) => {
+export const getArtworksImageUrl = async (fileNames: string[]): Promise<PresignedUrl> => {
   const params = new URLSearchParams();
   params.append('fileNames', fileNames.join(','));
 
-  const response = await apiClient.get<{ fileUrl: PresignedUrl }>(`api/v1/presigned-url?${params.toString()}`, {});
-  return response.json();
+  const response = await apiClient.get<PresignedUrl>(`api/v1/presigned-url?${params.toString()}`);
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch presigned URLs');
+  }
+
+  return await response.json();
 };

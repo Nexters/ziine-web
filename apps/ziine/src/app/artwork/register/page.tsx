@@ -46,7 +46,7 @@ const ArtworkRegisterPage = () => {
     try {
       const response = await getArtworksImageUrl([file.name]);
       console.log('getArtworksImage successfully:', response);
-      return response.fileUrl;
+      return response;
     } catch (err) {
       console.error('Error uploadImageToServer: ', err);
     }
@@ -59,12 +59,15 @@ const ArtworkRegisterPage = () => {
       try {
         const imageUrl = await uploadImageToServer(file);
 
-        if (imageUrl) {
-          await putArtworkImageToS3({ presignedUrl: imageUrl.presignedUrlList[0].presignedUrl, file: file }).then(
-            () => {
-              setImagePreview(imageUrl.presignedUrlList[0].fileUrl);
-            },
-          );
+        if (imageUrl && imageUrl.presignedUrlList && imageUrl.presignedUrlList.length > 0) {
+          await putArtworkImageToS3({
+            presignedUrl: imageUrl.presignedUrlList[0].presignedUrl,
+            file: file,
+          });
+
+          setImagePreview(imageUrl.presignedUrlList[0].fileUrl);
+        } else {
+          throw new Error('Invalid response structure');
         }
       } catch (error) {
         console.error('Error uploading image: ', error);

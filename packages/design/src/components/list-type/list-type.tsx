@@ -77,10 +77,10 @@ export const TwoRegisterArea = ({
 
       <div
         className={css({
-          display: 'flex',
-          gap: '8px',
+          display: 'grid',
+          gridTemplateColumns: 'auto auto',
+          gap: '12px',
           width: '100%',
-          //gridTemplateColumns: '1fr auto',
         })}
       >
         <DimensionsInput placeholder={placeholder[0]} value={value[0]} onChange={onWidthChange} />

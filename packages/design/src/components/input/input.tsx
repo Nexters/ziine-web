@@ -40,15 +40,29 @@ export const DimensionsInput = ({ placeholder, value, dimension = 'cm', onChange
   return (
     <div
       className={cx(
-        inputStyle(),
+        inputStyle({ type: 'dimension' }),
         css({
           justifyContent: 'space-between',
           flex: 1,
+          width: '100%',
         }),
       )}
     >
-      <input type='text' placeholder={placeholder} value={value} onChange={onChange} />
-      <Typography level='paragraph2' className={css({ color: 'grayscale.600' })}>
+      <input
+        type='text'
+        placeholder={placeholder}
+        value={value}
+        onChange={onChange}
+        className={css({
+          flexGrow: 1,
+          minWidth: '60px',
+          background: 'transparent',
+          border: 'none',
+          color: 'inherit',
+          outline: 'none',
+        })}
+      />
+      <Typography level='paragraph2' className={css({ whiteSpace: 'nowrap', color: 'grayscale.600' })}>
         {dimension}
       </Typography>
     </div>
