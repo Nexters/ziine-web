@@ -3,6 +3,7 @@ import '@/styles/global.css';
 import { css } from '@/styled-system/css';
 import type { Metadata } from 'next';
 import { TanstackQueryProvider } from '@/shared/providers';
+import { Toaster } from 'react-hot-toast';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -17,6 +18,19 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body className={css({ bg: 'grayscale.900' })}>
+        <Toaster
+          toastOptions={{
+            style: {
+              background: 'transparent',
+              boxShadow: 'none',
+              padding: 0,
+              margin: 0,
+            },
+            success: { icon: null },
+            error: { icon: null },
+            loading: { icon: null },
+          }}
+        />
         <TanstackQueryProvider>{children}</TanstackQueryProvider>
       </body>
     </html>

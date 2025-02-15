@@ -10,7 +10,7 @@ export const ICON_NAMES = [
   'arrow_right',
   'arrow_up',
   'cancel',
-  'close',
+  'check',
   'direction_down',
   'direction_left',
   'direction_right',
