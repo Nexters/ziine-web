@@ -58,7 +58,9 @@ const ArtworkRegisterSuccessPage = () => {
           maxWidth: '870px',
         })}
       >
-        <Button children={<Typography level='subtitle2' />} type='sub' onClick={() => {}} />
+        <Button type='sub' onClick={() => {}}>
+          홈으로 돌아가기
+        </Button>
       </Link>
     </div>
   );
