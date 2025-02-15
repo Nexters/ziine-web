@@ -28,7 +28,7 @@ const MainPage = () => {
 
 const ClientMagazineListPage = () => {
   return (
-    <div className={css({ height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' })}>
+    <div className={css({ height: '100%' })}>
       <Suspense fallback={<Loading className={css({ height: '100%' })} />}>
         <MagazineListPage />
       </Suspense>

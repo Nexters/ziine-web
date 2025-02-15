@@ -32,7 +32,6 @@ export const MagazineListPage = () => {
         spaceBetween={16}
         slidesPerView={3}
         centeredSlides={true}
-        pagination={{ clickable: true, type: 'fraction' }}
         observer={true}
         observeParents={true}
         updateOnWindowResize={true}
