@@ -10,7 +10,7 @@ import { Suspense } from 'react';
 
 export default function Home() {
   return (
-    <div className={css({ position: 'relative', height: '100%', display: 'flex', flexDirection: 'column' })}>
+    <div className={css({ position: 'relative', height: '100%' })}>
       <Suspense>
         <GlobalNavBar className={css({ zIndex: 1, position: 'sticky', top: 0 })} />
       </Suspense>
@@ -28,8 +28,10 @@ const MainPage = () => {
 
 const ClientMagazineListPage = () => {
   return (
-    <Suspense fallback={<Loading className={css({ flex: 1 })} />}>
-      <MagazineListPage />
-    </Suspense>
+    <div className={css({ height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' })}>
+      <Suspense fallback={<Loading className={css({ height: '100%' })} />}>
+        <MagazineListPage />
+      </Suspense>
+    </div>
   );
 };

@@ -36,7 +36,6 @@ interface Props {
 
 const ArtworkDetailPage = async ({ id, needNavigateBar = true }: Props) => {
   const data = await getArtworkDetail(Number(id));
-  const contactIcon = getContactIcon(data.artist.contacts[0].type);
 
   return (
     <div className={css({ marginBottom: '40px' })}>
@@ -118,7 +117,7 @@ const ArtworkDetailPage = async ({ id, needNavigateBar = true }: Props) => {
             height={28}
             src={data.artist.profileImageUrl}
             alt={data.artist.name}
-            className={css({ borderRadius: '50%' })}
+            className={css({ borderRadius: '50%', objectFit: 'cover' })}
           />
 
           <div className={css({ marginLeft: '6px' })}>
@@ -170,23 +169,26 @@ const ArtworkDetailPage = async ({ id, needNavigateBar = true }: Props) => {
           </Typography>
 
           <div className={css({ display: 'flex', flexDirection: 'column', gap: '16px' })}>
-            {data.artist.contacts.map((contact) => (
-              <div
-                key={contact.type}
-                className={css({ display: 'flex', alignItems: 'center', justifyContent: 'space-between' })}
-              >
-                <div className={css({ display: 'flex', alignItems: 'center' })}>
-                  <div className={css({ width: '20px', height: '20px', marginRight: '8px' })}>
-                    <Icon name={contactIcon.name} size='medium' color={contactIcon.color} />
+            {data.artist.contacts.map((contact) => {
+              const contactIcon = getContactIcon(contact.type);
+              return (
+                <div
+                  key={contact.type}
+                  className={css({ display: 'flex', alignItems: 'center', justifyContent: 'space-between' })}
+                >
+                  <div className={css({ display: 'flex', alignItems: 'center' })}>
+                    <div className={css({ width: '20px', height: '20px', marginRight: '8px' })}>
+                      <Icon name={contactIcon.name} size='medium' color={contactIcon.color} />
+                    </div>
+                    <Typography level='paragraph2' className={css({ color: 'grayscale.600' })}>
+                      {contact.value}
+                    </Typography>
                   </div>
-                  <Typography level='paragraph2' className={css({ color: 'grayscale.600' })}>
-                    {contact.value}
-                  </Typography>
-                </div>
 
-                <ContactShareButton text={contact.value} targetText={getContactText(contact.type)} />
-              </div>
-            ))}
+                  <ContactShareButton text={contact.value} targetText={getContactText(contact.type)} />
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>

@@ -20,7 +20,7 @@ const addButtonStyle = css({
 
 export const ArtWorkPage = () => {
   return (
-    <div className={css({ overflow: 'auto', flex: 1 })}>
+    <div className={css({ overflow: 'auto' })}>
       <Suspense fallback={<Loading className={css({ height: '100%', flex: 1 })} />}>
         <ArtworkList />
       </Suspense>
@@ -53,14 +53,14 @@ const ArtworkList = () => {
 
   return (
     <div className={gridLayout}>
-      {artworks.map(({ id, artist: { name, profileImageUrl }, title, imageUrl }, idx) => (
+      {artworks.map(({ id, artist: { name, profileImageUrl }, title, artworkImageUrl }, idx) => (
         <ArtImageCard
           id={id}
-          key={title + imageUrl + idx}
+          key={title + artworkImageUrl + idx}
           profileImageUrl={profileImageUrl}
           profileName={name}
           title={title}
-          imageUrl={imageUrl}
+          imageUrl={artworkImageUrl}
         />
       ))}
     </div>

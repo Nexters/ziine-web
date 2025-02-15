@@ -3,7 +3,7 @@ import { apiClient } from '@/shared/apis';
 export interface ArtworkItem {
   id: number;
   title: string;
-  imageUrl: string;
+  artworkImageUrl: string;
   createdAt: string;
   modifiedAt: string;
   artist: {
