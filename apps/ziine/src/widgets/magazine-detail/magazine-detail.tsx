@@ -33,7 +33,7 @@ const MagazineDetail = async ({ id }: { id: number }) => {
   const formattedCreatedAt = formatYYYYMMDDDate(createdAt);
 
   return (
-    <div className={css({ padding: '24px 16px' })}>
+    <div className={css({ padding: '24px 16px', width: '100%' })}>
       <div className={css({ marginBottom: '8px' })}>
         <Typography level='paragraph3' className={css({ color: 'grayscale.500', textAlign: 'left' })}>
           {formattedCreatedAt}
@@ -60,6 +60,7 @@ const MagazineDetail = async ({ id }: { id: number }) => {
       <ReactMarkdown
         className={cx(
           css({
+            maxWidth: '100%',
             fontFamily: 'body',
             color: 'grayscale.0',
           }),
