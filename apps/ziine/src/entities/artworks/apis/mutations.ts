@@ -38,11 +38,11 @@ interface ArtWorkImage {
 export const putArtworkImageToS3 = async (data: ArtWorkImage) => {
   const response = await fetch(data.presignedUrl, {
     method: 'PUT',
-    mode: 'no-cors',
     headers: {
       'x-amz-meta-original-name': data.file.name,
       'Content-Type': data.file.type,
     },
+    body: data.file,
   });
 
   if (!response.ok) {

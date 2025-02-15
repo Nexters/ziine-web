@@ -131,30 +131,3 @@ interface DropdownProps {
   dropdownValue: string;
   onChangeOption: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 }
-
-export const DropDownList = ({
-  placeholder,
-  options,
-  value,
-  onChange,
-  dropdownValue,
-  onChangeOption,
-}: DropdownProps) => {
-  return (
-    <div className={cx(dropdownContainer())}>
-      <input
-        placeholder={placeholder}
-        className={cx(inputStyle())}
-        style={{ flex: 1 }}
-        value={value}
-        onChange={onChange}
-      ></input>
-      <select className={cx(dropdownStyle())} value={dropdownValue} onChange={onChangeOption}>
-        <option value=''>{options[0]}</option>
-        <option value='option1'>{options[1]}</option>
-        <option value='option2'>{options[2]}</option>
-        <option value='option3'>{options[3]}</option>
-      </select>
-    </div>
-  );
-};

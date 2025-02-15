@@ -35,6 +35,19 @@ const ArtworkRegisterPage = () => {
   const [emailOption, setEmailOption] = useState<string>('');
 
   const [isRegisterBtnDisabled, setIsRegisterBtnDisabled] = useState(false);
+  const options = ['naver.com', 'gmail.com', 'kakao.com', 'daum.net', '직접 입력'];
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedOption, setSelectedOption] = useState(options[options.length - 1]);
+
+  const toggleDropdown = () => {
+    setIsOpen((prev) => !prev);
+  };
+
+  const selectOption = (option: string) => {
+    setSelectedOption(option);
+    setIsOpen(false);
+  };
 
   useEffect(() => {
     const allRequiredFilled = title.trim() !== '' && Number(width) > 0 && Number(height) > 0 && material.trim() !== '';
@@ -116,7 +129,7 @@ const ArtworkRegisterPage = () => {
   const handleLinkChange = (e: EventType) => setLink(e.target.value);
 
   const handleEmailChange = (e: EventType) => setEmail(e.target.value);
-  const handleEmailOptionChange = (e: ChangeEvent<HTMLSelectElement>) => setEmailOption(e.target.value);
+  const handleEmailOptionChange = (option: string) => setEmailOption(option);
 
   const artworkFormData: ArtworkFormItem = {
     title: title,
@@ -259,10 +272,13 @@ const ArtworkRegisterPage = () => {
         }
         required={false}
         value={email}
-        onChange={handleEmailChange}
         dropdownValue={emailOption}
+        onChangeInputValue={handleEmailChange}
+        onChangeIsOpen={toggleDropdown}
         onChangeOption={handleEmailOptionChange}
+        dropdownIsOpen={isOpen}
       />
+
       <Button text='등록 신청하기' onClick={handleRegisterFormData} disabled={isRegisterBtnDisabled} />
     </div>
   );

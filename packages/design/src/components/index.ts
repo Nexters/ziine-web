@@ -11,3 +11,4 @@ export { ExhibitionIconInput } from './list-type';
 export { Divider } from './divider';
 export { Button } from './button';
 export { SmallButton } from './button';
+export { DropdownList } from './dropdown';

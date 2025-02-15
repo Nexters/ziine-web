@@ -2,8 +2,10 @@ import { listTypeStyle } from './list-type.styles';
 import { css, cx } from '@/styled-system/css';
 import { Typography } from '../typography';
 import { Input } from '../input';
-import { DimensionsInput, DropDownList, ImgInput, InputFat } from '../input/input';
+import { DimensionsInput, ImgInput, InputFat } from '../input/input';
 import { TitleDescriptionGroup } from './title-description-group';
+import { DropdownList } from '../dropdown';
+import { ChangeEvent } from 'react';
 
 type InputType = 'thin' | 'fat';
 type EventType = React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>;
@@ -173,9 +175,11 @@ interface DropdownProps {
   required: boolean;
   description?: string;
   value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  dropdownIsOpen: boolean;
+  onChangeInputValue: (e: ChangeEvent<HTMLInputElement>) => void;
+  onChangeIsOpen: () => void;
   dropdownValue: string;
-  onChangeOption: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  onChangeOption: (option: string) => void;
 }
 
 export const DropDownInput = ({
@@ -185,21 +189,30 @@ export const DropDownInput = ({
   description,
   options,
   value,
-  onChange,
+  dropdownIsOpen,
   dropdownValue,
+  onChangeInputValue,
+  onChangeIsOpen,
   onChangeOption,
 }: DropdownProps) => {
   return (
     <div className={cx(listTypeStyle())}>
       <TitleDescriptionGroup text={text} required={required} description={description!} />
-      <DropDownList
-        options={options}
-        placeholder={placeholder[0]}
-        value={value}
-        onChange={onChange}
-        dropdownValue={dropdownValue}
-        onChangeOption={onChangeOption}
-      />
+      <div
+        className={css({
+          display: 'flex',
+          gap: '11px',
+        })}
+      >
+        <Input placeholder={placeholder[0]} textCntVisible={false} value={value} onChange={onChangeInputValue} />
+        <DropdownList
+          value={dropdownValue}
+          options={options}
+          onChangeIsOpen={onChangeIsOpen}
+          onChangeOption={onChangeOption}
+          isOpen={dropdownIsOpen}
+        />
+      </div>
     </div>
   );
 };
