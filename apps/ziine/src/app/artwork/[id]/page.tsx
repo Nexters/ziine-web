@@ -1,5 +1,5 @@
 import { getArtworkDetail } from '@/entities/artworks/apis/apis';
-import { BaseImage } from '@/shared';
+import { BaseImage, NavigateBar } from '@/shared';
 import { formatYYYYMMDDDate } from '@/shared/utils';
 import { css } from '@/styled-system/css';
 import { Divider, Tag, Typography } from '@ziine/design';
@@ -10,6 +10,7 @@ const ArtworkDetailPage = async ({ params }: { params: Promise<{ id: string }> }
 
   return (
     <div className={css({ marginBottom: '40px' })}>
+      <NavigateBar className={css({ position: 'fixed', top: 0 })} />
       {/** @todo 뒤로가기 버튼 */}
       <BaseImage
         width={375}
