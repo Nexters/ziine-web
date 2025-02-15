@@ -4,6 +4,7 @@ import { useSuspenseArtworksQuery } from '@/entities/artworks/apis/queries';
 import { ArtImageCard } from '@/entities/artworks/components';
 import { AddArtworkButton } from '@/features/add-artwork/components';
 import { useShowFloatingButton } from '@/features/add-artwork/hooks';
+import { Loading } from '@/shared';
 import { css, cx } from '@/styled-system/css';
 import React, { Suspense } from 'react';
 
@@ -19,8 +20,8 @@ const addButtonStyle = css({
 
 export const ArtWorkPage = () => {
   return (
-    <div className={css({ overflow: 'auto' })}>
-      <Suspense>
+    <div className={css({ overflow: 'auto', flex: 1 })}>
+      <Suspense fallback={<Loading className={css({ height: '100%', flex: 1 })} />}>
         <ArtworkList />
       </Suspense>
       <FloatingButton />

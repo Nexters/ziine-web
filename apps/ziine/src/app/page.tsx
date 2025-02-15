@@ -1,5 +1,6 @@
 'use client';
 
+import { Loading } from '@/shared/components/loading/loading';
 import { css } from '@/styled-system/css';
 import { ArtWorkPage } from '@/views';
 import { MagazineListPage } from '@/views/magazine-list-page';
@@ -9,7 +10,7 @@ import { Suspense } from 'react';
 
 export default function Home() {
   return (
-    <div className={css({ position: 'relative' })}>
+    <div className={css({ position: 'relative', height: '100%', display: 'flex', flexDirection: 'column' })}>
       <Suspense>
         <GlobalNavBar className={css({ zIndex: 1, position: 'sticky', top: 0 })} />
       </Suspense>
@@ -27,7 +28,7 @@ const MainPage = () => {
 
 const ClientMagazineListPage = () => {
   return (
-    <Suspense>
+    <Suspense fallback={<Loading className={css({ flex: 1 })} />}>
       <MagazineListPage />
     </Suspense>
   );
