@@ -22,5 +22,13 @@ export default function Home() {
 
 const MainPage = () => {
   const { isArtwork } = useDetectNavType();
-  return isArtwork ? <ArtWorkPage /> : <MagazineListPage />;
+  return isArtwork ? <ArtWorkPage /> : <ClientMagazineListPage />;
+};
+
+const ClientMagazineListPage = () => {
+  return (
+    <Suspense>
+      <MagazineListPage />
+    </Suspense>
+  );
 };

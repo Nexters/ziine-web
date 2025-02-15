@@ -1,5 +1,4 @@
 import { getMagazineDetail } from '@/entities/magazine/apis/apis';
-import { BaseImage } from '@/shared/components';
 import { css, cx } from '@/styled-system/css';
 import { Typography } from '@ziine/design';
 import ReactMarkdown from 'react-markdown';
@@ -43,7 +42,8 @@ const MagazineDetail = async ({ id }: { id: number }) => {
         {title}
       </Typography>
       <div className={css({ margin: '24px 0' })}>
-        <BaseImage
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
           width={343}
           height={197}
           src={thumbnailImageUrl}
