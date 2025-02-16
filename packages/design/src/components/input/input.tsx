@@ -1,18 +1,19 @@
 import { inputFatStyle, inputStyle, container } from './input.styles';
 import { css, cx } from '@/styled-system/css';
 import { Typography } from '../typography';
-import { ChangeEvent } from 'react';
+import { ChangeEvent, CSSProperties } from 'react';
 
 interface InputProps {
   placeholder: string;
   textCntVisible: boolean;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  style?: CSSProperties;
 }
 
 export const Input = ({ placeholder, textCntVisible, value, onChange }: InputProps) => {
   return (
-    <div className={css({ display: 'flex', flexDirection: 'column', gap: '4px' })}>
+    <div className={css({ display: 'flex', flexDirection: 'column', gap: '4px', width: '100%' })}>
       <input
         type='text'
         className={cx(inputStyle())}

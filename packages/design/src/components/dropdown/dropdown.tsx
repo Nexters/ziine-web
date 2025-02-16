@@ -5,7 +5,7 @@ interface DropdownListProps {
   options: string[];
   value: string;
   isOpen: boolean;
-  onChangeIsOpen?: () => void;
+  onChangeIsOpen: () => void;
   onChangeOption: (option: string) => void;
 }
 
@@ -30,6 +30,7 @@ export const DropdownList = ({ value, options, onChangeOption, onChangeIsOpen, i
                 onClick={(e) => {
                   e.stopPropagation();
                   onChangeOption(option);
+                  onChangeIsOpen();
                 }}
               >
                 {option}
