@@ -7,3 +7,11 @@ export const listTypeStyle = cva({
     gap: '8px',
   },
 });
+
+export const container = cva({
+  base: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '12px',
+  },
+});

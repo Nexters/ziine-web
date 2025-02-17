@@ -7,7 +7,7 @@ import {
   OneRegisterArea,
   TwoRegisterArea,
   ExhibitionInput,
-  ExhibitionIconInput,
+  IconInput,
   DropDownInput,
   Divider,
   Button,
@@ -18,6 +18,8 @@ import { css } from 'styled-system/css';
 import { ChangeEvent, useState } from 'react';
 import { ArtworkFormItem, postArtworksForm, putArtworkImageToS3 } from '@/entities/artworks/apis/mutations';
 import { getArtworksImageUrl } from '@/entities/artworks/apis/apis';
+import { useRouter } from 'next/navigation';
+import { SnsInfoInput } from '@/features/artwork-register/components/sns-info-input';
 
 interface FormData {
   title: string;
@@ -93,13 +95,17 @@ const ArtworkRegisterPage = () => {
     setExhibitionHistory([...exhibitionHistory, ['', '']]);
   };
 
+  const router = useRouter();
+
   const handleWebViewRegisterFormData = () => {
-    if (window.ziineApp && typeof window.ziineApp.artworkRegisterSuccess === 'function') {
-      window.ziineApp.artworkRegisterSuccess();
-    } else if (window.webkit?.messageHandlers?.artworkRegisterSuccess) {
-      window.webkit.messageHandlers.artworkRegisterSuccess.postMessage(null);
-    } else {
-      console.warn('WebView bridge function is not available');
+    if (typeof window !== 'undefined') {
+      if (window.ziineApp?.artworkRegisterSuccess) {
+        window.ziineApp.artworkRegisterSuccess();
+      } else if (window.webkit?.messageHandlers?.artworkRegisterSuccess) {
+        window.webkit.messageHandlers.artworkRegisterSuccess.postMessage(null);
+      } else {
+        router.push('/artwork/success');
+      }
     }
   };
 
@@ -233,15 +239,11 @@ const ArtworkRegisterPage = () => {
       <SmallButton text='추가하기' type='outlined' onClick={handleAddExhibitionInput} />
 
       {/* SNS & 이메일 */}
-      <ExhibitionIconInput
-        text='홍보 채널'
-        required={false}
-        placeholder={['@인스타그램 아이디', '비핸스 등 웹사이트 링크']}
-        value={[watch('instagramId'), watch('link')]}
-        onChangeInstagramId={(e) => setValue('instagramId', e.target.value)}
-        onChangeLink={(e) => setValue('link', e.target.value)}
-        description={'나와 내 작품을 홍보할 수 있는 채널이 있다면, 알려주세요.'}
-        icons={[]}
+      <SnsInfoInput
+        instagramValue={watch('instagramId')}
+        linkValue={watch('link')}
+        onInstagramChange={(e) => setValue('instagramId', e.target.value)}
+        onLinkChange={(e) => setValue('link', e.target.value)}
       />
       <DropDownInput
         placeholder={['이메일']}

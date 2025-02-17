@@ -1,4 +1,4 @@
-import { inputFatStyle, inputStyle, container } from './input.styles';
+import { inputFatStyle, inputStyle } from './input.styles';
 import { css, cx } from '@/styled-system/css';
 import { Typography } from '../typography';
 import { ChangeEvent, CSSProperties } from 'react';
@@ -14,13 +14,7 @@ interface InputProps {
 export const Input = ({ placeholder, textCntVisible, value, onChange }: InputProps) => {
   return (
     <div className={css({ display: 'flex', flexDirection: 'column', gap: '4px', width: '100%' })}>
-      <input
-        type='text'
-        className={cx(inputStyle())}
-        placeholder={placeholder}
-        value={value}
-        onChange={onChange}
-      ></input>
+      <input type='text' className={cx(inputStyle())} placeholder={placeholder} value={value} onChange={onChange} />
       {textCntVisible && (
         <Typography level='paragraph4' className={css({ color: 'grayscale.500', textAlign: 'end' })}>
           {value?.length}/00
@@ -86,40 +80,6 @@ export const InputFat = ({ placeholder, textCntVisible, value, onChange }: TextA
           00/00
         </Typography>
       )}
-    </div>
-  );
-};
-
-interface ImgInputProps {
-  placeholder: string[];
-  img: string[];
-  value: string[];
-  onChangeInstagramId: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onChangeLink: (e: React.ChangeEvent<HTMLInputElement>) => void;
-}
-
-export const ImgInput = ({ placeholder, img, value, onChangeInstagramId, onChangeLink }: ImgInputProps) => {
-  return (
-    <div className={cx(container())}>
-      <div className={cx(inputStyle())}>
-        <img src={img[0]}></img>
-        <input
-          placeholder={placeholder[0]}
-          value={value[0]}
-          onChange={onChangeInstagramId}
-          style={{ flex: 1, outline: 'none' }}
-        ></input>
-      </div>
-
-      <div className={cx(inputStyle())}>
-        <img src={img[1]}></img>
-        <input
-          placeholder={placeholder[1]}
-          value={value[1]}
-          onChange={onChangeLink}
-          style={{ flex: 1, outline: 'none' }}
-        ></input>
-      </div>
     </div>
   );
 };

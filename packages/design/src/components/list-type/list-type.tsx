@@ -2,7 +2,7 @@ import { listTypeStyle } from './list-type.styles';
 import { css, cx } from '@/styled-system/css';
 import { Typography } from '../typography';
 import { Input } from '../input';
-import { DimensionsInput, ImgInput, InputFat } from '../input/input';
+import { DimensionsInput, InputFat } from '../input/input';
 import { TitleDescriptionGroup } from './title-description-group';
 import { DropdownList } from '../dropdown';
 import { ChangeEvent } from 'react';
@@ -127,42 +127,6 @@ export const ExhibitionInput = ({ index, placeholder, value, onChangeDate, onCha
         textCntVisible={false}
         value={value[1]}
         onChange={(e) => onChangeName(e.target.value)}
-      />
-      {/* 버튼 */}
-    </div>
-  );
-};
-
-interface IconInputProps {
-  text: string;
-  required: boolean;
-  placeholder: string[];
-  description: string;
-  value: string[];
-  icons: string[];
-  onChangeInstagramId: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onChangeLink: (e: React.ChangeEvent<HTMLInputElement>) => void;
-}
-
-export const ExhibitionIconInput = ({
-  text,
-  required = true,
-  placeholder,
-  description,
-  icons,
-  value,
-  onChangeInstagramId,
-  onChangeLink,
-}: IconInputProps) => {
-  return (
-    <div className={cx(listTypeStyle())}>
-      <TitleDescriptionGroup text={text} required={required} description={description!} />
-      <ImgInput
-        img={icons}
-        placeholder={placeholder}
-        value={value}
-        onChangeInstagramId={onChangeInstagramId}
-        onChangeLink={onChangeLink}
       />
     </div>
   );

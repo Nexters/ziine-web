@@ -1,3 +1,4 @@
+import { Icon } from '../icon';
 import { Typography } from '../typography';
 import { imgButtonStyle, imgInputContainer } from './img-button.styles';
 import { cx, css } from '@/styled-system/css';
@@ -16,6 +17,7 @@ export const ImgButton = ({ text, onChange, imagePreview }: Props) => {
   return (
     <div className={cx(imgInputContainer())}>
       <div className={cx(imgButtonStyle({ feature: 'upload' }))} onClick={handleClick}>
+        <Icon name='upload' size='medium' color='grayscale.600' />
         <input
           type='file'
           accept='image/*'
