@@ -1,5 +1,6 @@
 import { css, cx } from '@/styled-system/css';
 import { dropdownItemStyle, dropdownListStyle, dropdownSelectedStyle } from './dropdown.styles';
+import { Icon } from '../icon';
 
 interface DropdownListProps {
   options: string[];
@@ -12,7 +13,9 @@ interface DropdownListProps {
 export const DropdownList = ({ value, options, onChangeOption, onChangeIsOpen, isOpen }: DropdownListProps) => {
   return (
     <div className={css({ position: 'relative' })} onClick={onChangeIsOpen}>
-      <div className={cx(dropdownSelectedStyle())}>{value}</div>
+      <div className={cx(dropdownSelectedStyle())}>
+        {value} <Icon name='drop_down_arrow' size='medium' color='grayscale.0' />
+      </div>
       {isOpen && (
         <ul className={cx(dropdownListStyle())}>
           {options.map((option: string, index: number) => {

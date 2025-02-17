@@ -259,7 +259,7 @@ const ArtworkRegisterPage = () => {
       />
 
       {/* 제출 버튼 */}
-      <Button type='sub' disabled={!isValid} onClick={() => {}}>
+      <Button type='main' disabled={!isValid} onClick={() => {}}>
         <Typography level='subtitle2'>등록 신청하기</Typography>
       </Button>
     </form>
