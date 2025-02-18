@@ -30,7 +30,7 @@ export const MagazineCard = ({
   keywords,
 }: Props) => {
   return (
-    <Link href={`/magazine-webview/${id}`}>
+    <Link href={`/magazine/${id}`}>
       <div
         className={cx(css({ padding: '16px', borderRadius: '18.493px' }), className)}
         style={{ ...style, backgroundColor }}
