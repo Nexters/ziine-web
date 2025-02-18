@@ -30,6 +30,20 @@ export const postArtworksForm = async (data: Partial<ArtworkFormItem>) => {
   }
 };
 
+export const postClientSideArtworksForm = async (data: Partial<ArtworkFormItem>) => {
+  try {
+    const response = await apiClient.post<{ success: boolean; message: string }>('api/v1/artworks', {
+      json: data,
+      prefixUrl: '',
+    });
+
+    return response;
+  } catch (error) {
+    console.error('Error posting artwork (client-side): ', error);
+    throw error;
+  }
+};
+
 interface ArtWorkImage {
   presignedUrl: string;
   file: File;

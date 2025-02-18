@@ -14,6 +14,9 @@ const nextConfig: NextConfig = {
       'monthlyart.com',
       'slownews.kr',
       'www.sakyejul.net',
+      'velog.velcdn.com',
+      'cdn.ziine.gallery',
+      'www.qrart.kr',
     ],
   },
 };

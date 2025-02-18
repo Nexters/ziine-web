@@ -15,8 +15,13 @@ import {
 } from '@ziine/design';
 import { css } from 'styled-system/css';
 import { ChangeEvent, useEffect, useState } from 'react';
-import { ArtworkFormItem, postArtworksForm, putArtworkImageToS3 } from '@/entities/artworks/apis/mutations';
-import { getArtworksImageUrl } from '@/entities/artworks/apis/apis';
+import {
+  ArtworkFormItem,
+  postArtworksForm,
+  postClientSideArtworksForm,
+  putArtworkImageToS3,
+} from '@/entities/artworks/apis/mutations';
+import { getArtworksImageUrl, getClientSideArtworksImageUrl } from '@/entities/artworks/apis/apis';
 import { useRouter } from 'next/navigation';
 import { SnsInfoInput } from '@/features/artwork-register/components/sns-info-input';
 import EducationInput from '@/features/artwork-register/components/education-input/education-input';
@@ -39,13 +44,7 @@ interface FormData {
 }
 
 const ArtworkRegisterPage = () => {
-  const {
-    register,
-    handleSubmit,
-    watch,
-    setValue,
-    formState: { errors, isValid },
-  } = useForm<FormData>({
+  const { handleSubmit, watch, setValue } = useForm<FormData>({
     defaultValues: {
       artworkImageUrl: '',
       title: '',
@@ -65,7 +64,7 @@ const ArtworkRegisterPage = () => {
 
   useEffect(() => {
     if (educationTags.length === 0 && watch('education') === '#') {
-      setValue('education', ''); // 🚀 빈 값으로 유지
+      setValue('education', '');
     }
   }, [educationTags, setValue, watch]);
 
@@ -79,7 +78,10 @@ const ArtworkRegisterPage = () => {
 
     if (file) {
       try {
-        const imageUrl = await getArtworksImageUrl([file.name]);
+        const imageUrl =
+          typeof window !== 'undefined'
+            ? await getClientSideArtworksImageUrl([file.name])
+            : await getArtworksImageUrl([file.name]);
 
         if (imageUrl?.presignedUrlList?.length > 0) {
           await putArtworkImageToS3({
@@ -100,7 +102,7 @@ const ArtworkRegisterPage = () => {
   };
 
   const handleAddExhibitionInput = () => {
-    setExhibitionHistory([...exhibitionHistory, ['', '']]); // 새로운 전시 이력 추가
+    setExhibitionHistory([...exhibitionHistory, ['', '']]);
   };
 
   const handleExhibitionChange = (index: number, field: 'date' | 'title', value: string) => {
@@ -166,12 +168,15 @@ const ArtworkRegisterPage = () => {
 
       const filteredData = filterEmptyValues(formData);
 
-      console.log('🚀 artworkFormData:', filteredData);
+      console.log('artworkFormData: ', filteredData);
 
-      await postArtworksForm(filteredData);
+      typeof window !== 'undefined'
+        ? await postClientSideArtworksForm(filteredData)
+        : await postArtworksForm(filteredData);
+
       handleWebViewRegisterFormData();
     } catch (error) {
-      console.error('❌ Failed to register artwork:', error);
+      console.error('register artwork error', error);
     }
   };
 
