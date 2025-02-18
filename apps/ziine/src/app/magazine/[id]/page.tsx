@@ -37,7 +37,7 @@ const MagazineDetailPage = async ({ params }: { params: Promise<{ id: string }> 
 
   return (
     <>
-      <NavigateBar className={css({ position: 'fixed', top: 0 })} />
+      <NavigateBar className={css({ position: 'sticky', top: 0 })} />
       <Suspense fallback={<Loading className={css({ flex: 1, height: '100%' })} />}>
         <MagazineDetail id={Number(id)} />
       </Suspense>
