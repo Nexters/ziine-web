@@ -18,7 +18,7 @@ export interface ArtworkFormItem {
   email?: string;
 }
 
-export const postArtworksForm = async (data: ArtworkFormItem) => {
+export const postArtworksForm = async (data: Partial<ArtworkFormItem>) => {
   try {
     const response = await apiClient.post<{ success: boolean; message: string }>('api/v1/artworks', {
       json: data,

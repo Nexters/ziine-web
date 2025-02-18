@@ -52,6 +52,7 @@ const ArtworkRegisterPage = () => {
       width: '',
       height: '',
       material: '',
+      artistName: '',
     },
     mode: 'onChange',
   });
@@ -132,6 +133,18 @@ const ArtworkRegisterPage = () => {
 
   const onSubmit = async () => {
     try {
+      const emailOption = watch('emailOption');
+      const email = watch('email');
+      const formattedEmail = emailOption && emailOption !== '직접 입력' ? `${email}@${emailOption}` : email;
+
+      const contacts = [];
+      if (watch('instagramId')) {
+        contacts.push({ type: 'INSTAGRAM', value: watch('instagramId') });
+      }
+      if (watch('link')) {
+        contacts.push({ type: 'WEBSITE', value: watch('link') });
+      }
+
       const formData: Partial<ArtworkFormItem> = {
         artworkImageUrl: watch('artworkImageUrl'),
         title: watch('title'),
@@ -147,16 +160,16 @@ const ArtworkRegisterPage = () => {
             title,
             exhibitionDate: formatYYYYMMDDDate(date),
           })),
-        contacts: watch('instagramId') ? [{ type: 'INSTAGRAM', value: watch('instagramId') }] : undefined,
-        email: watch('email'),
+        contacts: contacts.length > 0 ? contacts : undefined,
+        email: formattedEmail || undefined,
       };
 
       const filteredData = filterEmptyValues(formData);
 
       console.log('🚀 artworkFormData:', filteredData);
 
-      // await postArtworksForm(filteredData);
-      // handleWebViewRegisterFormData();
+      await postArtworksForm(filteredData);
+      handleWebViewRegisterFormData();
     } catch (error) {
       console.error('❌ Failed to register artwork:', error);
     }
@@ -217,7 +230,7 @@ const ArtworkRegisterPage = () => {
       <Divider />
       <OneRegisterArea
         text='작가 정보'
-        required={false}
+        required
         placeholder={['작가 이름']}
         value={watch('artistName') || ''}
         onChange={(e) => setValue('artistName', e.target.value)}
@@ -273,7 +286,14 @@ const ArtworkRegisterPage = () => {
       <Button
         type='main'
         disabled={
-          !(watch('artworkImageUrl') && watch('title') && watch('width') && watch('height') && watch('material'))
+          !(
+            watch('artworkImageUrl') &&
+            watch('title') &&
+            watch('width') &&
+            watch('height') &&
+            watch('material') &&
+            watch('artistName')
+          )
         }
         onClick={handleSubmit(onSubmit)}
       >
