@@ -85,7 +85,7 @@ export const EducationInput = ({ value, onChange, tags, onTagsChange }: Educatio
               onClick={handleTagClick}
               variant='grayFilled'
               icon={
-                <div onClick={(e) => handelRemoveTag(index)} style={{ cursor: 'pointer' }}>
+                <div onClick={() => handelRemoveTag(index)} style={{ cursor: 'pointer' }}>
                   <Icon name='cancel' size='small' color='grayscale.600' />
                 </div>
               }
