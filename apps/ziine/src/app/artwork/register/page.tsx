@@ -24,7 +24,7 @@ import {
 import { getArtworksImageUrl, getClientSideArtworksImageUrl } from '@/entities/artworks/apis/apis';
 import { useRouter } from 'next/navigation';
 import { SnsInfoInput } from '@/features/artwork-register/components/sns-info-input';
-import { EducationInput } from '@/features/artwork-register/components/education-input/education-input';
+import { EducationInput } from '@/features/artwork-register/components/education-input';
 import { formatYYYYMMDDDate } from '@/shared/utils';
 
 interface FormData {
@@ -78,10 +78,12 @@ const ArtworkRegisterPage = () => {
 
     if (file) {
       try {
-        const imageUrl =
-          typeof window !== 'undefined'
-            ? await getClientSideArtworksImageUrl([file.name])
-            : await getArtworksImageUrl([file.name]);
+        let imageUrl;
+        if (typeof window !== 'undefined') {
+          imageUrl = await getClientSideArtworksImageUrl([file.name]);
+        } else {
+          imageUrl = await getArtworksImageUrl([file.name]);
+        }
 
         if (imageUrl?.presignedUrlList?.length > 0) {
           await putArtworkImageToS3({
@@ -171,9 +173,11 @@ const ArtworkRegisterPage = () => {
 
       console.log('artworkFormData: ', filteredData);
 
-      typeof window !== 'undefined'
-        ? await postClientSideArtworksForm(filteredData)
-        : await postArtworksForm(filteredData);
+      if (typeof window !== 'undefined') {
+        await postClientSideArtworksForm(filteredData);
+      } else {
+        await postArtworksForm(filteredData);
+      }
 
       handleWebViewRegisterFormData();
     } catch (error) {

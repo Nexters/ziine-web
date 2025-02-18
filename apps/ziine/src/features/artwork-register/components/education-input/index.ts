@@ -1,1 +1,1 @@
-import { EducationInput } from './education-input';
+export { EducationInput } from './education-input';
