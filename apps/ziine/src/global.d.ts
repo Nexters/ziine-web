@@ -6,11 +6,11 @@ declare global {
     webkit?: {
       messageHandlers?: {
         artworkRegisterSuccess?: {
-          postMessage: (message: any) => void;
+          postMessage: (message: string | Record<string, unknown>) => void;
         };
       };
     };
   }
 }
 
-export {}; // 글로벌 타입 선언에서는 export 필수
+export {};
