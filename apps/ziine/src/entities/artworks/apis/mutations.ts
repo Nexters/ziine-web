@@ -9,7 +9,7 @@ export interface ArtworkFormItem {
   artistName: string;
   description?: string;
   educations?: string[];
-  exhibitions?: { title: string; exhibitionDate: Date }[];
+  exhibitions?: { title: string; exhibitionDate: string }[];
   contacts?: {
     type: string;
     value: string;

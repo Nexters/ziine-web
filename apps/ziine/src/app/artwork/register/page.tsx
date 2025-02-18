@@ -20,6 +20,7 @@ import { getArtworksImageUrl } from '@/entities/artworks/apis/apis';
 import { useRouter } from 'next/navigation';
 import { SnsInfoInput } from '@/features/artwork-register/components/sns-info-input';
 import EducationInput from '@/features/artwork-register/components/education-input/education-input';
+import { formatYYYYMMDDDate } from '@/shared/utils';
 
 interface FormData {
   artworkImageUrl: string;
@@ -30,6 +31,7 @@ interface FormData {
   artistInfo: string;
   artistName: string;
   education: string;
+  exhibitions: { title: string; exhibitionDate: string }[];
   instagramId: string;
   link: string;
   email: string;
@@ -97,7 +99,17 @@ const ArtworkRegisterPage = () => {
   };
 
   const handleAddExhibitionInput = () => {
-    setExhibitionHistory([...exhibitionHistory, ['', '']]);
+    setExhibitionHistory([...exhibitionHistory, ['', '']]); // 새로운 전시 이력 추가
+  };
+
+  const handleExhibitionChange = (index: number, field: 'date' | 'title', value: string) => {
+    const newHistory = [...exhibitionHistory];
+    if (field === 'date') {
+      newHistory[index][0] = value;
+    } else {
+      newHistory[index][1] = value;
+    }
+    setExhibitionHistory(newHistory);
   };
 
   const handleWebViewRegisterFormData = () => {
@@ -129,6 +141,12 @@ const ArtworkRegisterPage = () => {
         artistName: watch('artistName'),
         description: watch('artistInfo'),
         educations: educationTags.length > 0 ? educationTags : undefined,
+        exhibitions: exhibitionHistory
+          .filter(([date, title]) => date.trim() !== '' && title.trim() !== '')
+          .map(([date, title]) => ({
+            title,
+            exhibitionDate: formatYYYYMMDDDate(date),
+          })),
         contacts: watch('instagramId') ? [{ type: 'INSTAGRAM', value: watch('instagramId') }] : undefined,
         email: watch('email'),
       };
@@ -201,7 +219,7 @@ const ArtworkRegisterPage = () => {
         text='작가 정보'
         required={false}
         placeholder={['작가 이름']}
-        value={watch('artistName')}
+        value={watch('artistName') || ''}
         onChange={(e) => setValue('artistName', e.target.value)}
       />
       {/* 학력 */}
@@ -221,19 +239,11 @@ const ArtworkRegisterPage = () => {
         {exhibitionHistory.map((exhibition, index) => (
           <ExhibitionInput
             key={index}
-            placeholder={['YYYY.MM', '전시 명']}
+            placeholder={['YYYY-MM-DD', '전시 명']}
             index={index}
             value={exhibition}
-            onChangeDate={(value) => {
-              const newHistory = [...exhibitionHistory];
-              newHistory[index][0] = value;
-              setExhibitionHistory(newHistory);
-            }}
-            onChangeName={(value) => {
-              const newHistory = [...exhibitionHistory];
-              newHistory[index][1] = value;
-              setExhibitionHistory(newHistory);
-            }}
+            onChangeDate={(value) => handleExhibitionChange(index, 'date', value)}
+            onChangeName={(value) => handleExhibitionChange(index, 'title', value)}
           />
         ))}
       </div>
