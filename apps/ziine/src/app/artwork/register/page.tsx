@@ -78,12 +78,7 @@ const ArtworkRegisterPage = () => {
 
     if (file) {
       try {
-        let imageUrl;
-        if (typeof window !== 'undefined') {
-          imageUrl = await getClientSideArtworksImageUrl([file.name]);
-        } else {
-          imageUrl = await getArtworksImageUrl([file.name]);
-        }
+        const imageUrl = await getClientSideArtworksImageUrl([file.name]);
 
         if (imageUrl?.presignedUrlList?.length > 0) {
           await putArtworkImageToS3({
@@ -173,12 +168,7 @@ const ArtworkRegisterPage = () => {
 
       console.log('artworkFormData: ', filteredData);
 
-      if (typeof window !== 'undefined') {
-        await postClientSideArtworksForm(filteredData);
-      } else {
-        await postArtworksForm(filteredData);
-      }
-
+      await postClientSideArtworksForm(filteredData);
       handleWebViewRegisterFormData();
     } catch (error) {
       console.error('register artwork error', error);
