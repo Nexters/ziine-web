@@ -15,13 +15,8 @@ import {
 } from '@ziine/design';
 import { css } from 'styled-system/css';
 import { ChangeEvent, useEffect, useState } from 'react';
-import {
-  ArtworkFormItem,
-  postArtworksForm,
-  postClientSideArtworksForm,
-  putArtworkImageToS3,
-} from '@/entities/artworks/apis/mutations';
-import { getArtworksImageUrl, getClientSideArtworksImageUrl } from '@/entities/artworks/apis/apis';
+import { ArtworkFormItem, postClientSideArtworksForm, putArtworkImageToS3 } from '@/entities/artworks/apis/mutations';
+import { getClientSideArtworksImageUrl } from '@/entities/artworks/apis/apis';
 import { useRouter } from 'next/navigation';
 import { SnsInfoInput } from '@/features/artwork-register/components/sns-info-input';
 import { EducationInput } from '@/features/artwork-register/components/education-input';
