@@ -1,6 +1,6 @@
 import { css } from '@/styled-system/css';
-import { Icon, Input, Tag, TitleDescriptionGroup, Typography } from '@ziine/design';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { Icon, Input, Tag, TitleDescriptionGroup } from '@ziine/design';
+import { ChangeEvent, useEffect } from 'react';
 
 interface EducationInputProps {
   value: string;
@@ -9,7 +9,7 @@ interface EducationInputProps {
   onTagsChange: (tags: string[]) => void;
 }
 
-const EducationInput = ({ value, onChange, tags, onTagsChange }: EducationInputProps) => {
+export const EducationInput = ({ value, onChange, tags, onTagsChange }: EducationInputProps) => {
   useEffect(() => {
     if (value === '#' && tags.length === 0) {
       onChange({ target: { value: '' } } as React.ChangeEvent<HTMLInputElement>);
@@ -38,7 +38,8 @@ const EducationInput = ({ value, onChange, tags, onTagsChange }: EducationInputP
       }, 0);
     }
   };
-  const handelRemoveTag = (index: number, e: React.MouseEvent) => {
+  const handelRemoveTag = (index: number) => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const newTags = tags.filter((_, i) => i !== index);
     onTagsChange(newTags);
   };
@@ -82,19 +83,18 @@ const EducationInput = ({ value, onChange, tags, onTagsChange }: EducationInputP
           <div key={index}>
             <Tag
               onClick={handleTagClick}
-              children={`#${tag}`}
               variant='grayFilled'
               icon={
-                <div onClick={(e) => handelRemoveTag(index, e)} style={{ cursor: 'pointer' }}>
+                <div onClick={(e) => handelRemoveTag(index)} style={{ cursor: 'pointer' }}>
                   <Icon name='cancel' size='small' color='grayscale.600' />
                 </div>
               }
-            ></Tag>
+            >
+              {`#${tag}`}
+            </Tag>
           </div>
         ))}
       </div>
     </div>
   );
 };
-
-export default EducationInput;

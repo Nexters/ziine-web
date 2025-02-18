@@ -24,7 +24,7 @@ import {
 import { getArtworksImageUrl, getClientSideArtworksImageUrl } from '@/entities/artworks/apis/apis';
 import { useRouter } from 'next/navigation';
 import { SnsInfoInput } from '@/features/artwork-register/components/sns-info-input';
-import EducationInput from '@/features/artwork-register/components/education-input/education-input';
+import { EducationInput } from '@/features/artwork-register/components/education-input/education-input';
 import { formatYYYYMMDDDate } from '@/shared/utils';
 
 interface FormData {
@@ -120,7 +120,7 @@ const ArtworkRegisterPage = () => {
       if (window.ziineApp?.artworkRegisterSuccess) {
         window.ziineApp.artworkRegisterSuccess();
       } else if (window.webkit?.messageHandlers?.artworkRegisterSuccess) {
-        window.webkit.messageHandlers.artworkRegisterSuccess.postMessage(null);
+        window.webkit.messageHandlers.artworkRegisterSuccess.postMessage('');
       } else {
         router.push('/artwork/success');
       }
@@ -129,6 +129,7 @@ const ArtworkRegisterPage = () => {
 
   const filterEmptyValues = (data: Partial<ArtworkFormItem>): Partial<ArtworkFormItem> => {
     return Object.fromEntries(
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       Object.entries(data).filter(([_, value]) => value !== '' && value !== undefined && value !== null),
     ) as Partial<ArtworkFormItem>;
   };
