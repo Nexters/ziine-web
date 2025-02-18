@@ -1,12 +1,12 @@
 'use client';
 
+import { useForm } from 'react-hook-form';
 import {
   ImgButton,
   Typography,
   OneRegisterArea,
   TwoRegisterArea,
   ExhibitionInput,
-  ExhibitionIconInput,
   DropDownInput,
   Divider,
   Button,
@@ -15,54 +15,62 @@ import {
 } from '@ziine/design';
 import { css } from 'styled-system/css';
 import { ChangeEvent, useEffect, useState } from 'react';
-import { ArtworkFormItem, postArtworksForm, putArtworkImageToS3 } from '@/entities/artworks/apis/mutations';
-import { getArtworksImageUrl } from '@/entities/artworks/apis/apis';
+import {
+  ArtworkFormItem,
+  postArtworksForm,
+  postClientSideArtworksForm,
+  putArtworkImageToS3,
+} from '@/entities/artworks/apis/mutations';
+import { getArtworksImageUrl, getClientSideArtworksImageUrl } from '@/entities/artworks/apis/apis';
+import { useRouter } from 'next/navigation';
+import { SnsInfoInput } from '@/features/artwork-register/components/sns-info-input';
+import EducationInput from '@/features/artwork-register/components/education-input/education-input';
+import { formatYYYYMMDDDate } from '@/shared/utils';
 
-type EventType = React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>;
+interface FormData {
+  artworkImageUrl: string;
+  title: string;
+  width: string;
+  height: string;
+  material: string;
+  artistInfo: string;
+  artistName: string;
+  education: string;
+  exhibitions: { title: string; exhibitionDate: string }[];
+  instagramId: string;
+  link: string;
+  email: string;
+  emailOption: string;
+}
 
 const ArtworkRegisterPage = () => {
+  const { handleSubmit, watch, setValue } = useForm<FormData>({
+    defaultValues: {
+      artworkImageUrl: '',
+      title: '',
+      width: '',
+      height: '',
+      material: '',
+      artistName: '',
+    },
+    mode: 'onChange',
+  });
+
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   const [imagePreview, setImagePreview] = useState<string>('');
-  const [title, setTitle] = useState<string>('');
-  const [width, setWidth] = useState<string>('');
-  const [height, setHeight] = useState<string>('');
-  const [material, setMaterial] = useState<string>('');
-  const [artistInfo, setArtistInfo] = useState<string>('');
-  const [artistName, setArtistName] = useState<string>('');
-  const [education, setEducation] = useState<string>('');
-  const [instagramId, setInstagramId] = useState<string>('');
-  const [link, setLink] = useState<string>('');
-  const [email, setEmail] = useState<string>('');
-  //const [emailOption, setEmailOption] = useState<string>('');
-
-  const [isRegisterBtnDisabled, setIsRegisterBtnDisabled] = useState(false);
-  const options = ['naver.com', 'gmail.com', 'kakao.com', 'daum.net', '직접 입력'];
-
-  const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState(options[options.length - 1]);
-
-  const toggleDropdown = () => {
-    setIsOpen((prev) => !prev);
-  };
-
-  const selectOption = (option: string) => {
-    setSelectedOption(option);
-    setIsOpen(false);
-  };
+  const [exhibitionHistory, setExhibitionHistory] = useState<[string, string][]>([['', '']]);
+  const [educationTags, setEducationTags] = useState<string[]>([]);
+  const router = useRouter();
 
   useEffect(() => {
-    const allRequiredFilled = title.trim() !== '' && Number(width) > 0 && Number(height) > 0 && material.trim() !== '';
-
-    setIsRegisterBtnDisabled(!allRequiredFilled);
-  }, [title, width, height, material, artistName, instagramId, email]);
-
-  const uploadImageToServer = async (file: File) => {
-    try {
-      const response = await getArtworksImageUrl([file.name]);
-      console.log('getArtworksImage successfully:', response);
-      return response;
-    } catch (err) {
-      console.error('Error uploadImageToServer: ', err);
+    if (educationTags.length === 0 && watch('education') === '#') {
+      setValue('education', '');
     }
+  }, [educationTags, setValue, watch]);
+
+  const onChangeIsOpen = () => {
+    setIsOpen((prev) => !prev);
+    console.log(isOpen);
   };
 
   const handleImageChange = async (e: ChangeEvent<HTMLInputElement>) => {
@@ -70,15 +78,20 @@ const ArtworkRegisterPage = () => {
 
     if (file) {
       try {
-        const imageUrl = await uploadImageToServer(file);
+        const imageUrl =
+          typeof window !== 'undefined'
+            ? await getClientSideArtworksImageUrl([file.name])
+            : await getArtworksImageUrl([file.name]);
 
-        if (imageUrl && imageUrl.presignedUrlList && imageUrl.presignedUrlList.length > 0) {
+        if (imageUrl?.presignedUrlList?.length > 0) {
           await putArtworkImageToS3({
             presignedUrl: imageUrl.presignedUrlList[0].presignedUrl,
             file: file,
           });
 
-          setImagePreview(imageUrl.presignedUrlList[0].fileUrl);
+          const newImageUrl = imageUrl.presignedUrlList[0].fileUrl;
+          setImagePreview(newImageUrl);
+          setValue('artworkImageUrl', newImageUrl);
         } else {
           throw new Error('Invalid response structure');
         }
@@ -88,100 +101,87 @@ const ArtworkRegisterPage = () => {
     }
   };
 
-  const handleTitleChange = (e: EventType) => setTitle(e.target.value);
-  const handleWidthChange = (e: EventType) => {
-    const value = e.target.value;
-    if (value === '' || !isNaN(Number(value))) {
-      setWidth(value);
-    }
-  };
-
-  const handleHeightChange = (e: EventType) => {
-    const value = e.target.value;
-    if (!isNaN(Number(value)) || value === '') {
-      setHeight(value);
-    }
-  };
-
-  const handleMaterialChange = (e: EventType) => setMaterial(e.target.value);
-  const handleArtistInfoChange = (e: EventType) => setArtistInfo(e.target.value);
-  const handleArtistNameChange = (e: EventType) => setArtistName(e.target.value);
-  const handleEducationChange = (e: EventType) => setEducation(e.target.value);
-  const [exhibitionHistory, setExhibitionHistory] = useState<[string, string][]>([['', '']]);
-
-  const handleExhibitionDateChange = (index: number, value: string) => {
-    const newExhibitionHistory = [...exhibitionHistory];
-    newExhibitionHistory[index][0] = value; // 날짜 업데이트
-    setExhibitionHistory(newExhibitionHistory);
-  };
-
-  const handleExhibitionNameChange = (index: number, value: string) => {
-    const newExhibitionHistory = [...exhibitionHistory];
-    newExhibitionHistory[index][1] = value; // 전시명 업데이트
-    setExhibitionHistory(newExhibitionHistory);
-  };
-
   const handleAddExhibitionInput = () => {
-    setExhibitionHistory([...exhibitionHistory, ['', '']]); // 새로운 항목 추가
+    setExhibitionHistory([...exhibitionHistory, ['', '']]);
   };
 
-  const handleInstagramIdChange = (e: EventType) => setInstagramId(e.target.value);
-  const handleLinkChange = (e: EventType) => setLink(e.target.value);
+  const handleExhibitionChange = (index: number, field: 'date' | 'title', value: string) => {
+    const newHistory = [...exhibitionHistory];
+    if (field === 'date') {
+      newHistory[index][0] = value;
+    } else {
+      newHistory[index][1] = value;
+    }
+    setExhibitionHistory(newHistory);
+  };
 
-  const handleEmailChange = (e: EventType) => setEmail(e.target.value);
-  //const handleEmailOptionChange = (option: string) => setSelectedOption(option);
-
-  const handleWebViewRegisterFormData = async () => {
-    try {
-      const response = await postArtworksForm(artworkFormData);
-      console.log('Artwork registered successfully:', response);
-
-      // 📌 네이티브 웹뷰 브릿지 함수 호출
-      if (window.ziineApp && typeof window.ziineApp.artworkRegisterSuccess === 'function') {
+  const handleWebViewRegisterFormData = () => {
+    if (typeof window !== 'undefined') {
+      if (window.ziineApp?.artworkRegisterSuccess) {
         window.ziineApp.artworkRegisterSuccess();
+      } else if (window.webkit?.messageHandlers?.artworkRegisterSuccess) {
+        window.webkit.messageHandlers.artworkRegisterSuccess.postMessage(null);
       } else {
-        console.warn('ziineApp.artworkRegisterSuccess is not defined');
+        router.push('/artwork/success');
       }
-    } catch (error) {
-      console.error('Failed to register artwork:', error);
     }
   };
 
-  const artworkFormData: ArtworkFormItem = {
-    title: title,
-    width: Number(width),
-    height: Number(height),
-    material: material,
-    artworkImageUrl: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSz7lfFTzOS1-oWBBCCzdjUAIkckPDMrfzhrw&s',
-    artistName: artistName,
-    description: artistInfo,
-    educations: [education],
-    // exhibitions: exhibitionHistory.map(([title, exhibitionDate]) => ({
-    //   title,
-    //   exhibitionDate: new Date(exhibitionDate),
-    // })),
-    contacts: [
-      {
-        type: 'INSTAGRAM',
-        value: instagramId,
-      },
-    ],
-    email: email,
+  const filterEmptyValues = (data: Partial<ArtworkFormItem>): Partial<ArtworkFormItem> => {
+    return Object.fromEntries(
+      Object.entries(data).filter(([_, value]) => value !== '' && value !== undefined && value !== null),
+    ) as Partial<ArtworkFormItem>;
   };
 
-  const handleRegisterFormData = async () => {
+  const onSubmit = async () => {
     try {
-      const response = await postArtworksForm(artworkFormData).then(() => {
-        handleWebViewRegisterFormData();
-      });
-      console.log('Artwork registered successfully:', response);
+      const emailOption = watch('emailOption');
+      const email = watch('email');
+      const formattedEmail = emailOption && emailOption !== '직접 입력' ? `${email}@${emailOption}` : email;
+
+      const contacts = [];
+      if (watch('instagramId')) {
+        contacts.push({ type: 'INSTAGRAM', value: watch('instagramId') });
+      }
+      if (watch('link')) {
+        contacts.push({ type: 'WEBSITE', value: watch('link') });
+      }
+
+      const formData: Partial<ArtworkFormItem> = {
+        artworkImageUrl: watch('artworkImageUrl'),
+        title: watch('title'),
+        width: Number(watch('width')),
+        height: Number(watch('height')),
+        material: watch('material'),
+        artistName: watch('artistName'),
+        description: watch('artistInfo'),
+        educations: educationTags.length > 0 ? educationTags : undefined,
+        exhibitions: exhibitionHistory
+          .filter(([date, title]) => date.trim() !== '' && title.trim() !== '')
+          .map(([date, title]) => ({
+            title,
+            exhibitionDate: formatYYYYMMDDDate(date),
+          })),
+        contacts: contacts.length > 0 ? contacts : undefined,
+        email: formattedEmail || undefined,
+      };
+
+      const filteredData = filterEmptyValues(formData);
+
+      console.log('artworkFormData: ', filteredData);
+
+      typeof window !== 'undefined'
+        ? await postClientSideArtworksForm(filteredData)
+        : await postArtworksForm(filteredData);
+
+      handleWebViewRegisterFormData();
     } catch (error) {
-      console.error('Failed to register artwork:', error);
+      console.error('register artwork error', error);
     }
   };
 
   return (
-    <div
+    <form
       className={css({
         display: 'flex',
         flexDirection: 'column',
@@ -191,116 +191,120 @@ const ArtworkRegisterPage = () => {
         mb: '40px',
       })}
     >
-      <div className={css({ display: 'flex', flexDirection: 'column', gap: '12px' })}>
-        <ImgButton
-          text={imagePreview !== '' ? '이미지 바꾸기' : '이미지 업로드'}
-          onChange={handleImageChange}
-          imagePreview={imagePreview}
-        />
+      {/* 이미지 업로드 */}
+      <ImgButton
+        text={imagePreview ? '이미지 바꾸기' : '이미지 업로드'}
+        onChange={handleImageChange}
+        imagePreview={imagePreview}
+      />
+      <Typography level='paragraph4' className={css({ color: 'grayscale.600' })}>
+        *작품 이미지는 한 장만 업로드 가능합니다.
+      </Typography>
 
-        <Typography level='paragraph4' className={css({ color: 'grayscale.600' })}>
-          *작품 이미지는 한 장만 업로드 가능합니다.
-        </Typography>
-      </div>
+      {/* 입력 필드 */}
       <OneRegisterArea
-        text={'제목'}
-        required={true}
+        text='제목'
+        required
         placeholder={['작품 제목']}
-        value={title}
-        onChange={handleTitleChange}
+        value={watch('title')}
+        onChange={(e) => setValue('title', e.target.value)}
       />
       <TwoRegisterArea
         text='작품 사이즈'
-        required={true}
+        required
         placeholder={['가로 사이즈', '세로 사이즈']}
-        description='디지털 아트의 경우에는 픽셀을 cm 단위로 변환하여 작성해 주세요.'
-        value={[width, height]}
-        onWidthChange={handleWidthChange}
-        onHeightChange={handleHeightChange}
+        value={[watch('width'), watch('height')]}
+        onWidthChange={(e) => setValue('width', e.target.value)}
+        onHeightChange={(e) => setValue('height', e.target.value)}
       />
       <OneRegisterArea
-        text={'재료'}
-        required={true}
+        text='재료'
+        required
         placeholder={['ex. 캔버스에 유화']}
-        value={material}
-        onChange={handleMaterialChange}
+        value={watch('material')}
+        onChange={(e) => setValue('material', e.target.value)}
       />
       <OneRegisterArea
-        inputType={'fat'}
-        text={'작가 상세 정보'}
+        inputType='fat'
+        text='작가 상세 정보'
         required={false}
         placeholder={['ex. 작품에 담긴 의미 혹은 사용된 기법 설명']}
-        textCntVisible={false}
-        value={artistInfo}
-        onChange={handleArtistInfoChange}
+        value={watch('artistInfo')}
+        onChange={(e) => setValue('artistInfo', e.target.value)}
       />
       <Divider />
       <OneRegisterArea
-        text={'작가 정보'}
-        required={false}
+        text='작가 정보'
+        required
         placeholder={['작가 이름']}
-        description='본인을 들어낼 수 있는 설명이나 닉네임을 작성해 주세요.'
-        textCntVisible={false}
-        value={artistName}
-        onChange={handleArtistNameChange}
+        value={watch('artistName') || ''}
+        onChange={(e) => setValue('artistName', e.target.value)}
       />
-      <OneRegisterArea
-        text={'학력'}
-        required={false}
-        placeholder={['학력']}
-        description='공개하고자 하는 학교 이름과 학과 정보를 해쉬태그 형태로 기입해 주세요.'
-        value={education}
-        onChange={handleEducationChange}
+      {/* 학력 */}
+      <EducationInput
+        value={watch('education') || ''}
+        onChange={(e) => setValue('education', e.target.value)}
+        tags={educationTags}
+        onTagsChange={setEducationTags}
       />
+      {/* 전시 이력 */}
       <div>
         <TitleDescriptionGroup
-          text={'전시 이력'}
+          text='전시 이력'
           required={false}
-          description={'과거 전시했던 개인전 및 단체전의일자, 전시 명을 작성해 주세요.'}
+          description={'과거 전시했던 개인전 및 단체전의 일자, 전시 명을 작성해 주세요.'}
         />
         {exhibitionHistory.map((exhibition, index) => (
           <ExhibitionInput
             key={index}
-            placeholder={['YYYY.MM', '전시 명']}
+            placeholder={['YYYY-MM-DD', '전시 명']}
             index={index}
             value={exhibition}
-            onChangeDate={(value) => handleExhibitionDateChange(index, value)}
-            onChangeName={(value) => handleExhibitionNameChange(index, value)}
+            onChangeDate={(value) => handleExhibitionChange(index, 'date', value)}
+            onChangeName={(value) => handleExhibitionChange(index, 'title', value)}
           />
         ))}
       </div>
       <SmallButton text='추가하기' type='outlined' onClick={handleAddExhibitionInput} />
-      <ExhibitionIconInput
-        text={'홍보 채널'}
-        required={false}
-        placeholder={['@인스타그램 아이디', '비핸스 등 웹사이트 링크']}
-        icons={['', '']}
-        description={'나와 내 작품을 홍보할 수 있는 채널이 있다면, 알려주세요.'}
-        value={[instagramId, link]}
-        onChangeInstagramId={handleInstagramIdChange}
-        onChangeLink={handleLinkChange}
+
+      {/* SNS & 이메일 */}
+      <SnsInfoInput
+        instagramValue={watch('instagramId') || ''}
+        linkValue={watch('link') || ''}
+        onInstagramChange={(e) => setValue('instagramId', e.target.value)}
+        onLinkChange={(e) => setValue('link', e.target.value)}
       />
-      <Divider />
       <DropDownInput
         placeholder={['이메일']}
-        options={['직접 입력', '옵션1', '옵션2', '옵션3']}
-        text={'이메일'}
-        description={
-          '이메일 주소를 기입하시면, 심사 통과 여부를 메일로 알려드려요.\n 이메일 주소는 공개되지 않으니, 안심하고 작성하세요.'
-        }
+        options={['naver.com', 'gmail.com', 'kakao.com', 'daum.net', '직접 입력']}
+        text='이메일'
         required={false}
-        value={email}
-        dropdownValue={selectedOption}
-        onChangeInputValue={handleEmailChange}
-        onChangeIsOpen={toggleDropdown}
-        onChangeOption={selectOption}
+        value={watch('email') || ''}
+        onChangeInputValue={(e) => setValue('email', e.target.value)}
         dropdownIsOpen={isOpen}
+        onChangeIsOpen={onChangeIsOpen}
+        dropdownValue={watch('emailOption') || '직접 입력'}
+        onChangeOption={(option: string) => setValue('emailOption', option)}
       />
 
-      <Button onClick={handleRegisterFormData} disabled={isRegisterBtnDisabled}>
+      {/* 제출 버튼 */}
+      <Button
+        type='main'
+        disabled={
+          !(
+            watch('artworkImageUrl') &&
+            watch('title') &&
+            watch('width') &&
+            watch('height') &&
+            watch('material') &&
+            watch('artistName')
+          )
+        }
+        onClick={handleSubmit(onSubmit)}
+      >
         <Typography level='subtitle2'>등록 신청하기</Typography>
       </Button>
-    </div>
+    </form>
   );
 };
 

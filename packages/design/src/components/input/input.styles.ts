@@ -110,3 +110,11 @@ export const dropdownStyle = cva({
     outline: 'none',
   },
 });
+
+export const iconInputStyle = cva({
+  base: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '8px',
+  },
+});

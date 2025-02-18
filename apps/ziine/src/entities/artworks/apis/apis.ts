@@ -38,6 +38,17 @@ export const getArtworksImageUrl = async (fileNames: string[]): Promise<Presigne
   return await response.json();
 };
 
+export const getClientSideArtworksImageUrl = async (fileNames: string[]): Promise<PresignedUrl> => {
+  const params = new URLSearchParams();
+  params.append('fileNames', fileNames.join(','));
+
+  const response = await apiClient.get<PresignedUrl>(`api/v1/presigned-url?${params.toString()}`, {
+    prefixUrl: '',
+  });
+
+  return await response.json();
+};
+
 export const getClientSideArtworks = async () => {
   const response = await apiClient.get<{ artworks: Array<ArtworkItem> }>('api/v1/artworks', { prefixUrl: '' });
   return await response.json();

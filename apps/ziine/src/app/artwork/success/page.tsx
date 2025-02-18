@@ -6,9 +6,9 @@ import Link from 'next/link';
 import { css } from '@/styled-system/css';
 import dynamic from 'next/dynamic';
 
-const ArtworkRegisterSuccessPage = () => {
-  const Lottie = dynamic(() => import('react-lottie-player'), { ssr: false });
+const Lottie = dynamic(() => import('react-lottie-player'), { ssr: false });
 
+const ArtworkRegisterSuccessPage = () => {
   return (
     <div
       className={css({
@@ -49,6 +49,8 @@ const ArtworkRegisterSuccessPage = () => {
       {/* 로티 */}
       <Lottie
         animationData={lottieJson}
+        play
+        loop={false}
         className={css({
           maxWidth: '280px',
         })}
