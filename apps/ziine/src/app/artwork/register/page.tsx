@@ -15,8 +15,13 @@ import {
 } from '@ziine/design';
 import { css } from 'styled-system/css';
 import { ChangeEvent, useEffect, useState } from 'react';
-import { ArtworkFormItem, postClientSideArtworksForm, putArtworkImageToS3 } from '@/entities/artworks/apis/mutations';
-import { getClientSideArtworksImageUrl } from '@/entities/artworks/apis/apis';
+import {
+  ArtworkFormItem,
+  postArtworksForm,
+  postClientSideArtworksForm,
+  putArtworkImageToS3,
+} from '@/entities/artworks/apis/mutations';
+import { getArtworksImageUrl, getClientSideArtworksImageUrl } from '@/entities/artworks/apis/apis';
 import { useRouter } from 'next/navigation';
 import { SnsInfoInput } from '@/features/artwork-register/components/sns-info-input';
 import { EducationInput } from '@/features/artwork-register/components/education-input';
@@ -73,7 +78,12 @@ const ArtworkRegisterPage = () => {
 
     if (file) {
       try {
-        const imageUrl = await getClientSideArtworksImageUrl([file.name]);
+        let imageUrl;
+        if (typeof window !== 'undefined') {
+          imageUrl = await getClientSideArtworksImageUrl([file.name]);
+        } else {
+          imageUrl = await getArtworksImageUrl([file.name]);
+        }
 
         if (imageUrl?.presignedUrlList?.length > 0) {
           await putArtworkImageToS3({
@@ -163,7 +173,11 @@ const ArtworkRegisterPage = () => {
 
       console.log('artworkFormData: ', filteredData);
 
-      await postClientSideArtworksForm(filteredData);
+      if (typeof window !== 'undefined') {
+        await postClientSideArtworksForm(filteredData);
+      } else {
+        await postArtworksForm(filteredData);
+      }
       handleWebViewRegisterFormData();
     } catch (error) {
       console.error('register artwork error', error);

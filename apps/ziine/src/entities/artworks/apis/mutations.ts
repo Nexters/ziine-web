@@ -32,7 +32,9 @@ export const postArtworksForm = async (data: Partial<ArtworkFormItem>) => {
 
 export const postClientSideArtworksForm = async (data: Partial<ArtworkFormItem>) => {
   try {
-    const response = await apiClient.post<{ success: boolean; message: string }>('api/v1/artworks', {
+    const API_BASE = 'http://localhost:3000';
+
+    const response = await apiClient.post<{ success: boolean; message: string }>(`${API_BASE}/api/v1/artworks`, {
       json: data,
       prefixUrl: '',
     });
