@@ -7,7 +7,6 @@ import {
   OneRegisterArea,
   TwoRegisterArea,
   ExhibitionInput,
-  IconInput,
   DropDownInput,
   Divider,
   Button,
@@ -15,13 +14,15 @@ import {
   TitleDescriptionGroup,
 } from '@ziine/design';
 import { css } from 'styled-system/css';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { ArtworkFormItem, postArtworksForm, putArtworkImageToS3 } from '@/entities/artworks/apis/mutations';
 import { getArtworksImageUrl } from '@/entities/artworks/apis/apis';
 import { useRouter } from 'next/navigation';
 import { SnsInfoInput } from '@/features/artwork-register/components/sns-info-input';
+import EducationInput from '@/features/artwork-register/components/education-input/education-input';
 
 interface FormData {
+  artworkImageUrl: string;
   title: string;
   width: string;
   height: string;
@@ -44,17 +45,11 @@ const ArtworkRegisterPage = () => {
     formState: { errors, isValid },
   } = useForm<FormData>({
     defaultValues: {
+      artworkImageUrl: '',
       title: '',
       width: '',
       height: '',
       material: '',
-      artistInfo: '',
-      artistName: '',
-      education: '',
-      instagramId: '',
-      link: '',
-      email: '',
-      emailOption: '',
     },
     mode: 'onChange',
   });
@@ -62,6 +57,14 @@ const ArtworkRegisterPage = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [imagePreview, setImagePreview] = useState<string>('');
   const [exhibitionHistory, setExhibitionHistory] = useState<[string, string][]>([['', '']]);
+  const [educationTags, setEducationTags] = useState<string[]>([]);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (educationTags.length === 0 && watch('education') === '#') {
+      setValue('education', ''); // 🚀 빈 값으로 유지
+    }
+  }, [educationTags, setValue, watch]);
 
   const onChangeIsOpen = () => {
     setIsOpen((prev) => !prev);
@@ -81,7 +84,9 @@ const ArtworkRegisterPage = () => {
             file: file,
           });
 
-          setImagePreview(imageUrl.presignedUrlList[0].fileUrl);
+          const newImageUrl = imageUrl.presignedUrlList[0].fileUrl;
+          setImagePreview(newImageUrl);
+          setValue('artworkImageUrl', newImageUrl);
         } else {
           throw new Error('Invalid response structure');
         }
@@ -95,8 +100,6 @@ const ArtworkRegisterPage = () => {
     setExhibitionHistory([...exhibitionHistory, ['', '']]);
   };
 
-  const router = useRouter();
-
   const handleWebViewRegisterFormData = () => {
     if (typeof window !== 'undefined') {
       if (window.ziineApp?.artworkRegisterSuccess) {
@@ -109,34 +112,33 @@ const ArtworkRegisterPage = () => {
     }
   };
 
-  const filterEmptyValues = (data: Record<string, any>) => {
-    return Object.entries(data).reduce((acc, [key, value]) => {
-      if (value !== '' && value !== undefined && value !== null) {
-        acc[key] = value;
-      }
-      return acc;
-    }, {} as Record<string, any>);
+  const filterEmptyValues = (data: Partial<ArtworkFormItem>): Partial<ArtworkFormItem> => {
+    return Object.fromEntries(
+      Object.entries(data).filter(([_, value]) => value !== '' && value !== undefined && value !== null),
+    ) as Partial<ArtworkFormItem>;
   };
 
-  const onSubmit = async (formData: FormData) => {
+  const onSubmit = async () => {
     try {
-      const filteredData = filterEmptyValues(formData);
-
-      const artworkFormData: ArtworkFormItem = {
-        title: filteredData.title,
-        width: Number(filteredData.width),
-        height: Number(filteredData.height),
-        material: filteredData.material,
-        artworkImageUrl: imagePreview || 'https://via.placeholder.com/150',
-        artistName: filteredData.artistName,
-        description: filteredData.artistInfo,
-        educations: filteredData.education ? [filteredData.education] : undefined,
-        contacts: filteredData.instagramId ? [{ type: 'INSTAGRAM', value: filteredData.instagramId }] : undefined,
-        email: filteredData.email,
+      const formData: Partial<ArtworkFormItem> = {
+        artworkImageUrl: watch('artworkImageUrl'),
+        title: watch('title'),
+        width: Number(watch('width')),
+        height: Number(watch('height')),
+        material: watch('material'),
+        artistName: watch('artistName'),
+        description: watch('artistInfo'),
+        educations: educationTags.length > 0 ? educationTags : undefined,
+        contacts: watch('instagramId') ? [{ type: 'INSTAGRAM', value: watch('instagramId') }] : undefined,
+        email: watch('email'),
       };
 
-      await postArtworksForm(artworkFormData);
-      handleWebViewRegisterFormData();
+      const filteredData = filterEmptyValues(formData);
+
+      console.log('🚀 artworkFormData:', filteredData);
+
+      // await postArtworksForm(filteredData);
+      // handleWebViewRegisterFormData();
     } catch (error) {
       console.error('❌ Failed to register artwork:', error);
     }
@@ -144,7 +146,6 @@ const ArtworkRegisterPage = () => {
 
   return (
     <form
-      onSubmit={handleSubmit(onSubmit)}
       className={css({
         display: 'flex',
         flexDirection: 'column',
@@ -203,12 +204,12 @@ const ArtworkRegisterPage = () => {
         value={watch('artistName')}
         onChange={(e) => setValue('artistName', e.target.value)}
       />
-      <OneRegisterArea
-        text='학력'
-        required={false}
-        placeholder={['학력']}
-        value={watch('education')}
+      {/* 학력 */}
+      <EducationInput
+        value={watch('education') || ''}
         onChange={(e) => setValue('education', e.target.value)}
+        tags={educationTags}
+        onTagsChange={setEducationTags}
       />
       {/* 전시 이력 */}
       <div>
@@ -240,8 +241,8 @@ const ArtworkRegisterPage = () => {
 
       {/* SNS & 이메일 */}
       <SnsInfoInput
-        instagramValue={watch('instagramId')}
-        linkValue={watch('link')}
+        instagramValue={watch('instagramId') || ''}
+        linkValue={watch('link') || ''}
         onInstagramChange={(e) => setValue('instagramId', e.target.value)}
         onLinkChange={(e) => setValue('link', e.target.value)}
       />
@@ -250,7 +251,7 @@ const ArtworkRegisterPage = () => {
         options={['naver.com', 'gmail.com', 'kakao.com', 'daum.net', '직접 입력']}
         text='이메일'
         required={false}
-        value={watch('email')}
+        value={watch('email') || ''}
         onChangeInputValue={(e) => setValue('email', e.target.value)}
         dropdownIsOpen={isOpen}
         onChangeIsOpen={onChangeIsOpen}
@@ -259,7 +260,13 @@ const ArtworkRegisterPage = () => {
       />
 
       {/* 제출 버튼 */}
-      <Button type='main' disabled={!isValid} onClick={() => {}}>
+      <Button
+        type='main'
+        disabled={
+          !(watch('artworkImageUrl') && watch('title') && watch('width') && watch('height') && watch('material'))
+        }
+        onClick={handleSubmit(onSubmit)}
+      >
         <Typography level='subtitle2'>등록 신청하기</Typography>
       </Button>
     </form>

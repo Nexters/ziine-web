@@ -22,8 +22,8 @@ export const SnsInfoInput = ({ instagramValue, linkValue, onInstagramChange, onL
       value={[instagramValue, linkValue]}
       onChangeInstagramId={onInstagramChange}
       onChangeLink={onLinkChange}
-      instagramIconName={isFocusedInstagram || instagramValue.length > 0 ? 'instagram_color' : 'instagram_gray'}
-      linkIconColor={isFocusedLink || linkValue.length > 0 ? 'grayscale.0' : 'grayscale.600'}
+      instagramIconName={isFocusedInstagram || (instagramValue || '').length > 0 ? 'instagram_color' : 'instagram_gray'}
+      linkIconColor={isFocusedLink || (linkValue || '').length > 0 ? 'grayscale.0' : 'grayscale.600'}
       linkIconName={'link'}
       onInstagramFocus={() => setIsFocusedInstagram(true)}
       onInstagramBlur={() => setIsFocusedInstagram(false)}

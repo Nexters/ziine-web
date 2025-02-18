@@ -41,7 +41,7 @@ interface SmallBtnProps {
 
 export const SmallButton = ({ text, type = 'filled', onClick }: SmallBtnProps) => {
   return (
-    <button className={cx(smallBtnStyle({ type }))} onClick={onClick}>
+    <button type='button' className={cx(smallBtnStyle({ type }))} onClick={onClick}>
       {text}
     </button>
   );

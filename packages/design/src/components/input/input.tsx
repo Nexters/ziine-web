@@ -8,13 +8,21 @@ interface InputProps {
   textCntVisible: boolean;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   style?: CSSProperties;
 }
 
-export const Input = ({ placeholder, textCntVisible, value, onChange }: InputProps) => {
+export const Input = ({ placeholder, textCntVisible, value, onChange, onKeyDown }: InputProps) => {
   return (
     <div className={css({ display: 'flex', flexDirection: 'column', gap: '4px', width: '100%' })}>
-      <input type='text' className={cx(inputStyle())} placeholder={placeholder} value={value} onChange={onChange} />
+      <input
+        type='text'
+        className={cx(inputStyle())}
+        placeholder={placeholder}
+        value={value}
+        onChange={onChange}
+        onKeyDown={onKeyDown}
+      />
       {textCntVisible && (
         <Typography level='paragraph4' className={css({ color: 'grayscale.500', textAlign: 'end' })}>
           {value?.length}/00
