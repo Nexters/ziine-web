@@ -37,7 +37,7 @@ const ArtworkRegisterGuidePage = () => {
               </Typography>
             </div>
             <Typography className={css({ color: 'grayscale.300' })} level='paragraph3'>
-              배경이 많이 보이거 빛 반사가 된 이미지와 같은 경우,{' '}
+              배경이 많이 보이거나 빛 반사가 된 이미지와 같은 경우,{' '}
               <Typography className={css({ color: 'grayscale.0' })} level='paragraph3'>
                 작품 심사가 반려될 수 있어요.
               </Typography>

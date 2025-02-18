@@ -4,6 +4,7 @@ import { useSuspenseArtworksQuery } from '@/entities/artworks/apis/queries';
 import { ArtImageCard } from '@/entities/artworks/components';
 import { AddArtworkButton } from '@/features/add-artwork/components';
 import { useShowFloatingButton } from '@/features/add-artwork/hooks';
+import { Loading } from '@/shared';
 import { css, cx } from '@/styled-system/css';
 import React, { Suspense } from 'react';
 
@@ -19,8 +20,8 @@ const addButtonStyle = css({
 
 export const ArtWorkPage = () => {
   return (
-    <div className={css({ overflow: 'auto' })}>
-      <Suspense>
+    <div className={css({ height: '100%', overflow: 'auto' })}>
+      <Suspense fallback={<Loading className={css({ height: '100%' })} />}>
         <ArtworkList />
       </Suspense>
       <FloatingButton />
@@ -52,14 +53,14 @@ const ArtworkList = () => {
 
   return (
     <div className={gridLayout}>
-      {artworks.map(({ id, artist: { name, profileImageUrl }, title, imageUrl }, idx) => (
+      {artworks.map(({ id, artist: { name, profileImageUrl }, title, artworkImageUrl }, idx) => (
         <ArtImageCard
           id={id}
-          key={title + imageUrl + idx}
+          key={title + artworkImageUrl + idx}
           profileImageUrl={profileImageUrl}
           profileName={name}
           title={title}
-          imageUrl={imageUrl}
+          imageUrl={artworkImageUrl}
         />
       ))}
     </div>
