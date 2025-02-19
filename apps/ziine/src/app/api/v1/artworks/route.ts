@@ -1,4 +1,5 @@
 import { getArtworks } from '@/entities/artworks/apis/apis';
+import { postArtworksForm } from '@/entities/artworks/apis/mutations';
 import { NextRequest, NextResponse } from 'next/server';
 
 export const dynamic = 'force-dynamic';
@@ -21,9 +22,9 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    console.log(' POST 요청 받은 데이터:', data);
+    const response = await postArtworksForm(data);
 
-    return NextResponse.json({ success: true, message: 'Artwork 등록 성공' }, { status: 201 });
+    return NextResponse.json(response);
   } catch (error) {
     console.error('POST API 오류:', error);
     return NextResponse.json({ success: false, message: '서버 내부 오류 발생' }, { status: 500 });
