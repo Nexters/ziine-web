@@ -42,9 +42,7 @@ export const getClientSideArtworksImageUrl = async (fileNames: string[]): Promis
   const params = new URLSearchParams();
   params.append('fileNames', fileNames.join(','));
 
-  const API_BASE = process.env.API_URL || 'http://localhost:3000';
-
-  const response = await apiClient.get<PresignedUrl>(`${API_BASE}/api/v1/presigned-url?${params.toString()}`, {
+  const response = await apiClient.get<PresignedUrl>(`/api/v1/presigned-url?${params.toString()}`, {
     prefixUrl: '',
   });
 
