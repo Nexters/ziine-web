@@ -14,3 +14,4 @@ export { Tag } from './tag';
 export { Icon, type IconProps } from './icon';
 export { DropdownList } from './dropdown';
 export { IconInput } from './input';
+export { Popup } from './pop-up';

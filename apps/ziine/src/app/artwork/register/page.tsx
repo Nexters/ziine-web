@@ -303,7 +303,11 @@ const ArtworkRegisterPage = () => {
           />
         ))}
       </div>
-      <SmallButton text='추가하기' type='outlined' onClick={handleAddExhibitionInput} />
+      <SmallButton type='outlined' onClick={handleAddExhibitionInput}>
+        <Typography level='paragraph3' className={css({ color: 'grayscale.0' })}>
+          추가하기
+        </Typography>
+      </SmallButton>
 
       {/* SNS & 이메일 */}
       <SnsInfoInput

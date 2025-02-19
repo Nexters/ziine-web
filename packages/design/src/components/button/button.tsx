@@ -34,15 +34,15 @@ export const Button = ({
 };
 
 interface SmallBtnProps {
-  text: string;
+  children: ReactNode;
   type?: 'filled' | 'outlined';
   onClick: () => void;
 }
 
-export const SmallButton = ({ text, type = 'filled', onClick }: SmallBtnProps) => {
+export const SmallButton = ({ children, type = 'filled', onClick }: SmallBtnProps) => {
   return (
     <button type='button' className={cx(smallBtnStyle({ type }))} onClick={onClick}>
-      {text}
+      {children}
     </button>
   );
 };
