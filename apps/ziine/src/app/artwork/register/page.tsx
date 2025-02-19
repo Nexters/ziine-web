@@ -62,6 +62,7 @@ const ArtworkRegisterPage = () => {
   const [imagePreview, setImagePreview] = useState<string>('');
   const [exhibitionHistory, setExhibitionHistory] = useState<[string, string][]>([['', '']]);
   const [educationTags, setEducationTags] = useState<string[]>([]);
+  const [isPopUpOpen, setIsPopUpOpen] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -70,13 +71,21 @@ const ArtworkRegisterPage = () => {
     }
   }, [educationTags, setValue, watch]);
 
-  useEffect(() => {
-    console.log('errors.title ERROR: ', errors.title);
-  }, [errors]);
-
   const onChangeIsOpen = () => {
     setIsOpen((prev) => !prev);
     console.log(isOpen);
+  };
+
+  const handleExitClick = () => {
+    setIsPopUpOpen(true);
+  };
+
+  const handleClosePopup = () => {
+    setIsPopUpOpen(false);
+  };
+
+  const handleLeave = () => {
+    router.push('/');
   };
 
   const handleImageChange = async (e: ChangeEvent<HTMLInputElement>) => {
