@@ -12,18 +12,18 @@ import { typographyStyle } from '@ziine/design';
 type MarkdownProps = ComponentProps<typeof ReactMarkdown>;
 
 export const markdownComponents: MarkdownProps['components'] = {
-  h1: (props) => <h1 className={typographyStyle({ level: 'heading1' })} {...props} />,
-  h2: (props) => <h2 className={typographyStyle({ level: 'heading2' })} {...props} />,
-  h3: (props) => <h3 className={typographyStyle({ level: 'heading3' })} {...props} />,
-  h4: (props) => <h4 className={typographyStyle({ level: 'heading4' })} {...props} />,
-  h5: (props) => <h5 className={typographyStyle({ level: 'heading5' })} {...props} />,
-  h6: (props) => <h6 className={typographyStyle({ level: 'subtitle1' })} {...props} />,
-  p: (props) => <p className={typographyStyle({ level: 'paragraph1' })} {...props} />,
-  a: (props) => <a className='custom-link' {...props} />,
-  ul: (props) => <ul className='custom-ul' {...props} />,
-  ol: (props) => <ol className='custom-ol' {...props} />,
-  li: (props) => <li className='custom-li' {...props} />,
-  blockquote: (props) => <blockquote className='custom-blockquote' {...props} />,
+  h1: (props) => <h1 className={cx(typographyStyle({ level: 'heading1' }), css({ margin: '16px 0' }))} {...props} />,
+  h2: (props) => <h2 className={cx(typographyStyle({ level: 'heading2' }), css({ margin: '14px 0' }))} {...props} />,
+  h3: (props) => <h3 className={cx(typographyStyle({ level: 'heading3' }), css({ margin: '12px 0' }))} {...props} />,
+  h4: (props) => <h4 className={cx(typographyStyle({ level: 'heading4' }), css({ margin: '10px 0' }))} {...props} />,
+  h5: (props) => <h5 className={cx(typographyStyle({ level: 'heading5' }), css({ margin: '8px 0' }))} {...props} />,
+  h6: (props) => <h6 className={cx(typographyStyle({ level: 'subtitle1' }), css({ margin: '6px 0' }))} {...props} />,
+  p: (props) => <p className={cx(typographyStyle({ level: 'paragraph1' }), css({ margin: '16px 0' }))} {...props} />,
+  a: (props) => <a className={css({ margin: '4px 0' })} {...props} />,
+  ul: (props) => <ul className={css({ margin: '8px 0' })} {...props} />,
+  ol: (props) => <ol className={css({ margin: '8px 0' })} {...props} />,
+  li: (props) => <li className={css({ margin: '4px 0' })} {...props} />,
+  blockquote: (props) => <blockquote className={css({ margin: '12px 0' })} {...props} />,
 };
 
 const MagazineDetail = async ({ id }: { id: number }) => {
