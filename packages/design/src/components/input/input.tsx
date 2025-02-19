@@ -5,30 +5,36 @@ import { ChangeEvent, CSSProperties } from 'react';
 
 interface InputProps {
   placeholder: string;
-  textCntVisible: boolean;
+  maxLength?: number;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   style?: CSSProperties;
+  warning?: boolean;
 }
 
-export const Input = ({ placeholder, textCntVisible, value, onChange, onKeyDown }: InputProps) => {
+export const Input = ({ placeholder, maxLength, value, onChange, onKeyDown, warning }: InputProps) => {
   return (
-    <div className={css({ display: 'flex', flexDirection: 'column', gap: '4px', width: '100%' })}>
-      <input
-        type='text'
-        className={cx(inputStyle())}
-        placeholder={placeholder}
-        value={value}
-        onChange={onChange}
-        onKeyDown={onKeyDown}
-      />
-      {textCntVisible && (
-        <Typography level='paragraph4' className={css({ color: 'grayscale.500', textAlign: 'end' })}>
-          {value?.length}/00
-        </Typography>
-      )}
-    </div>
+    <>
+      <div className={css({ display: 'flex', flexDirection: 'column', gap: '4px', width: '100%' })}>
+        <input
+          type='text'
+          className={cx(inputStyle({ state: warning ? 'warning' : 'default' }))}
+          placeholder={placeholder}
+          value={value}
+          onChange={onChange}
+          onKeyDown={onKeyDown}
+        />
+        {maxLength && (
+          <Typography
+            level='paragraph4'
+            className={css({ color: warning ? 'error.500' : 'grayscale.500', textAlign: 'end' })}
+          >
+            {value?.length}/{maxLength}
+          </Typography>
+        )}
+      </div>
+    </>
   );
 };
 
@@ -36,14 +42,15 @@ interface DimensionsInputProps {
   placeholder: string;
   value: string;
   dimension?: string;
+  warning: boolean;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
-export const DimensionsInput = ({ placeholder, value, dimension = 'cm', onChange }: DimensionsInputProps) => {
+export const DimensionsInput = ({ placeholder, value, dimension = 'cm', onChange, warning }: DimensionsInputProps) => {
   return (
     <div
       className={cx(
-        inputStyle({ type: 'dimension' }),
+        inputStyle({ type: 'dimension', state: warning ? 'warning' : 'default' }),
         css({
           justifyContent: 'space-between',
           flex: 1,
@@ -65,7 +72,10 @@ export const DimensionsInput = ({ placeholder, value, dimension = 'cm', onChange
           outline: 'none',
         })}
       />
-      <Typography level='paragraph2' className={css({ whiteSpace: 'nowrap', color: 'grayscale.600' })}>
+      <Typography
+        level='paragraph2'
+        className={css({ whiteSpace: 'nowrap', color: warning ? 'error.500' : 'grayscale.500' })}
+      >
         {dimension}
       </Typography>
     </div>
@@ -74,20 +84,15 @@ export const DimensionsInput = ({ placeholder, value, dimension = 'cm', onChange
 
 interface TextAreaProps {
   placeholder: string;
-  textCntVisible: boolean;
   value: string;
+
   onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
 }
 
-export const InputFat = ({ placeholder, textCntVisible, value, onChange }: TextAreaProps) => {
+export const InputFat = ({ placeholder, value, onChange }: TextAreaProps) => {
   return (
     <div className={css({ display: 'flex', flexDirection: 'column', gap: '4px' })}>
       <textarea className={cx(inputFatStyle())} placeholder={placeholder} value={value} onChange={onChange} />
-      {textCntVisible && (
-        <Typography level='paragraph4' className={css({ color: 'grayscale.500', textAlign: 'end' })}>
-          00/00
-        </Typography>
-      )}
     </div>
   );
 };

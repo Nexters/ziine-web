@@ -16,9 +16,10 @@ interface Props {
   required: boolean;
   placeholder: string[];
   description?: string;
-  textCntVisible?: boolean;
+  maxLength?: number;
   value: string;
   onChange: (e: EventType) => void;
+  warning?: boolean;
 }
 
 export const OneRegisterArea = ({
@@ -27,14 +28,14 @@ export const OneRegisterArea = ({
   required = true,
   placeholder,
   description,
-  textCntVisible = true,
+  maxLength,
   value,
   onChange,
+  warning,
 }: Props) => {
   return (
     <div className={cx(listTypeStyle())}>
       <TitleDescriptionGroup text={text} required={required} description={description!} />
-
       <div
         className={css({
           display: 'grid',
@@ -44,9 +45,15 @@ export const OneRegisterArea = ({
         })}
       >
         {inputType === 'fat' ? (
-          <InputFat placeholder={placeholder[0]} textCntVisible={textCntVisible} value={value} onChange={onChange} />
+          <InputFat placeholder={placeholder[0]} value={value} onChange={onChange} />
         ) : (
-          <Input placeholder={placeholder[0]} textCntVisible={textCntVisible} value={value} onChange={onChange} />
+          <Input
+            placeholder={placeholder[0]}
+            maxLength={maxLength}
+            value={value}
+            onChange={onChange}
+            warning={warning}
+          />
         )}
       </div>
     </div>
@@ -60,6 +67,7 @@ interface TwoRegisterAreaProps {
   description?: string;
   textCntVisible?: boolean;
   value: string[];
+  warning: [boolean, boolean];
   onWidthChange: (e: EventType) => void;
   onHeightChange: (e: EventType) => void;
 }
@@ -70,6 +78,7 @@ export const TwoRegisterArea = ({
   placeholder,
   description,
   value,
+  warning,
   onWidthChange,
   onHeightChange,
 }: TwoRegisterAreaProps) => {
@@ -85,8 +94,8 @@ export const TwoRegisterArea = ({
           width: '100%',
         })}
       >
-        <DimensionsInput placeholder={placeholder[0]} value={value[0]} onChange={onWidthChange} />
-        <DimensionsInput placeholder={placeholder[1]} value={value[1]} onChange={onHeightChange} />
+        <DimensionsInput placeholder={placeholder[0]} value={value[0]} onChange={onWidthChange} warning={warning[0]} />
+        <DimensionsInput placeholder={placeholder[1]} value={value[1]} onChange={onHeightChange} warning={warning[1]} />
       </div>
     </div>
   );
@@ -116,18 +125,8 @@ export const ExhibitionInput = ({ index, placeholder, value, onChangeDate, onCha
       <Typography level='paragraph2' className={css({ color: 'grayscale.300' })}>
         {`전시 ${index + 1}`}
       </Typography>
-      <Input
-        placeholder={placeholder[0]}
-        textCntVisible={false}
-        value={value[0]}
-        onChange={(e) => onChangeDate(e.target.value)}
-      />
-      <Input
-        placeholder={placeholder[1]}
-        textCntVisible={false}
-        value={value[1]}
-        onChange={(e) => onChangeName(e.target.value)}
-      />
+      <Input placeholder={placeholder[0]} value={value[0]} onChange={(e) => onChangeDate(e.target.value)} />
+      <Input placeholder={placeholder[1]} value={value[1]} onChange={(e) => onChangeName(e.target.value)} />
     </div>
   );
 };
@@ -168,7 +167,7 @@ export const DropDownInput = ({
           gap: '11px',
         })}
       >
-        <Input placeholder={placeholder[0]} textCntVisible={false} value={value} onChange={onChangeInputValue} />
+        <Input placeholder={placeholder[0]} value={value} onChange={onChangeInputValue} />
         <DropdownList
           value={dropdownValue}
           options={options}

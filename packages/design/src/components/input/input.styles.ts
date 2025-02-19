@@ -10,6 +10,7 @@ const input_paragraph_style = {
 export const inputStyle = cva({
   defaultVariants: {
     type: 'default',
+    state: 'default',
   },
   base: {
     display: 'flex',
@@ -38,6 +39,21 @@ export const inputStyle = cva({
       dimension: {
         '@media (max-width: 899px)': {
           maxWidth: '166px',
+        },
+      },
+    },
+    state: {
+      default: {},
+      warning: {
+        color: 'grayscale.0',
+        border: 'solid',
+        borderWidth: '1.5px',
+        borderColor: 'error.500',
+        _focus: {
+          color: 'grayscale.0',
+          border: 'solid',
+          borderWidth: '1.5px',
+          borderColor: 'error.500',
         },
       },
     },

@@ -62,7 +62,6 @@ export const EducationInput = ({ value, onChange, tags, onTagsChange }: Educatio
       >
         <Input
           placeholder={'#대학교'}
-          textCntVisible={false}
           value={value}
           onChange={(e) => {
             const newValue = e.target.value;

@@ -26,25 +26,21 @@ import { useRouter } from 'next/navigation';
 import { SnsInfoInput } from '@/features/artwork-register/components/sns-info-input';
 import { EducationInput } from '@/features/artwork-register/components/education-input';
 import { formatYYYYMMDDDate } from '@/shared/utils';
-
-interface FormData {
-  artworkImageUrl: string;
-  title: string;
-  width: string;
-  height: string;
-  material: string;
-  artistInfo: string;
-  artistName: string;
-  education: string;
-  exhibitions: { title: string; exhibitionDate: string }[];
-  instagramId: string;
-  link: string;
-  email: string;
-  emailOption: string;
-}
+import { zodResolver } from '@hookform/resolvers/zod';
+import { artworkSchema } from '@/features/artwork-register/model/schema';
+import { z } from 'zod';
 
 const ArtworkRegisterPage = () => {
-  const { handleSubmit, watch, setValue } = useForm<FormData>({
+  type ArtworkFormData = z.infer<typeof artworkSchema>;
+
+  const {
+    handleSubmit,
+    watch,
+    setValue,
+    trigger,
+    formState: { errors, isValid },
+  } = useForm<ArtworkFormData>({
+    resolver: zodResolver(artworkSchema),
     defaultValues: {
       artworkImageUrl: '',
       title: '',
@@ -52,6 +48,12 @@ const ArtworkRegisterPage = () => {
       height: '',
       material: '',
       artistName: '',
+      artistInfo: '',
+      education: '',
+      exhibitions: [],
+      email: '',
+      emailOption: '직접 입력',
+      contacts: [],
     },
     mode: 'onChange',
   });
@@ -67,6 +69,10 @@ const ArtworkRegisterPage = () => {
       setValue('education', '');
     }
   }, [educationTags, setValue, watch]);
+
+  useEffect(() => {
+    console.log('errors.title ERROR: ', errors.title);
+  }, [errors]);
 
   const onChangeIsOpen = () => {
     setIsOpen((prev) => !prev);
@@ -142,13 +148,7 @@ const ArtworkRegisterPage = () => {
       const email = watch('email');
       const formattedEmail = emailOption && emailOption !== '직접 입력' ? `${email}@${emailOption}` : email;
 
-      const contacts = [];
-      if (watch('instagramId')) {
-        contacts.push({ type: 'INSTAGRAM', value: watch('instagramId') });
-      }
-      if (watch('link')) {
-        contacts.push({ type: 'WEBSITE', value: watch('link') });
-      }
+      const contacts = watch('contacts') || [];
 
       const formData: Partial<ArtworkFormItem> = {
         artworkImageUrl: watch('artworkImageUrl'),
@@ -206,44 +206,78 @@ const ArtworkRegisterPage = () => {
       </Typography>
 
       {/* 입력 필드 */}
-      <OneRegisterArea
-        text='제목'
-        required
-        placeholder={['작품 제목']}
-        value={watch('title')}
-        onChange={(e) => setValue('title', e.target.value)}
-      />
-      <TwoRegisterArea
-        text='작품 사이즈'
-        required
-        placeholder={['가로 사이즈', '세로 사이즈']}
-        value={[watch('width'), watch('height')]}
-        onWidthChange={(e) => setValue('width', e.target.value)}
-        onHeightChange={(e) => setValue('height', e.target.value)}
-      />
-      <OneRegisterArea
-        text='재료'
-        required
-        placeholder={['ex. 캔버스에 유화']}
-        value={watch('material')}
-        onChange={(e) => setValue('material', e.target.value)}
-      />
+      <div>
+        <OneRegisterArea
+          text='제목'
+          required
+          maxLength={80}
+          placeholder={['작품 제목']}
+          value={watch('title')}
+          onChange={(e) => setValue('title', e.target.value, { shouldValidate: true })}
+          warning={Boolean(errors.title)}
+        />
+        {errors.title && (
+          <Typography level='paragraph4' className={css({ color: 'error.500' })}>
+            {errors.title.message}
+          </Typography>
+        )}
+      </div>
+      <div>
+        <TwoRegisterArea
+          text='작품 사이즈'
+          required
+          placeholder={['가로 사이즈', '세로 사이즈']}
+          value={[watch('width'), watch('height')]}
+          onWidthChange={(e) => setValue('width', e.target.value, { shouldValidate: true })}
+          onHeightChange={(e) => setValue('height', e.target.value, { shouldValidate: true })}
+          warning={[Boolean(errors.width), Boolean(errors.height)]}
+        />
+        {(errors.width || errors.height) && (
+          <Typography level='paragraph4' className={css({ color: 'error.500' })}>
+            {errors.width?.message || errors.height?.message}
+          </Typography>
+        )}
+      </div>
+      <div>
+        <OneRegisterArea
+          text='재료'
+          required
+          maxLength={50}
+          placeholder={['ex. 캔버스에 유화']}
+          value={watch('material')}
+          onChange={(e) => setValue('material', e.target.value, { shouldValidate: true })}
+          warning={Boolean(errors.material)}
+        />
+        {errors.material && (
+          <Typography level='paragraph4' className={css({ color: 'error.500' })}>
+            {errors.material.message}
+          </Typography>
+        )}
+      </div>
       <OneRegisterArea
         inputType='fat'
         text='작가 상세 정보'
         required={false}
         placeholder={['ex. 작품에 담긴 의미 혹은 사용된 기법 설명']}
-        value={watch('artistInfo')}
+        value={watch('artistInfo') || ''}
         onChange={(e) => setValue('artistInfo', e.target.value)}
       />
       <Divider />
-      <OneRegisterArea
-        text='작가 정보'
-        required
-        placeholder={['작가 이름']}
-        value={watch('artistName') || ''}
-        onChange={(e) => setValue('artistName', e.target.value)}
-      />
+      <div>
+        <OneRegisterArea
+          text='작가 정보'
+          required
+          placeholder={['작가 이름']}
+          value={watch('artistName') || ''}
+          onChange={(e) => setValue('artistName', e.target.value, { shouldValidate: true })}
+          warning={Boolean(errors.artistName)}
+        />
+        {errors.artistName && (
+          <Typography level='paragraph4' className={css({ color: 'error.500' })}>
+            {errors.artistName.message}
+          </Typography>
+        )}
+      </div>
       {/* 학력 */}
       <EducationInput
         value={watch('education') || ''}
@@ -273,11 +307,18 @@ const ArtworkRegisterPage = () => {
 
       {/* SNS & 이메일 */}
       <SnsInfoInput
-        instagramValue={watch('instagramId') || ''}
-        linkValue={watch('link') || ''}
-        onInstagramChange={(e) => setValue('instagramId', e.target.value)}
-        onLinkChange={(e) => setValue('link', e.target.value)}
+        instagramValue={watch('contacts').find((c) => c.type === 'INSTAGRAM')?.value || ''}
+        linkValue={watch('contacts').find((c) => c.type === 'WEBSITE')?.value || ''}
+        onInstagramChange={(e) => {
+          const newContacts = watch('contacts').filter((c) => c.type !== 'INSTAGRAM');
+          setValue('contacts', [...newContacts, { type: 'INSTAGRAM', value: e.target.value }]);
+        }}
+        onLinkChange={(e) => {
+          const newContacts = watch('contacts').filter((c) => c.type !== 'WEBSITE');
+          setValue('contacts', [...newContacts, { type: 'WEBSITE', value: e.target.value }]);
+        }}
       />
+
       <DropDownInput
         placeholder={['이메일']}
         options={['naver.com', 'gmail.com', 'kakao.com', 'daum.net', '직접 입력']}
@@ -294,17 +335,11 @@ const ArtworkRegisterPage = () => {
       {/* 제출 버튼 */}
       <Button
         type='main'
-        disabled={
-          !(
-            watch('artworkImageUrl') &&
-            watch('title') &&
-            watch('width') &&
-            watch('height') &&
-            watch('material') &&
-            watch('artistName')
-          )
-        }
-        onClick={handleSubmit(onSubmit)}
+        disabled={!isValid}
+        onClick={async () => {
+          const result = await trigger();
+          if (result) handleSubmit(onSubmit)();
+        }}
       >
         <Typography level='subtitle2'>등록 신청하기</Typography>
       </Button>
