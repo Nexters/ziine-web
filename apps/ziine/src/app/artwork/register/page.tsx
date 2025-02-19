@@ -340,7 +340,8 @@ const ArtworkRegisterPage = () => {
       <Button
         type='main'
         disabled={!isValid}
-        onClick={async () => {
+        onClick={async (e) => {
+          e.preventDefault();
           const result = await trigger();
           if (result) handleSubmit(onSubmit)();
         }}

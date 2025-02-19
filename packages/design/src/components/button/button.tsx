@@ -7,7 +7,7 @@ interface ButtonProps {
   type?: 'main' | 'sub';
   status?: 'default' | 'loading';
   disabled?: boolean;
-  onClick: () => void;
+  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
   className?: string;
   style?: CSSProperties;
 }
@@ -36,7 +36,7 @@ export const Button = ({
 interface SmallBtnProps {
   children: ReactNode;
   type?: 'filled' | 'outlined';
-  onClick: () => void;
+  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 export const SmallButton = ({ children, type = 'filled', onClick }: SmallBtnProps) => {

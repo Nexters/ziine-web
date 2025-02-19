@@ -1,5 +1,5 @@
 import { ContactsType, getArtworkDetail } from '@/entities/artworks/apis/apis';
-import { BaseImage, NavigateBar } from '@/shared';
+import { BaseImage } from '@/shared';
 import { formatYYYYMMDDDate } from '@/shared/utils';
 import { css } from '@/styled-system/css';
 import { Divider, Icon, IconProps, Tag, Typography } from '@ziine/design';
@@ -31,15 +31,13 @@ const getContactText = (type: ContactsType) => {
 
 interface Props {
   id: string;
-  needNavigateBar?: boolean;
 }
 
-const ArtworkDetailPage = async ({ id, needNavigateBar = true }: Props) => {
+const ArtworkDetailPage = async ({ id }: Props) => {
   const data = await getArtworkDetail(Number(id));
 
   return (
-    <div className={css({ marginBottom: '40px' })}>
-      {needNavigateBar && <NavigateBar className={css({ position: 'fixed', top: 0 })} />}
+    <div className={css({ paddingBottom: '40px' })}>
       <BaseImage
         width={375}
         height={375}

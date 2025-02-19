@@ -37,10 +37,14 @@ const MagazineDetailPage = async ({ params }: { params: Promise<{ id: string }> 
 
   return (
     <>
-      <NavigateBar className={css({ position: 'sticky', top: 0 })} />
-      <Suspense fallback={<Loading className={css({ flex: 1, height: '100%' })} />}>
-        <MagazineDetail id={Number(id)} />
-      </Suspense>
+      <div>
+        <NavigateBar className={css({ position: 'sticky', top: 0 })} />
+        <Suspense fallback={<Loading className={css({ flex: 1, height: '100%' })} />}>
+          <div className={css({ width: '375px', margin: '0 auto' })}>
+            <MagazineDetail id={Number(id)} />
+          </div>
+        </Suspense>
+      </div>
     </>
   );
 };

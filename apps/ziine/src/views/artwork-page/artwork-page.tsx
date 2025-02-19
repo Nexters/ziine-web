@@ -20,12 +20,16 @@ const addButtonStyle = css({
 
 export const ArtWorkPage = () => {
   return (
-    <div className={css({ height: '100%', overflow: 'auto' })}>
-      <Suspense fallback={<Loading className={css({ height: '100%' })} />}>
+    <Suspense
+      fallback={
+        <Loading className={css({ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' })} />
+      }
+    >
+      <div className={css({ overflow: 'auto' })}>
         <ArtworkList />
-      </Suspense>
-      <FloatingButton />
-    </div>
+        <FloatingButton />
+      </div>
+    </Suspense>
   );
 };
 
