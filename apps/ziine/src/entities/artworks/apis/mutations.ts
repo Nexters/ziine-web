@@ -32,9 +32,7 @@ export const postArtworksForm = async (data: Partial<ArtworkFormItem>) => {
 
 export const postClientSideArtworksForm = async (data: Partial<ArtworkFormItem>) => {
   try {
-    const API_BASE = process.env.API_URL || 'http://localhost:3000';
-
-    const response = await apiClient.post<{ success: boolean; message: string }>(`${API_BASE}/api/v1/artworks`, {
+    const response = await apiClient.post<{ success: boolean; message: string }>(`/api/v1/artworks`, {
       json: data,
       prefixUrl: '',
     });
@@ -52,13 +50,13 @@ interface ArtWorkImage {
 }
 
 export const putArtworkImageToS3 = async (data: ArtWorkImage) => {
-  const response = await fetch(data.presignedUrl, {
-    method: 'PUT',
+  const response = await apiClient.put(data.presignedUrl, {
     headers: {
-      'x-amz-meta-original-name': data.file.name,
+      'x-amz-meta-original-name': encodeURIComponent(data.file.name),
       'Content-Type': data.file.type,
     },
     body: data.file,
+    prefixUrl: '',
   });
 
   if (!response.ok) {
