@@ -1,4 +1,5 @@
 import { getArtworkDetail } from '@/entities/artworks/apis/apis';
+import { NavigateBar } from '@/shared';
 import { Loading } from '@/shared/components/loading/loading';
 import { css } from '@/styled-system/css';
 import { ArtworkDetailPage } from '@/views';
@@ -37,7 +38,10 @@ const ArtworkDetailWebPage = async ({ params }: { params: Promise<{ id: string }
 
   return (
     <Suspense fallback={<Loading className={css({ flex: 1, height: '100%' })} />}>
-      <ArtworkDetailPage id={id} needNavigateBar={true} />
+      <NavigateBar className={css({ position: 'fixed', top: 0 })} />
+      <div className={css({ width: '375px', margin: '0 auto' })}>
+        <ArtworkDetailPage id={id} />
+      </div>
     </Suspense>
   );
 };
