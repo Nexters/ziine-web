@@ -29,6 +29,7 @@ import { formatYYYYMMDDDate } from '@/shared/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { artworkSchema } from '@/features/artwork-register/model/schema';
 import { z } from 'zod';
+import { useKeyboardAdjust } from '@/features/artwork-register/hooks';
 
 const ArtworkRegisterPage = () => {
   type ArtworkFormData = z.infer<typeof artworkSchema>;
@@ -63,6 +64,7 @@ const ArtworkRegisterPage = () => {
   const [exhibitionHistory, setExhibitionHistory] = useState<[string, string][]>([['', '']]);
   const [educationTags, setEducationTags] = useState<string[]>([]);
   const router = useRouter();
+  const isKeyboardOpen = useKeyboardAdjust();
 
   useEffect(() => {
     if (educationTags.length === 0 && watch('education') === '#') {
@@ -181,170 +183,172 @@ const ArtworkRegisterPage = () => {
   };
 
   return (
-    <form
-      className={css({
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '40px',
-        maxWidth: '900px',
-        width: '100%',
-        mb: '40px',
-      })}
-    >
-      {/* 이미지 업로드 */}
-      <ImgButton
-        text={imagePreview ? '이미지 바꾸기' : '이미지 업로드'}
-        onChange={handleImageChange}
-        imagePreview={imagePreview}
-      />
-      <Typography level='paragraph4' className={css({ color: 'grayscale.600' })}>
-        *작품 이미지는 한 장만 업로드 가능합니다.
-      </Typography>
-
-      {/* 입력 필드 */}
-      <div>
-        <OneRegisterArea
-          text='제목'
-          required
-          maxLength={80}
-          placeholder={['작품 제목']}
-          value={watch('title')}
-          onChange={(e) => setValue('title', e.target.value, { shouldValidate: true })}
-          warning={Boolean(errors.title)}
-        />
-        {errors.title && (
-          <Typography level='paragraph4' className={css({ color: 'error.500' })}>
-            {errors.title.message}
-          </Typography>
-        )}
-      </div>
-      <div>
-        <TwoRegisterArea
-          text='작품 사이즈'
-          required
-          placeholder={['가로 사이즈', '세로 사이즈']}
-          value={[watch('width'), watch('height')]}
-          onWidthChange={(e) => setValue('width', e.target.value, { shouldValidate: true })}
-          onHeightChange={(e) => setValue('height', e.target.value, { shouldValidate: true })}
-          warning={[Boolean(errors.width), Boolean(errors.height)]}
-        />
-        {(errors.width || errors.height) && (
-          <Typography level='paragraph4' className={css({ color: 'error.500' })}>
-            {errors.width?.message || errors.height?.message}
-          </Typography>
-        )}
-      </div>
-      <div>
-        <OneRegisterArea
-          text='재료'
-          required
-          maxLength={50}
-          placeholder={['ex. 캔버스에 유화']}
-          value={watch('material')}
-          onChange={(e) => setValue('material', e.target.value, { shouldValidate: true })}
-          warning={Boolean(errors.material)}
-        />
-        {errors.material && (
-          <Typography level='paragraph4' className={css({ color: 'error.500' })}>
-            {errors.material.message}
-          </Typography>
-        )}
-      </div>
-      <OneRegisterArea
-        inputType='fat'
-        text='작가 상세 정보'
-        required={false}
-        placeholder={['ex. 작품에 담긴 의미 혹은 사용된 기법 설명']}
-        value={watch('artistInfo') || ''}
-        onChange={(e) => setValue('artistInfo', e.target.value)}
-      />
-      <Divider />
-      <div>
-        <OneRegisterArea
-          text='작가 정보'
-          required
-          placeholder={['작가 이름']}
-          value={watch('artistName') || ''}
-          onChange={(e) => setValue('artistName', e.target.value, { shouldValidate: true })}
-          warning={Boolean(errors.artistName)}
-        />
-        {errors.artistName && (
-          <Typography level='paragraph4' className={css({ color: 'error.500' })}>
-            {errors.artistName.message}
-          </Typography>
-        )}
-      </div>
-      {/* 학력 */}
-      <EducationInput
-        value={watch('education') || ''}
-        onChange={(e) => setValue('education', e.target.value)}
-        tags={educationTags}
-        onTagsChange={setEducationTags}
-      />
-      {/* 전시 이력 */}
-      <div>
-        <TitleDescriptionGroup
-          text='전시 이력'
-          required={false}
-          description={'과거 전시했던 개인전 및 단체전의 일자, 전시 명을 작성해 주세요.'}
-        />
-        {exhibitionHistory.map((exhibition, index) => (
-          <ExhibitionInput
-            key={index}
-            placeholder={['YYYY-MM-DD', '전시 명']}
-            index={index}
-            value={exhibition}
-            onChangeDate={(value) => handleExhibitionChange(index, 'date', value)}
-            onChangeName={(value) => handleExhibitionChange(index, 'title', value)}
-          />
-        ))}
-      </div>
-      <SmallButton type='outlined' onClick={handleAddExhibitionInput}>
-        <Typography level='paragraph3' className={css({ color: 'grayscale.0' })}>
-          추가하기
-        </Typography>
-      </SmallButton>
-
-      {/* SNS & 이메일 */}
-      <SnsInfoInput
-        instagramValue={watch('contacts').find((c) => c.type === 'INSTAGRAM')?.value || ''}
-        linkValue={watch('contacts').find((c) => c.type === 'WEBSITE')?.value || ''}
-        onInstagramChange={(e) => {
-          const newContacts = watch('contacts').filter((c) => c.type !== 'INSTAGRAM');
-          setValue('contacts', [...newContacts, { type: 'INSTAGRAM', value: e.target.value }]);
-        }}
-        onLinkChange={(e) => {
-          const newContacts = watch('contacts').filter((c) => c.type !== 'WEBSITE');
-          setValue('contacts', [...newContacts, { type: 'WEBSITE', value: e.target.value }]);
-        }}
-      />
-
-      <DropDownInput
-        placeholder={['이메일']}
-        options={['naver.com', 'gmail.com', 'kakao.com', 'daum.net', '직접 입력']}
-        text='이메일'
-        required={false}
-        value={watch('email') || ''}
-        onChangeInputValue={(e) => setValue('email', e.target.value)}
-        dropdownIsOpen={isOpen}
-        onChangeIsOpen={onChangeIsOpen}
-        dropdownValue={watch('emailOption') || '직접 입력'}
-        onChangeOption={(option: string) => setValue('emailOption', option)}
-      />
-
-      {/* 제출 버튼 */}
-      <Button
-        type='main'
-        disabled={!isValid}
-        onClick={async (e) => {
-          e.preventDefault();
-          const result = await trigger();
-          if (result) handleSubmit(onSubmit)();
-        }}
+    <div className={css({ height: isKeyboardOpen ? 'calc(100vh - 300px)' : '100vh', transition: 'hei8ght 0.3s ease' })}>
+      <form
+        className={css({
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '40px',
+          maxWidth: '900px',
+          width: '100%',
+          mb: '40px',
+        })}
       >
-        <Typography level='subtitle2'>등록 신청하기</Typography>
-      </Button>
-    </form>
+        {/* 이미지 업로드 */}
+        <ImgButton
+          text={imagePreview ? '이미지 바꾸기' : '이미지 업로드'}
+          onChange={handleImageChange}
+          imagePreview={imagePreview}
+        />
+        <Typography level='paragraph4' className={css({ color: 'grayscale.600' })}>
+          *작품 이미지는 한 장만 업로드 가능합니다.
+        </Typography>
+
+        {/* 입력 필드 */}
+        <div>
+          <OneRegisterArea
+            text='제목'
+            required
+            maxLength={80}
+            placeholder={['작품 제목']}
+            value={watch('title')}
+            onChange={(e) => setValue('title', e.target.value, { shouldValidate: true })}
+            warning={Boolean(errors.title)}
+          />
+          {errors.title && (
+            <Typography level='paragraph4' className={css({ color: 'error.500' })}>
+              {errors.title.message}
+            </Typography>
+          )}
+        </div>
+        <div>
+          <TwoRegisterArea
+            text='작품 사이즈'
+            required
+            placeholder={['가로 사이즈', '세로 사이즈']}
+            value={[watch('width'), watch('height')]}
+            onWidthChange={(e) => setValue('width', e.target.value, { shouldValidate: true })}
+            onHeightChange={(e) => setValue('height', e.target.value, { shouldValidate: true })}
+            warning={[Boolean(errors.width), Boolean(errors.height)]}
+          />
+          {(errors.width || errors.height) && (
+            <Typography level='paragraph4' className={css({ color: 'error.500' })}>
+              {errors.width?.message || errors.height?.message}
+            </Typography>
+          )}
+        </div>
+        <div>
+          <OneRegisterArea
+            text='재료'
+            required
+            maxLength={50}
+            placeholder={['ex. 캔버스에 유화']}
+            value={watch('material')}
+            onChange={(e) => setValue('material', e.target.value, { shouldValidate: true })}
+            warning={Boolean(errors.material)}
+          />
+          {errors.material && (
+            <Typography level='paragraph4' className={css({ color: 'error.500' })}>
+              {errors.material.message}
+            </Typography>
+          )}
+        </div>
+        <OneRegisterArea
+          inputType='fat'
+          text='작가 상세 정보'
+          required={false}
+          placeholder={['ex. 작품에 담긴 의미 혹은 사용된 기법 설명']}
+          value={watch('artistInfo') || ''}
+          onChange={(e) => setValue('artistInfo', e.target.value)}
+        />
+        <Divider />
+        <div>
+          <OneRegisterArea
+            text='작가 정보'
+            required
+            placeholder={['작가 이름']}
+            value={watch('artistName') || ''}
+            onChange={(e) => setValue('artistName', e.target.value, { shouldValidate: true })}
+            warning={Boolean(errors.artistName)}
+          />
+          {errors.artistName && (
+            <Typography level='paragraph4' className={css({ color: 'error.500' })}>
+              {errors.artistName.message}
+            </Typography>
+          )}
+        </div>
+        {/* 학력 */}
+        <EducationInput
+          value={watch('education') || ''}
+          onChange={(e) => setValue('education', e.target.value)}
+          tags={educationTags}
+          onTagsChange={setEducationTags}
+        />
+        {/* 전시 이력 */}
+        <div>
+          <TitleDescriptionGroup
+            text='전시 이력'
+            required={false}
+            description={'과거 전시했던 개인전 및 단체전의 일자, 전시 명을 작성해 주세요.'}
+          />
+          {exhibitionHistory.map((exhibition, index) => (
+            <ExhibitionInput
+              key={index}
+              placeholder={['YYYY-MM-DD', '전시 명']}
+              index={index}
+              value={exhibition}
+              onChangeDate={(value) => handleExhibitionChange(index, 'date', value)}
+              onChangeName={(value) => handleExhibitionChange(index, 'title', value)}
+            />
+          ))}
+        </div>
+        <SmallButton type='outlined' onClick={handleAddExhibitionInput}>
+          <Typography level='paragraph3' className={css({ color: 'grayscale.0' })}>
+            추가하기
+          </Typography>
+        </SmallButton>
+
+        {/* SNS & 이메일 */}
+        <SnsInfoInput
+          instagramValue={watch('contacts').find((c) => c.type === 'INSTAGRAM')?.value || ''}
+          linkValue={watch('contacts').find((c) => c.type === 'WEBSITE')?.value || ''}
+          onInstagramChange={(e) => {
+            const newContacts = watch('contacts').filter((c) => c.type !== 'INSTAGRAM');
+            setValue('contacts', [...newContacts, { type: 'INSTAGRAM', value: e.target.value }]);
+          }}
+          onLinkChange={(e) => {
+            const newContacts = watch('contacts').filter((c) => c.type !== 'WEBSITE');
+            setValue('contacts', [...newContacts, { type: 'WEBSITE', value: e.target.value }]);
+          }}
+        />
+
+        <DropDownInput
+          placeholder={['이메일']}
+          options={['naver.com', 'gmail.com', 'kakao.com', 'daum.net', '직접 입력']}
+          text='이메일'
+          required={false}
+          value={watch('email') || ''}
+          onChangeInputValue={(e) => setValue('email', e.target.value)}
+          dropdownIsOpen={isOpen}
+          onChangeIsOpen={onChangeIsOpen}
+          dropdownValue={watch('emailOption') || '직접 입력'}
+          onChangeOption={(option: string) => setValue('emailOption', option)}
+        />
+
+        {/* 제출 버튼 */}
+        <Button
+          type='main'
+          disabled={!isValid}
+          onClick={async (e) => {
+            e.preventDefault();
+            const result = await trigger();
+            if (result) handleSubmit(onSubmit)();
+          }}
+        >
+          <Typography level='subtitle2'>등록 신청하기</Typography>
+        </Button>
+      </form>
+    </div>
   );
 };
 
