@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-const useKeyboardAdjust = () => {
+export const useKeyboardAdjust = () => {
   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
 
   useEffect(() => {
