@@ -76,18 +76,6 @@ const ArtworkRegisterPage = () => {
     console.log(isOpen);
   };
 
-  const handleExitClick = () => {
-    setIsPopUpOpen(true);
-  };
-
-  const handleClosePopup = () => {
-    setIsPopUpOpen(false);
-  };
-
-  const handleLeave = () => {
-    router.push('/');
-  };
-
   const handleImageChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
 

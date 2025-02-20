@@ -9,7 +9,7 @@ interface UndoPopupProps {
 export const UndoPopup = ({ onClickCancel, onClickClose }: UndoPopupProps) => {
   return (
     <>
-      <Popup buttonText={[]} onClickOutlinedBtn={onClickClose} onClickFilledBtn={onClickCancel}>
+      <Popup buttonText={['닫기', '나가기']} onClickOutlinedBtn={onClickClose} onClickFilledBtn={onClickCancel}>
         <Typography level='subtitle1' className={css({ color: 'grayscale.0' })}>
           이대로 나가시면, 작성 중인 내용은 저장되지 않습니다.
         </Typography>

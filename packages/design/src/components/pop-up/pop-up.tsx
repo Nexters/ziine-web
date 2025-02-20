@@ -3,7 +3,7 @@
 import { css, cx } from '@/styled-system/css';
 import { SmallButton, Typography } from '@ziine/design';
 import { ReactNode } from 'react';
-import { popupButtonsStyle, popupTitleStyle } from './pop-up.styles';
+import { popupButtonsStyle, popupContainer, popupTitleStyle } from './pop-up.styles';
 
 interface PopupProps {
   children: ReactNode;
@@ -14,7 +14,7 @@ interface PopupProps {
 
 export const Popup = ({ children, buttonText, onClickOutlinedBtn, onClickFilledBtn }: PopupProps) => {
   return (
-    <>
+    <div className={cx(popupContainer())}>
       <div className={cx(popupTitleStyle())}>{children}</div>
       <div className={cx(popupButtonsStyle())}>
         <SmallButton type='outlined' onClick={onClickOutlinedBtn}>
@@ -28,6 +28,6 @@ export const Popup = ({ children, buttonText, onClickOutlinedBtn, onClickFilledB
           </Typography>
         </SmallButton>
       </div>
-    </>
+    </div>
   );
 };
