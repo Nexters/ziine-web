@@ -1,11 +1,6 @@
-'use client';
-
-import { Loading } from '@/shared/components/loading/loading';
 import { css } from '@/styled-system/css';
-import { ArtWorkPage } from '@/views';
-import { MagazineListPage } from '@/views/magazine-list-page';
+import { MainPage } from '@/views/main-page';
 import { GlobalNavBar } from '@/widgets';
-import { useDetectNavType } from '@/widgets/global-nav-bar/hooks';
 import { Suspense } from 'react';
 
 export default function Home() {
@@ -20,20 +15,3 @@ export default function Home() {
     </div>
   );
 }
-
-const MainPage = () => {
-  const { isArtwork } = useDetectNavType();
-  return isArtwork ? <ArtWorkPage /> : <ClientMagazineListPage />;
-};
-
-const ClientMagazineListPage = () => {
-  return (
-    <Suspense
-      fallback={
-        <Loading className={css({ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' })} />
-      }
-    >
-      <MagazineListPage />
-    </Suspense>
-  );
-};

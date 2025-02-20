@@ -8,6 +8,29 @@ import { Toaster } from 'react-hot-toast';
 export const metadata: Metadata = {
   title: 'ziine - 내 손 안의 미술 작품',
   description: '대학생 및 무명 작가들을 위한 미술품 큐레이션 서비스',
+  openGraph: {
+    title: 'ziine - 내 손 안의 미술 작품',
+    description: '대학생 및 무명 작가들을 위한 미술품 큐레이션 서비스',
+    url: 'https://www.ziine.gallery',
+    images: [
+      {
+        url: '/assets/logo.png',
+        width: 216,
+        height: 216,
+      },
+    ],
+  },
+  twitter: {
+    title: 'ziine - 내 손 안의 미술 작품',
+    description: '대학생 및 무명 작가들을 위한 미술품 큐레이션 서비스',
+    images: [
+      {
+        url: '/assets/logo.png',
+        width: 216,
+        height: 216,
+      },
+    ],
+  },
 };
 
 export default function RootLayout({
