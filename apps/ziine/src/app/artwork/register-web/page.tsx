@@ -174,7 +174,7 @@ const ArtworkRegisterPage = () => {
           .filter(([date, title]) => date.trim() !== '' && title.trim() !== '')
           .map(([date, title]) => ({
             title,
-            exhibitionDate: formatYYYYMMDDDate(date),
+            exhibitionDate: formatYYYYMMDDDate(date).replace(/\./g, '-').replace(/\s/g, '').replace(/-$/, ''),
           })),
         contacts: contacts.length > 0 ? contacts : undefined,
         email: formattedEmail || undefined,
