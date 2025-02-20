@@ -1,5 +1,6 @@
 import { css, cx } from '@/styled-system/css';
-import { SmallButton, Typography } from '@ziine/design';
+import { SmallButton } from '../button';
+import { Typography } from '../typography';
 import { ReactNode } from 'react';
 import { popupButtonsStyle, popupContainer, popupTitleStyle } from './pop-up.styles';
 
