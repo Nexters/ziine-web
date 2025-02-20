@@ -124,7 +124,7 @@ const ArtworkRegisterGuidePage = () => {
           <Button
             className={css({ width: '100%' })}
             onClick={() => {
-              router.push('/artwork/register');
+              router.push('/artwork/register-web');
             }}
           >
             <Typography className={css({ color: 'grayscale.900' })} level='paragraph1'>
