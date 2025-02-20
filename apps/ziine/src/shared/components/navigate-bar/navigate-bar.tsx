@@ -10,9 +10,10 @@ import { navigateBarStyle } from './navigate-bar.styles';
 interface NavigateBarProps {
   className?: string;
   style?: CSSProperties;
+  onClick?: () => void;
 }
 
-export const NavigateBar = ({ className, style }: NavigateBarProps) => {
+export const NavigateBar = ({ className, style, onClick }: NavigateBarProps) => {
   const router = useRouter();
   const goBack = () => router.back();
   const isScrolled = useNavigateBarScroll();
@@ -20,7 +21,7 @@ export const NavigateBar = ({ className, style }: NavigateBarProps) => {
   return (
     <div className={cx(navigateBarStyle({ isScrolled }), className)} style={style}>
       <div className={css({ padding: '8px 16px 16px' })}>
-        <button onClick={goBack}>
+        <button onClick={onClick ? onClick : goBack}>
           <Icon name='direction_left' size='medium' color='grayscale.0' />
         </button>
       </div>

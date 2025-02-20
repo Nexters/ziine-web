@@ -62,6 +62,7 @@ const ArtworkRegisterPage = () => {
   const [imagePreview, setImagePreview] = useState<string>('');
   const [exhibitionHistory, setExhibitionHistory] = useState<[string, string][]>([['', '']]);
   const [educationTags, setEducationTags] = useState<string[]>([]);
+  const [isPopUpOpen, setIsPopUpOpen] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -69,10 +70,6 @@ const ArtworkRegisterPage = () => {
       setValue('education', '');
     }
   }, [educationTags, setValue, watch]);
-
-  useEffect(() => {
-    console.log('errors.title ERROR: ', errors.title);
-  }, [errors]);
 
   const onChangeIsOpen = () => {
     setIsOpen((prev) => !prev);
@@ -303,7 +300,11 @@ const ArtworkRegisterPage = () => {
           />
         ))}
       </div>
-      <SmallButton text='추가하기' type='outlined' onClick={handleAddExhibitionInput} />
+      <SmallButton type='outlined' onClick={handleAddExhibitionInput}>
+        <Typography level='paragraph3' className={css({ color: 'grayscale.0' })}>
+          추가하기
+        </Typography>
+      </SmallButton>
 
       {/* SNS & 이메일 */}
       <SnsInfoInput

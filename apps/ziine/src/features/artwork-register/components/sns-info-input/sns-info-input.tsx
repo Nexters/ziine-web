@@ -17,7 +17,7 @@ export const SnsInfoInput = ({ instagramValue, linkValue, onInstagramChange, onL
   return (
     <IconInput
       text='홍보 채널'
-      description={''}
+      description={'나와 내 작품을 홍보할 수 있는 채널이 있다면, 알려주세요.'}
       placeholder={['@인스타그램 아이디', '비핸스 등 웹사이트 링크']}
       value={[instagramValue, linkValue]}
       onChangeInstagramId={onInstagramChange}

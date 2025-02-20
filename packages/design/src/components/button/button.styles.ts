@@ -25,6 +25,10 @@ export const buttonStyle = cva({
         _disabled: {
           bg: 'grayscale.600',
           color: 'grayscale.700',
+          _hover: {
+            bg: 'grayscale.600',
+            color: 'grayscale.700',
+          },
         },
       },
       sub: {
@@ -41,6 +45,11 @@ export const buttonStyle = cva({
           bg: 'grayscale.800',
           color: 'grayscale.600',
           border: 'none',
+          _hover: {
+            bg: 'grayscale.800',
+            color: 'grayscale.600',
+            border: 'none',
+          },
         },
       },
     },
