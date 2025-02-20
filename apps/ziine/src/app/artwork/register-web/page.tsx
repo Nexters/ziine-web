@@ -354,7 +354,6 @@ const ArtworkRegisterPage = () => {
               setValue('contacts', [...newContacts, { type: 'WEBSITE', value: e.target.value }]);
             }}
           />
-
           <DropDownInput
             placeholder={['이메일']}
             description={
