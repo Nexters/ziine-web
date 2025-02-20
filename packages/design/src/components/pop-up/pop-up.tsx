@@ -1,5 +1,3 @@
-'use client';
-
 import { css, cx } from '@/styled-system/css';
 import { SmallButton, Typography } from '@ziine/design';
 import { ReactNode } from 'react';
