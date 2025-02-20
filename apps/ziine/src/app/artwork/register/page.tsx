@@ -62,7 +62,6 @@ const ArtworkRegisterPage = () => {
   const [imagePreview, setImagePreview] = useState<string>('');
   const [exhibitionHistory, setExhibitionHistory] = useState<[string, string][]>([['', '']]);
   const [educationTags, setEducationTags] = useState<string[]>([]);
-  const [isPopUpOpen, setIsPopUpOpen] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
