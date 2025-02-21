@@ -29,7 +29,6 @@ import { formatDateWithHyphen } from '@/shared/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { artworkSchema } from '@/features/artwork-register/model/schema';
 import { z } from 'zod';
-import { useKeyboardAdjust } from '@/features/artwork-register/hooks';
 
 const ArtworkRegisterPage = () => {
   type ArtworkFormData = z.infer<typeof artworkSchema>;
@@ -64,7 +63,21 @@ const ArtworkRegisterPage = () => {
   const [exhibitionHistory, setExhibitionHistory] = useState<[string, string][]>([['', '']]);
   const [educationTags, setEducationTags] = useState<string[]>([]);
   const router = useRouter();
-  const isKeyboardOpen = useKeyboardAdjust();
+  const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
+  const [viewportHeight, setViewportHeight] = useState(window.innerHeight);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerHeight < viewportHeight) {
+        setIsKeyboardOpen(true);
+      } else {
+        setIsKeyboardOpen(false);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [viewportHeight]);
 
   useEffect(() => {
     if (educationTags.length === 0 && watch('education') === '#') {
@@ -183,7 +196,7 @@ const ArtworkRegisterPage = () => {
   };
 
   return (
-    <div className={css({ height: isKeyboardOpen ? 'calc(100vh - 300px)' : '100vh', transition: 'hei8ght 0.3s ease' })}>
+    <div className={css({ paddingBottom: isKeyboardOpen ? '200px' : '0px' })}>
       <form
         className={css({
           display: 'flex',
