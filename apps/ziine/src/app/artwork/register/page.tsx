@@ -64,7 +64,7 @@ const ArtworkRegisterPage = () => {
   const [educationTags, setEducationTags] = useState<string[]>([]);
   const router = useRouter();
   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
-  const [viewportHeight, setViewportHeight] = useState(window.innerHeight);
+  const viewportHeight = window.innerHeight;
 
   useEffect(() => {
     const handleResize = () => {
