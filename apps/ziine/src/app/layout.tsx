@@ -41,7 +41,10 @@ export default function RootLayout({
   return (
     <html lang='en' className={css({ height: '100%' })}>
       <head>
-        <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' />
+        <meta
+          name='viewport'
+          content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover'
+        />
         <link rel='icon' type='image/png' sizes='16x16' href='/favicon.ico' />
         <link rel='apple-touch-icon' href='/icons/apple-icon.png' type='image/png' sizes='180x180' />
         <link rel='icon' type='image/png' sizes='16x16' href='/icons/favicon-16x16.png' />
