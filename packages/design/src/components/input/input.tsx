@@ -8,12 +8,11 @@ interface InputProps {
   maxLength?: number;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   style?: CSSProperties;
   warning?: boolean;
 }
 
-export const Input = ({ placeholder, maxLength, value, onChange, onKeyDown, warning }: InputProps) => {
+export const Input = ({ placeholder, maxLength, value, onChange, warning }: InputProps) => {
   return (
     <>
       <div className={css({ display: 'flex', flexDirection: 'column', gap: '4px', width: '100%' })}>
@@ -23,7 +22,6 @@ export const Input = ({ placeholder, maxLength, value, onChange, onKeyDown, warn
           placeholder={placeholder}
           value={value}
           onChange={onChange}
-          onKeyDown={onKeyDown}
         />
         {maxLength && (
           <Typography
