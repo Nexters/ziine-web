@@ -5,3 +5,7 @@ export const formatYYYYMMDDDate = (date: string) => {
     day: '2-digit',
   });
 };
+
+export const formatDateWithHyphen = (date: string) => {
+  return formatYYYYMMDDDate(date).replace(/\./g, '-').replace(/\s/g, '').replace(/-$/, '');
+};

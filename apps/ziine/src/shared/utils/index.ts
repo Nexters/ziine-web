@@ -1,2 +1,2 @@
-export { formatYYYYMMDDDate } from './dateFormat';
+export { formatYYYYMMDDDate, formatDateWithHyphen } from './dateFormat';
 export { onRaf } from './onRaf';

@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
     const requiredFields = ['title', 'width', 'height', 'material', 'artworkImageUrl'];
     for (const field of requiredFields) {
       if (!data[field]) {
-        return NextResponse.json({ success: false, message: `${field} 필드는 필수` }, { status: 400 });
+        return NextResponse.json({ success: false, message: `${field} 필드는 필수` });
       }
     }
 
@@ -27,6 +27,6 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(response);
   } catch (error) {
     console.error('POST API 오류:', error);
-    return NextResponse.json({ success: false, message: '서버 내부 오류 발생' }, { status: 500 });
+    return NextResponse.json({ success: false, message: error });
   }
 }

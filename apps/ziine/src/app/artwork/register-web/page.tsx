@@ -25,7 +25,7 @@ import { getArtworksImageUrl, getClientSideArtworksImageUrl } from '@/entities/a
 import { useRouter } from 'next/navigation';
 import { SnsInfoInput } from '@/features/artwork-register/components/sns-info-input';
 import { EducationInput } from '@/features/artwork-register/components/education-input';
-import { formatYYYYMMDDDate } from '@/shared/utils';
+import { formatDateWithHyphen, formatYYYYMMDDDate } from '@/shared/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { artworkSchema } from '@/features/artwork-register/model/schema';
 import { z } from 'zod';
@@ -174,7 +174,7 @@ const ArtworkRegisterPage = () => {
           .filter(([date, title]) => date.trim() !== '' && title.trim() !== '')
           .map(([date, title]) => ({
             title,
-            exhibitionDate: formatYYYYMMDDDate(date).replace(/\./g, '-').replace(/\s/g, '').replace(/-$/, ''),
+            exhibitionDate: formatDateWithHyphen(date),
           })),
         contacts: contacts.length > 0 ? contacts : undefined,
         email: formattedEmail || undefined,
