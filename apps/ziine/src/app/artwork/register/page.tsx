@@ -64,20 +64,21 @@ const ArtworkRegisterPage = () => {
   const [educationTags, setEducationTags] = useState<string[]>([]);
   const router = useRouter();
   const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
-  const viewportHeight = window.innerHeight;
 
   useEffect(() => {
-    const handleResize = () => {
-      if (window.innerHeight < viewportHeight) {
-        setIsKeyboardOpen(true);
-      } else {
-        setIsKeyboardOpen(false);
-      }
-    };
+    if (typeof window !== 'undefined') {
+      const handleResize = () => {
+        if (window.innerHeight < window.outerHeight * 0.6) {
+          setIsKeyboardOpen(true);
+        } else {
+          setIsKeyboardOpen(false);
+        }
+      };
 
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, [viewportHeight]);
+      window.addEventListener('resize', handleResize);
+      return () => window.removeEventListener('resize', handleResize);
+    }
+  }, []);
 
   useEffect(() => {
     if (educationTags.length === 0 && watch('education') === '#') {
