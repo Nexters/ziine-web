@@ -63,22 +63,22 @@ const ArtworkRegisterPage = () => {
   const [exhibitionHistory, setExhibitionHistory] = useState<[string, string][]>([['', '']]);
   const [educationTags, setEducationTags] = useState<string[]>([]);
   const router = useRouter();
-  const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
+  //const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
 
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const handleResize = () => {
-        if (window.innerHeight < window.outerHeight * 0.6) {
-          setIsKeyboardOpen(true);
-        } else {
-          setIsKeyboardOpen(false);
-        }
-      };
+  // useEffect(() => {
+  //   if (typeof window !== 'undefined') {
+  //     const handleResize = () => {
+  //       if (window.innerHeight < window.outerHeight * 0.6) {
+  //         setIsKeyboardOpen(true);
+  //       } else {
+  //         setIsKeyboardOpen(false);
+  //       }
+  //     };
 
-      window.addEventListener('resize', handleResize);
-      return () => window.removeEventListener('resize', handleResize);
-    }
-  }, []);
+  //     window.addEventListener('resize', handleResize);
+  //     return () => window.removeEventListener('resize', handleResize);
+  //   }
+  // }, []);
 
   useEffect(() => {
     if (educationTags.length === 0 && watch('education') === '#') {
@@ -208,7 +208,8 @@ const ArtworkRegisterPage = () => {
   };
 
   return (
-    <div className={css({ paddingBottom: isKeyboardOpen ? '200px' : '0px' })}>
+    // <div className={css({ paddingBottom: isKeyboardOpen ? '200px' : '0px' })}>
+    <div>
       <form
         className={css({
           display: 'flex',
