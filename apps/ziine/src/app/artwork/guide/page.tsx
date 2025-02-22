@@ -3,13 +3,11 @@
 import { BaseImage, NavigateBar } from '@/shared';
 import { Button, Typography } from '@ziine/design';
 import { css } from '@/styled-system/css';
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 const imageStyle = css({ width: '100%', aspectRatio: '320 / 240', borderRadius: '6px' });
 
 const ArtworkRegisterGuidePage = () => {
-  const router = useRouter();
-
   return (
     <div className={css({ width: '100%' })}>
       <NavigateBar />
@@ -117,20 +115,17 @@ const ArtworkRegisterGuidePage = () => {
             width: '100%',
             position: 'sticky',
             bottom: 0,
-            padding: '12px 0 40px',
+            padding: '12px 16px 40px',
             bg: 'grayscale.900',
           })}
         >
-          <Button
-            className={css({ width: '100%' })}
-            onClick={() => {
-              router.push('/artwork/register-web');
-            }}
-          >
-            <Typography className={css({ color: 'grayscale.900' })} level='paragraph1'>
-              작품 등록하기
-            </Typography>
-          </Button>
+          <Link href={'/artwork/register-web'}>
+            <Button className={css({ width: '100%' })} onClick={() => undefined}>
+              <Typography className={css({ color: 'grayscale.900' })} level='paragraph1'>
+                작품 등록하기
+              </Typography>
+            </Button>
+          </Link>
         </div>
       </div>
     </div>
