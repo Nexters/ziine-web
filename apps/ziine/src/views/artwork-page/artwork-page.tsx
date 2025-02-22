@@ -5,7 +5,7 @@ import { ArtImageCard } from '@/entities/artworks/components';
 import { AddArtworkButton } from '@/features/add-artwork/components';
 import { useShowFloatingButton } from '@/features/add-artwork/hooks';
 import { Loading } from '@/shared';
-import { css, cx } from '@/styled-system/css';
+import { css, cva, cx } from '@/styled-system/css';
 import React, { Suspense } from 'react';
 
 const addButtonStyle = css({
@@ -25,10 +25,8 @@ export const ArtWorkPage = () => {
         <Loading className={css({ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' })} />
       }
     >
-      <div className={css({ overflow: 'auto' })}>
-        <ArtworkList />
-        <FloatingButton />
-      </div>
+      <ArtworkList />
+      <FloatingButton />
     </Suspense>
   );
 };
@@ -74,16 +72,23 @@ const ArtworkList = () => {
 const FloatingButton = () => {
   const showButton = useShowFloatingButton();
 
-  return (
-    <AddArtworkButton
-      className={cx(
-        addButtonStyle,
-        css({
-          transition: 'opacity 0.3s ease',
-          opacity: showButton ? 1 : 0,
-          pointerEvents: showButton ? 'auto' : 'none',
-        }),
-      )}
-    />
-  );
+  return <AddArtworkButton className={cx(addButtonStyle, fadeInOutStyle({ show: showButton }))} />;
 };
+
+const fadeInOutStyle = cva({
+  base: {
+    transition: 'opacity 0.3s ease',
+  },
+  variants: {
+    show: {
+      true: {
+        opacity: 1,
+        pointerEvents: 'auto',
+      },
+      false: {
+        opacity: 0,
+        pointerEvents: 'none',
+      },
+    },
+  },
+});

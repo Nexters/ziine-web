@@ -39,7 +39,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang='en' className={css({ height: '100%' })}>
+    <html lang='en'>
       <head>
         <meta
           name='viewport'
