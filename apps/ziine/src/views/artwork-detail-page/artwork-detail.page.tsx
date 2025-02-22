@@ -21,7 +21,7 @@ const getContactIcon = (type: ContactsType): { name: IconProps['name']; color?: 
 const getContactText = (type: ContactsType) => {
   switch (type) {
     case 'INSTAGRAM':
-      return '인스타그램';
+      return '인스타그램 아이디';
     case 'WEBSITE':
       return '링크';
     default:
