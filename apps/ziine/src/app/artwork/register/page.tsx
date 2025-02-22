@@ -139,8 +139,19 @@ const ArtworkRegisterPage = () => {
     if (typeof window !== 'undefined') {
       if (window.ziineApp?.artworkRegisterSuccess) {
         window.ziineApp.artworkRegisterSuccess();
-      } else if (window.webkit?.messageHandlers?.artworkRegisterSuccess) {
-        window.webkit.messageHandlers.artworkRegisterSuccess.postMessage('');
+      }
+      //else if (window.webkit?.messageHandlers?.artworkRegisterSuccess) {
+      //window.webkit.messageHandlers.callbackHandler.postMessage("MessageBody");
+      //window.webkit.messageHandlers.artworkRegisterSuccess.postMessage('');
+      //}
+      else if (window.webkit?.messageHandlers?.callbackHandler) {
+        try {
+          window.webkit.messageHandlers.callbackHandler.postMessage({
+            action: 'artworkRegisterSuccess',
+          });
+        } catch (error) {
+          console.error('Error calling callbackHandler:', error);
+        }
       } else {
         router.push('/artwork/success');
       }

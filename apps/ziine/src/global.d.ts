@@ -8,6 +8,9 @@ declare global {
         artworkRegisterSuccess?: {
           postMessage: (message: string | Record<string, unknown>) => void;
         };
+        callbackHandler?: {
+          postMessage: (message: string | Record<string, unknown>) => void;
+        };
       };
     };
   }
