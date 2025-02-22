@@ -26,6 +26,7 @@ export const MagazineListPage = () => {
         alignItems: 'center',
         margin: '24px 0',
         width: '100%',
+        padding: '0 20px',
       })}
     >
       <Swiper
@@ -37,7 +38,7 @@ export const MagazineListPage = () => {
         updateOnWindowResize={true}
         className={css({
           marginBottom: '48px',
-          maxWidth: '860px',
+          maxWidth: '900px',
           width: '100%',
           height: '100%',
         })}
