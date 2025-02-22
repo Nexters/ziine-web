@@ -9,7 +9,7 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import { useState } from 'react';
 import { Tag } from '@ziine/design';
-import { listItemStyle } from './magazine-list-page.styles';
+// import { listItemStyle } from './magazine-list-page.styles';
 
 export const MagazineListPage = () => {
   const {
@@ -37,6 +37,7 @@ export const MagazineListPage = () => {
         updateOnWindowResize={true}
         className={css({
           marginBottom: '48px',
+          maxWidth: '860px',
           width: '100%',
           height: '100%',
         })}
@@ -44,8 +45,8 @@ export const MagazineListPage = () => {
           setActiveIndex(activeIndex);
         }}
       >
-        {magazines.map((magazine, idx) => (
-          <SwiperSlide key={magazine.id} className={listItemStyle({ active: activeIndex === idx })}>
+        {magazines.map((magazine) => (
+          <SwiperSlide key={magazine.id}>
             <MagazineCard {...magazine} />
           </SwiperSlide>
         ))}
