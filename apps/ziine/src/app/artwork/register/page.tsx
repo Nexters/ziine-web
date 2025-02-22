@@ -250,6 +250,7 @@ const ArtworkRegisterPage = () => {
           <TwoRegisterArea
             text='작품 사이즈'
             required
+            description={'디지털 아트의 경우에는 픽셀을 cm 단위로 변환하여 작성해 주세요.'}
             placeholder={['가로 사이즈', '세로 사이즈']}
             value={[watch('width'), watch('height')]}
             onWidthChange={(e) => setValue('width', e.target.value, { shouldValidate: true })}
@@ -280,7 +281,7 @@ const ArtworkRegisterPage = () => {
         </div>
         <OneRegisterArea
           inputType='fat'
-          text='작가 상세 정보'
+          text='작품 상세 정보'
           required={false}
           placeholder={['ex. 작품에 담긴 의미 혹은 사용된 기법 설명']}
           value={watch('artistInfo') || ''}
@@ -291,6 +292,7 @@ const ArtworkRegisterPage = () => {
           <OneRegisterArea
             text='작가 정보'
             required
+            description={'실명이나 닉네임, 혹은 팀 작품인 경우 팀명을 작성해 주세요.'}
             placeholder={['작가 이름']}
             value={watch('artistName') || ''}
             onChange={(e) => setValue('artistName', e.target.value, { shouldValidate: true })}
@@ -349,6 +351,9 @@ const ArtworkRegisterPage = () => {
 
         <DropDownInput
           placeholder={['이메일']}
+          description={
+            '이메일 주소를 기입하시면, 심사 통과 여부를 메일로 알려드려요. 이메일 주소는 공개되지 않으니, 안심하고 작성하세요.'
+          }
           options={['naver.com', 'gmail.com', 'kakao.com', 'daum.net', '직접 입력']}
           text='이메일'
           required={false}
